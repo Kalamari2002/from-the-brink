@@ -11,7 +11,7 @@ var round_start_lines = [
 	"She hath whispered me your stories",
 	"And so, I ask you again,",
 	"Will you answer this call?"
-] # Arcsys looking ass intro text
+] # Arcsys intro looking ass text
 
 var initiative_order = [] # A list of players, ordered by turn from first to last
 var initiative_idx = 0 # Keeps track of which player in the initiative_order is going currently
@@ -44,11 +44,11 @@ func instantiate_players():
 	
 	var player_instance_a = temp_player.instance()
 	player_instance_a.set_name("Player1")
-	player_instance_a.initialize(1) # setting player1 data
+	player_instance_a.initialize(1, "res://Sprites/Characters/Players/Sothro.png") # setting player1 data
 	
 	var player_instance_b = temp_player.instance()
 	player_instance_b.set_name("Player2")
-	player_instance_b.initialize(2) # setting player2 data
+	player_instance_b.initialize(2, "res://Sprites/Characters/Players/Poko.png") # setting player2 data
 	
 	get_node("/root/Board").call_deferred("add_child",player_instance_a)
 	get_node("/root/Board").call_deferred("add_child",player_instance_b)
