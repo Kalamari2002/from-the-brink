@@ -24,16 +24,8 @@ var player_count = 2 # Numbers of players playing
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	instantiate_players()
-	game_start()
+	#game_start()
 	pass # Replace with function body.
-
-###
-# Maybe this will have a little more to it in the future, but for now it 
-# just calls read_quote()
-###
-func game_start():
-	ready_quote()
-	pass
 
 ###
 # Creates the players, adding them to the scene, setting their Id's and names, and
@@ -67,47 +59,30 @@ func _input(event):
 		pass
 
 ###
-# Reads each line from the intro quotes every 3 seconds. When lines are finished,
-# roll initiative.
-###
-func ready_quote():
-	for l in round_start_lines:
-		if skip_intro:
-			break
-		print(l)
-		var time_in_seconds = 3
-		yield(get_tree().create_timer(time_in_seconds), "timeout")
-	roll_initiative()
-
-###
-# Doesn't really roll any numbers, it just shuffles the initiative_order
-# and then displays some Read/Fight text before starting top_of_the_round.
+# Called when the introtext broadcasts that it's ended. Doesn't really roll any numbers, 
+# it just shuffles the initiative_order and then displays some Read/Fight text before 
+# starting top_of_the_round. Sends a message to the InitiativeRoll containing the names
+# of all players in order.
 ###
 func roll_initiative():
-	print('\n')
-	print("Roll for Initiative...")
-	var time_in_seconds_a = 3
-	yield(get_tree().create_timer(time_in_seconds_a), "timeout")
 	
 	randomize()
 	initiative_order.shuffle()
-
-	print("Player" + String(initiative_order[0].player_id()) + " you're up!") 
-	var time_in_seconds_b = 2
-	yield(get_tree().create_timer(time_in_seconds_b), "timeout")
 	
-	print("Stand Your Ground...")
-	var time_in_seconds_c = 3
-	yield(get_tree().create_timer(time_in_seconds_c), "timeout")
-	print("And Fight!") 
-	var time_in_seconds_d = 2
-	yield(get_tree().create_timer(time_in_seconds_d), "timeout")
-	top_of_the_round()
+	var allPlayers = ""
+	for i in initiative_order: # Get all nodes in the initiative order and extract their names
+		var og = String(i.get_path())
+		var s =  og.substr(12,(len(og) - 12))
+		allPlayers += s + "," # Concatenate their names in a comma separated string
+	var toBroadcast = allPlayers.substr(0,len(allPlayers) - 1)
+	
+	get_node("Subscriber").send_message("gege"+toBroadcast) # Broadcast initiative order, received by InitiativeRoll
 	pass
 	
 ###
 # Name is self explanatory. Called every time the last player finishes their turn
-# and increments the round_count
+# and increments the round_count. Called for first time when the Ready object broadcasts
+# that the ready period thing is over
 ###
 func top_of_the_round():
 	round_count += 1
@@ -142,6 +117,9 @@ func pass_control_to_player(player):
 func current_player():
 	return initiative_order[initiative_idx]
 
+func get_initiative_order():
+	return initiative_order
+
 ###
 # To catch Broadcaster to Subscriber messages. Called by child Subscriber.
 # @param message is the received message from child Subscriber
@@ -150,4 +128,8 @@ func receive_message(message):
 	if message == "end_turn_1" or message == "end_turn_2": # If either player finishes their turn
 		switch_turn() # switch to the next player
 		pass
+	if message == "intro_ended":
+		roll_initiative()
+	if message == "ready_ended":
+		top_of_the_round()
 	pass
