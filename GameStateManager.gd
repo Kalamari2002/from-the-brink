@@ -132,4 +132,8 @@ func receive_message(message):
 		roll_initiative()
 	if message == "ready_ended":
 		top_of_the_round()
+	if message == "player1_died" or message == "player2_died":
+		var time_in_seconds = 3
+		yield(get_tree().create_timer(time_in_seconds), "timeout")
+		get_tree().change_scene("res://Scenes/VictoryScreen.tscn")
 	pass

@@ -37,6 +37,10 @@ class Quadrant:
 		for c in held_characters:
 			c.get_hit()
 	
+	func damage_characters(dmg):
+		for c in held_characters:
+			c.take_dmg(dmg)
+	
 	###
 	# Returns how many characters are standing in this quadrant.
 	# @return character count
@@ -125,7 +129,8 @@ func clear_selections():
 func confirm_insta_atk():
 	for q in quadrants:
 		if q.is_selected():
-			q.hit_characters()
+			#q.hit_characters()
+			q.damage_characters(25)
 			pass
 
 ###

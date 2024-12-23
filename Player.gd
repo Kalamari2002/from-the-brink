@@ -3,6 +3,9 @@ extends Node2D
 var subscriber # child subscriber
 var player_id = 0 # The unique id of this player
 
+var max_hp
+var curr_hp
+
 var failures_curr = 0 #TBI
 var successes_curr = 0 #TBI
 var is_stabilized = false #TBI
@@ -43,6 +46,8 @@ func _ready():
 ###
 func initialize(id, sprite):
 	player_id = id
+	max_hp = 100
+	curr_hp = max_hp
 	if id % 2 == 0:
 		get_node("Sprite").flip_h = true
 	get_node("Sprite").texture = load(sprite)
@@ -75,6 +80,8 @@ func start_turn():
 	pass
 
 func _input(event):
+	if curr_state == GameState.DEAD:
+		return
 	if curr_state == GameState.SELECTING:
 		if event.is_action_pressed("select_action"): # placeholder, mainly for debug
 			print("attack")
@@ -163,7 +170,26 @@ func move_aim(dir):
 # Called by the grid if player is standing in a quadrant that's being attacked by an opponent.
 ###
 func get_hit():
-	print(String(get_path()) + " was hit!")
+	failures_curr += 1
+	if failures_curr >= 3:
+		die()
+		return
+	subscriber.send_message("player" + String(player_id()) + "_hit")
+	print("player" + String(player_id()) + "_hit")
+	print(String(get_failure_count()))
+
+func take_dmg(dmg):
+	curr_hp -= dmg
+	get_node("AnimationPlayer").play("player_gethit")
+	if curr_hp <= 0:
+		curr_hp = 0
+		die()
+	subscriber.send_message("player" + String(player_id()) + "_hit")
+
+func die():
+	subscriber.send_message("player" + String(player_id()) + "_died")
+	curr_state = GameState.DEAD
+	get_node("Sprite").texture = load("res://Sprites/Characters/Players/Poko_death.png")
 ###
 # Gets the player's id.
 # @return player_id
@@ -177,6 +203,12 @@ func player_id():
 ###
 func curr_pos_idx():
 	return curr_pos
+
+func get_hp():
+	return curr_hp
+
+func get_failure_count():
+	return failures_curr
 
 ###
 # To catch Broadcaster to Subscriber messages. Called by child Subscriber.
