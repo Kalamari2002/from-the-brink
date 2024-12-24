@@ -1,30 +1,33 @@
 extends CanvasLayer
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
 var p1_failure
 var p2_failure
 
+var characters = []
+var labels = []
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	p1_failure = get_node("MarginContainer/p1_failure")
-	p2_failure = get_node("MarginContainer/p2_failure")
+	
+	get_node("/root/Board/GameManager/GameStateManager").connect("game_set", self, "on_game_end")
+	for c in get_node("MarginContainer").get_children():
+		labels.append(c)
+	for i in get_node("/root/Board/GameManager/GameStateManager").get_initiative_order():
+		characters.append(i.get_node("HealthManager"))
+	for i in range(len(characters)):
+		characters[i].connect("health_change",self,"update_health",[i])
 	pass # Replace with function body.
+
+func get_character_hp(path):
+	return get_node(path).get_curr_health()
+
+func update_health(idx):
+	labels[idx].text = "HP: " + String(characters[idx].get_curr_health())
+
+func on_game_end():
+	 get_node("End").visible = true
 
 func receive_message(message):
 	if message == "ready_ended":
-		p1_failure.text = "HP: " + String(get_node("/root/Board/Player1").get_hp())
-		p2_failure.text = "HP: " + String(get_node("/root/Board/Player2").get_hp())
-		
-	if message == "player1_hit":
-		print("UI RECEIVED MSG")
-		p1_failure.text = "HP: " + String(get_node("/root/Board/Player1").get_hp())
-	if message == "player2_hit":
-		print("UI RECEIVED MSG")
-		p2_failure.text = "HP: " + String(get_node("/root/Board/Player2").get_hp())
-		#get_node("MarginContainer/p1").text = "Failure: " + String
-	if message == "player1_died" or message == "player2_died":
-		get_node("End").visible = true
+		for i in range(len(characters)):
+			update_health(i)

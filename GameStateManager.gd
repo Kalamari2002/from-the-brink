@@ -5,13 +5,7 @@
 
 extends Node2D
 
-var round_start_lines = [
-	"O\' brave Heroes, kindred spirits",
-	"The winds hath broughts your songs to me",
-	"She hath whispered me your stories",
-	"And so, I ask you again,",
-	"Will you answer this call?"
-] # Arcsys intro looking ass text
+signal game_set
 
 var initiative_order = [] # A list of players, ordered by turn from first to last
 var initiative_idx = 0 # Keeps track of which player in the initiative_order is going currently
@@ -32,25 +26,40 @@ func _ready():
 # adding them to the initiative_order
 ###
 func instantiate_players():
-	var temp_player = preload("res://Prefabs/Player.tscn")
+	#var temp_player = preload("res://Prefabs/Player.tscn")
 	
-	var player_instance_a = temp_player.instance()
-	player_instance_a.set_name("Player1")
-	player_instance_a.initialize(1, "res://Sprites/Characters/Players/Sothro.png") # setting player1 data
+#	var player_instance_a = temp_player.instance()
+#	player_instance_a.set_name("Player1")
+#	player_instance_a.initialize(1, "res://Sprites/Characters/Players/Sothro.png") # setting player1 data
+#
+#	var player_instance_b = temp_player.instance()
+#	player_instance_b.set_name("Player2")
+#	player_instance_b.initialize(2, "res://Sprites/Characters/Players/Poko.png") # setting player2 data
+#	get_node("/root/Board").call_deferred("add_child",player_instance_a)
+#	get_node("/root/Board").call_deferred("add_child",player_instance_b)
+#	initiative_order.append(player_instance_a)
+#	initiative_order.append(player_instance_b)
+	var temp_player = preload("res://Prefabs/Components/Characters/Character.tscn")
+	var p1 = temp_player.instance()
+	p1.set_name("Player1")
+	p1.assign_id(1)
+	var p2 = temp_player.instance()
+	p2.set_name("Player2")
+	p2.assign_id(2)
+	get_node("/root/Board").call_deferred("add_child",p1)
+	get_node("/root/Board").call_deferred("add_child",p2)
+	initiative_order.append(p1)
+	initiative_order.append(p2)
 	
-	var player_instance_b = temp_player.instance()
-	player_instance_b.set_name("Player2")
-	player_instance_b.initialize(2, "res://Sprites/Characters/Players/Poko.png") # setting player2 data
-	
-	get_node("/root/Board").call_deferred("add_child",player_instance_a)
-	get_node("/root/Board").call_deferred("add_child",player_instance_b)
-	
+	for i in initiative_order:
+		i.connect("turn_ended", self, "switch_turn")
+		i.connect("died", self, "game_set")
+#	p1.connect("turn_ended", self, "switch_turn")
+#	p2.connect("turn_ended", self, "switch_turn")
 	###
 	# For now, the initiative order will be by player number.
 	# It'll be shuffled later on in the roll_initiative function.
 	###
-	initiative_order.append(player_instance_a)
-	initiative_order.append(player_instance_b)
 	pass
 
 func _input(event):
@@ -120,6 +129,13 @@ func current_player():
 func get_initiative_order():
 	return initiative_order
 
+func game_set():
+	
+	print("ended!!!")
+	emit_signal("game_set")
+	var time_in_seconds = 3
+	yield(get_tree().create_timer(time_in_seconds), "timeout")
+	get_tree().change_scene("res://Scenes/VictoryScreen.tscn")
 ###
 # To catch Broadcaster to Subscriber messages. Called by child Subscriber.
 # @param message is the received message from child Subscriber
