@@ -8,9 +8,11 @@
 extends Node2D
 
 var broadcaster #Broadcaster object with which it will establish a communication
-
+export var testing : bool
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	if testing:
+		return
 	broadcaster = get_node("/root/Board/GameManager/Broadcaster")
 	broadcaster.add_subscriber(self) #adds itself as a listener
 	pass # Replace with function body.
@@ -36,6 +38,9 @@ func notify(message):
 func send_message(message):
 	broadcaster.broadcast_message(message)
 	pass
+
+func remove():
+	broadcaster.remove_subscriber(self)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass

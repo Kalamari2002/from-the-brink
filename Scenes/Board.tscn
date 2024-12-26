@@ -34,4 +34,4 @@ margin_bottom = 596.0
 [node name="UI" parent="Control" instance=ExtResource( 7 )]
 
 [node name="Quadrants" parent="." instance=ExtResource( 4 )]
-position = Vector2( 328, 166 )
+position = Vector2( 506, 227 )

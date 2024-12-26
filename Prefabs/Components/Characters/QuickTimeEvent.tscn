@@ -1,0 +1,265 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Prefabs/Components/Characters/QuickTimeEvent.gd" type="Script" id=1]
+[ext_resource path="res://Prefabs/Components/QuickTimeLayer.gd" type="Script" id=2]
+[ext_resource path="res://Fonts/DUNGRG__.TTF" type="DynamicFontData" id=3]
+[ext_resource path="res://Prefabs/Subscriber.tscn" type="PackedScene" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 38
+font_data = ExtResource( 3 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "flash_red"
+tracks/0/type = "value"
+tracks/0/path = NodePath("participant1:custom_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ Color( 0.74902, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "flash_red"
+tracks/0/type = "value"
+tracks/0/path = NodePath("participant2:custom_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ Color( 0.74902, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "draw"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("QuickTimeLayer/MarginContainer/P1Container/participant1:custom_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.388235, 0.0156863, 0.0156863, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("QuickTimeLayer/MarginContainer/P2Container/participant2:custom_colors/font_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.388235, 0.0156863, 0.0156863, 1 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 1.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "exit"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("QuickTimeLayer:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "left_wins"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("QuickTimeLayer/MarginContainer/P1Container/participant1:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "Winner!" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("QuickTimeLayer/MarginContainer/P1Container/participant1:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true, false, true, false, true, false, true ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 1.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "exit"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("QuickTimeLayer:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "right_wins"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("QuickTimeLayer/MarginContainer/P2Container/participant2:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "Winner!" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("QuickTimeLayer/MarginContainer/P2Container/participant2:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true, false, true, false, true, false, true ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 1.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "exit"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("QuickTimeLayer:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[node name="QuickTimeEvent" type="Node2D"]
+script = ExtResource( 1 )
+input_count = 6
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 6.0
+one_shot = true
+
+[node name="QuickTimeLayer" type="CanvasLayer" parent="."]
+script = ExtResource( 2 )
+
+[node name="MarginContainer" type="MarginContainer" parent="QuickTimeLayer"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_top = -100.0
+margin_bottom = 100.0
+
+[node name="Panel" type="Panel" parent="QuickTimeLayer/MarginContainer"]
+margin_right = 1024.0
+margin_bottom = 200.0
+
+[node name="P1Container" type="MarginContainer" parent="QuickTimeLayer/MarginContainer"]
+margin_right = 1024.0
+margin_bottom = 200.0
+
+[node name="participant1" type="Label" parent="QuickTimeLayer/MarginContainer/P1Container"]
+margin_top = 76.0
+margin_right = 1024.0
+margin_bottom = 123.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "Winner!"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="QuickTimeLayer/MarginContainer/P1Container"]
+anims/flash_red = SubResource( 2 )
+
+[node name="P2Container" type="MarginContainer" parent="QuickTimeLayer/MarginContainer"]
+margin_right = 1024.0
+margin_bottom = 200.0
+custom_constants/margin_left = 512
+
+[node name="participant2" type="Label" parent="QuickTimeLayer/MarginContainer/P2Container"]
+margin_left = 512.0
+margin_top = 76.0
+margin_right = 1024.0
+margin_bottom = 123.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "Winner!"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="QuickTimeLayer/MarginContainer/P2Container"]
+anims/flash_red = SubResource( 3 )
+
+[node name="Subscriber" parent="." instance=ExtResource( 4 )]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/draw = SubResource( 6 )
+anims/left_wins = SubResource( 4 )
+anims/right_wins = SubResource( 5 )
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

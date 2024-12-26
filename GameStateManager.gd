@@ -14,7 +14,7 @@ var round_count = 0 # The round number, is incremented at the top of the round
 var skip_intro = false # If set true, the intro lines are skipped 
 
 var player_count = 2 # Numbers of players playing
-
+var game_over = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	instantiate_players()
@@ -130,7 +130,9 @@ func get_initiative_order():
 	return initiative_order
 
 func game_set():
-	
+	if game_over:
+		return
+	game_over = true
 	print("ended!!!")
 	emit_signal("game_set")
 	var time_in_seconds = 3

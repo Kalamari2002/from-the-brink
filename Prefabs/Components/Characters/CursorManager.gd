@@ -7,6 +7,7 @@ extends Node2D
 
 signal quadrant_effect(effect,value)
 
+var active = false
 var curr_pos
 var adversary_column_path
 var adversary_column
@@ -17,12 +18,16 @@ func _ready():
 	pass # Replace with function body.
 
 func enable_cursor():
+	active = true
 	adversary_column.set_cursor(-1,curr_pos)
 
 func disable_cursor():
+	active = false
 	adversary_column.clear_cursor()
 	
 func step(dir):
+	if !active:
+		return
 	var destination = dir + curr_pos
 	if adversary_column.step_cursor(curr_pos, destination):
 		curr_pos = destination

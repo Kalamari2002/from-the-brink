@@ -46,6 +46,9 @@ func damage_characters(dmg):
 func get_character_count():
 	return len(held_characters)
 
+func get_held_characters():
+	return held_characters
+
 ###
 # Self explanatory
 # @return hur dur

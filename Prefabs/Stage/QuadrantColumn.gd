@@ -52,6 +52,13 @@ func attack_quadrants(dmg):
 		if q.is_selected():
 			q.damage_characters(dmg)
 
+func get_characters():
+	var chars = []
+	for q in quadrants:
+		for c in q.get_held_characters():
+			chars.append(c)
+	return chars
+
 func clear_cursor():
 	for i in quadrants:
 		i.unselect()
