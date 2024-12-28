@@ -85,12 +85,4 @@ script = ExtResource( 10 )
 shape = SubResource( 2 )
 
 [connection signal="health_depleted" from="HealthManager" to="." method="_on_HealthManager_health_depleted"]
-[connection signal="end_insta_atk" from="OptionSelector/InstaAtk" to="." method="_on_InstaAtk_end_insta_atk"]
-[connection signal="end_insta_atk" from="OptionSelector/InstaAtk" to="PositionManager" method="_on_InstaAtk_end_insta_atk"]
-[connection signal="start_insta_atk" from="OptionSelector/InstaAtk" to="." method="_on_InstaAtk_start_insta_atk"]
-[connection signal="start_insta_atk" from="OptionSelector/InstaAtk" to="PositionManager" method="_on_InstaAtk_start_insta_atk"]
-[connection signal="end_volley" from="OptionSelector/ProjectileVolley" to="." method="_on_ProjectileVolley_end_volley"]
-[connection signal="start_volley" from="OptionSelector/ProjectileVolley" to="." method="_on_ProjectileVolley_start_volley"]
 [connection signal="timeout" from="OptionSelector/ProjectileVolley/Duration" to="OptionSelector/ProjectileVolley" method="_on_Duration_timeout"]
-[connection signal="end_qt_challenge" from="OptionSelector/QuickTimeEventChallenge" to="." method="_on_QuickTimeEventChallenge_end_qt_challenge"]
-[connection signal="start_qt_challenge" from="OptionSelector/QuickTimeEventChallenge" to="." method="_on_QuickTimeEventChallenge_start_qt_challenge"]

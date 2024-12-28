@@ -1,22 +1,21 @@
+###
+# A character orchestrates all its components together. Its main purpose is take inputs and react to
+# GameStateManager queues.
+###
 extends Node2D
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-signal turn_ended
-signal died
+signal turn_ended		# Signal is taken by GameStateManager to switch turns or end the game
+signal died				# Signaled when character dies
 
 enum GameState {WAITING, SELECTING, ATTACKING, ENDING, DEAD} # Determines what kinds of actions the player can take
-var curr_state # current game state of the player
+var curr_state			# current game state of the character
 
-var id
+var id		# Unique id assigned by the GameStateManager
 
 var position_manager
 var cursor_manager
 var health_manager
-var optionse_selector
+var options_selector
 var control_scheme
 
 # Called when the node enters the scene tree for the first time.
@@ -24,17 +23,17 @@ func _ready():
 	position_manager = get_node("PositionManager")
 	cursor_manager = get_node("CursorManager")
 	health_manager = get_node("HealthManager")
-	optionse_selector = get_node("OptionSelector")
+	options_selector = get_node("OptionSelector")
 	control_scheme = get_node("ControlScheme")
 	
 	curr_state = GameState.WAITING # Starts waiting, can't select actions but can move around
 	
-	if id % 2 == 0:
+	if id % 2 == 0:	# If even will stand on the right
 		position_manager.set_home_column("/root/Board/Quadrants/right")
 		cursor_manager.set_adversary_column("/root/Board/Quadrants/left")
 		control_scheme.set_scheme("p2_move_up","p2_move_down","p2_confirm","p2_special")
 		
-	else:
+	else:			# If odd will stand on the left
 		position_manager.set_home_column("/root/Board/Quadrants/left")
 		cursor_manager.set_adversary_column("/root/Board/Quadrants/right")
 		control_scheme.set_scheme("p1_move_up","p1_move_down","p1_confirm","p1_special")
@@ -45,26 +44,35 @@ func _ready():
 func _input(event):
 	if curr_state == GameState.DEAD:
 		return
-	if curr_state == GameState.SELECTING:
+	if curr_state == GameState.SELECTING: # While SELECTING, character's directions will be interpreted as selecting options 
 		if event.is_action_pressed(control_scheme.confirm()):
-			optionse_selector.open()
+			options_selector.open()
 		pass
-	else:
-		if event.is_action_pressed(control_scheme.up()):
+	else: # Otherwise, if character isn't SELECTING
+		if event.is_action_pressed(control_scheme.up()): # If character can move, directions are interpreted as position changes 
 			position_manager.step(-1)
 		if event.is_action_pressed(control_scheme.down()):
 			position_manager.step(1)
 	
-	if event.is_action_pressed(control_scheme.up()):
+	if event.is_action_pressed(control_scheme.up()): # Move cursor if it's active 
 		cursor_manager.step(-1)
 	if event.is_action_pressed(control_scheme.down()):
 		cursor_manager.step(1)
 
+###
+# Lets character select their options. Called by the GameStateManager
+###
 func start_turn():
+	if curr_state == GameState.DEAD:
+		return
 	curr_state = GameState.SELECTING
 	print(String(get_path()) + " is selecting their action")
 	pass
 
+###
+# Sets character to WAITING and stops them from selecting options. Stalls for 2 seconds
+# before passing the turn to another player. Called by the GameStateManager.
+###
 func end_turn():
 	curr_state = GameState.ENDING
 	var time_in_seconds = 2
@@ -72,54 +80,42 @@ func end_turn():
 	curr_state = GameState.WAITING
 	emit_signal("turn_ended")
 	print(String(get_path()) + " has ended their turn")
-	#subscriber.send_message("end_turn_" + String(player_id))
 	pass
 
+###
+# Sets game state to attacking. This is called on signals by attack options.
+###
 func start_atking():
 	curr_state = GameState.ATTACKING
 
+###
+# Tells health manager to decrease health by x amount.
+# @param dmg amount of health damaged
+###
 func take_dmg(dmg):
 	health_manager.change_health(-dmg)
 
+###
+# Changes game state to dead. Called by health manager signal.
+###
 func die():
 	if curr_state == GameState.DEAD:
 		return
 	curr_state = GameState.DEAD
-	emit_signal("died")
+	emit_signal("died") # Lets other objects know that this character is dead
 
+###
+# Called by GameStateManager at the start of the game. Determines the id of this character.
+###
 func assign_id(id):
 	self.id = id
 
+###
+# @return id of the character
+###
 func get_id():
 	return id
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
-func _on_InstaAtk_end_insta_atk():
-	end_turn()
-	pass # Replace with function body.
-
-func _on_InstaAtk_start_insta_atk():
-	start_atking()
-	pass # Replace with function body.
 
 func _on_HealthManager_health_depleted():
 	die()
-	pass # Replace with function body.
-
-func _on_ProjectileVolley_start_volley():
-	start_atking()
-	pass # Replace with function body.
-
-func _on_ProjectileVolley_end_volley():
-	end_turn()
-	pass # Replace with function body.
-
-func _on_QuickTimeEventChallenge_start_qt_challenge():
-	start_atking()
-	pass # Replace with function body.
-
-func _on_QuickTimeEventChallenge_end_qt_challenge():
-	end_turn()
 	pass # Replace with function body.

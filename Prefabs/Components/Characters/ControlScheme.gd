@@ -1,20 +1,15 @@
+###
+# Records the control scheme/input map of a player.
+###
 extends Node2D
 
+var scheme = {} # The inputs and their corresponding action labels
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-var scheme = {}
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
+###
+# Takes action labels and maps them to inputs.
+###
 func set_scheme(up,down,confirm,special):
-	#scheme = {"up": up, "down": down, "confirm": confirm, "special" : special}
 	scheme = {"up": up, "down": down, "confirm": confirm, "special" : special}
-	print(InputMap.get_action_list(up)[0].scancode)
-	pass
 
 func vaxis():
 	var vertical = Input.get_action_strength(scheme["up"]) - Input.get_action_strength(scheme["down"])
