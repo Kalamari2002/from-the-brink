@@ -6,6 +6,7 @@
 [ext_resource path="res://Prefabs/Stage/QuadrantColumn.gd" type="Script" id=4]
 
 [node name="Quadrants" type="Node2D"]
+scale = Vector2( 3, 3 )
 
 [node name="QuadrantManager" type="Node2D" parent="."]
 script = ExtResource( 3 )
