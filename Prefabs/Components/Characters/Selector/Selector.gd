@@ -1,62 +1,159 @@
+###
+# A selector picks and displays a character's options. To add options to a character,
+# add a child 2D Node and name it "Options", and just add whatever options you need as
+# a child of "Options". Each child node will be displayed as a selectable option in the
+# selection menu (Display), which the player can navigate.
+###
+
 extends Node2D
 
+signal opened_selector		# Whenever this selector is activated, signal this
+signal option_picked		# Whenever an option is picked, signal this
+signal go_back				# For subselectors, gives control back to the previous menu/selector
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+var options = []			# All selectable options in the selector
+var selected_idx			# The currently selected option 
+var display					# Ref to the Display child
 
-var options = []
-var selected_idx
-var display
+# Dummy options are used to hide the top or bottom options when the player reaches any end of the list
 var dummy_option = preload("res://Prefabs/Components/Characters/Options/DummyOption.tscn")
 
-# Called when the node enters the scene tree for the first time.
+var active = false			# Determines if this selector can be currently navigated/selected from
+var flipped = false			# True if this menu belongs to a player on the right column
+
+var character				# Ref to the character that owns this menu
+var offset = Vector2(48,-60)			# unflipped offset from character's position
+var flip_offset = Vector2(-216,-60)		# flipped offset from character's position
+
+###
+# Actions passed by the character to navigate the options menu
+###
+var up_controls
+var down_controls
+var confirm_controls
+var special_controls
+
 func _ready():
+	print("Base")
+	#active = true
 	display = get_node("Display")
+	character = get_parent()
+	
 	for c in get_node("Options").get_children():
 		options.append(c)
 	
-	selected_idx = int( len(options)/2 )
-	display.create_cards()
-	#print(selected_idx)
-	pass # Replace with function body.
+	selected_idx = int( len(options)/2 ) # Starting option is the middle one
+	create_cards()
+	pass
 
 func _input(event):
-	if event.is_action_pressed("p1_move_up"):
+	if !active:
+		return
+	if event.is_action_pressed(up_controls):
 		switch_selected(-1)
-	elif event.is_action_pressed("p1_move_down"):
+	elif event.is_action_pressed(down_controls):
 		switch_selected(1)
+	
+	if event.is_action_pressed(confirm_controls):
+		options[selected_idx].activate()
 
+###
+# Called by the character that owns this menu. It sets which actions
+# are up, down, confirm and special to navigate this menu.
+# @param up action
+# @param down action
+# @param confirm action
+# @param special action
+###
+func define_control_scheme(up,down,confirm,special):
+	up_controls = up
+	down_controls = down
+	confirm_controls = confirm
+	special_controls = special
+
+###
+# Positions itself and tells the display to create one card for each option
+# in the menu.
+###
+func create_cards():
+	position = offset
+	display.create_cards()
+
+###
+# Called by the character after creating the cards if they are in the right column. 
+# This overwrites the offset to be the flipped offset and tells the display to flip the cards.
+###
+func flip_cards():
+	position = flip_offset
+	flipped = true
+	display.flip()
+###
+# Lets the player navigate and pick from this selector
+###
+func activate():
+	active = true
+	display.visible = true
+	emit_signal("opened_selector")
+	
+func deactivate():
+	active = false
+###
+# Hides the menu and prevents the player from interacting with this selector.
+###
+func close():
+	deactivate()
+	display.visible = false
+	emit_signal("option_picked")
+
+###
+# Goes up or down the option list. Update the menu/display with the new 
+# selected option at the center, and neighbors on top/bottom.
+# @param dir -1 = up, +1 = down
+###
 func switch_selected(dir):
 	if selected_idx + dir >= 0 and selected_idx + dir < len(options):
 		selected_idx += dir
 		display.update_cards()
 
+###
+# @return the currently selected option
+###
 func curr_selected():
 	return options[selected_idx]
 
+###
+# @return flipped
+###
+func is_flipped():
+	return flipped
+
+###
+# @return the actions corresponding to the player's controls as a list of strings.
+###
+func get_control_scheme():
+	return [up_controls,down_controls,confirm_controls,special_controls]
+
+###
+# Creates a list of three elements [top neighbor, currently selected option, bottom neighbor]
+# and returns it. If there are no bottom or top neighbors, add a "dummy" option instead to
+# the list.
+# @return a list of 3 options
+###
 func on_display():
 	var to_display = []
 	
-	if selected_idx > 0:
-		print("prev")
+	if selected_idx > 0: # add top neighbor if there is one
 		to_display.append(options[selected_idx - 1])
-	elif selected_idx == 0:
+	elif selected_idx == 0: # otherwise add a dummy
 		var new_dummy = dummy_option.instance()
 		to_display.append(new_dummy)
 	
-	to_display.append(options[selected_idx])
-	print("curr")
+	to_display.append(options[selected_idx]) # add the currently selected option
 	
-	if selected_idx < len(options) - 1:
+	if selected_idx < len(options) - 1: # add bottom neighbor if there is one
 		to_display.append(options[selected_idx + 1])
-		print("next")
-	if selected_idx == len(options) - 1:
+	if selected_idx == len(options) - 1: # otherwise add a dummy
 		var new_dummy = dummy_option.instance()
 		to_display.append(new_dummy)
-	print(len(to_display))
+		
 	return to_display
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass

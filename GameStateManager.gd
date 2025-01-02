@@ -26,25 +26,12 @@ func _ready():
 # adding them to the initiative_order
 ###
 func instantiate_players():
-	#var temp_player = preload("res://Prefabs/Player.tscn")
-	
-#	var player_instance_a = temp_player.instance()
-#	player_instance_a.set_name("Player1")
-#	player_instance_a.initialize(1, "res://Sprites/Characters/Players/Sothro.png") # setting player1 data
-#
-#	var player_instance_b = temp_player.instance()
-#	player_instance_b.set_name("Player2")
-#	player_instance_b.initialize(2, "res://Sprites/Characters/Players/Poko.png") # setting player2 data
-#	get_node("/root/Board").call_deferred("add_child",player_instance_a)
-#	get_node("/root/Board").call_deferred("add_child",player_instance_b)
-#	initiative_order.append(player_instance_a)
-#	initiative_order.append(player_instance_b)
 	var temp_player = preload("res://Prefabs/Components/Characters/Character.tscn")
 	var temp_player1 = preload("res://Prefabs/PCs/Aspen/Aspen.tscn")
 	var p1 = temp_player1.instance()
 	p1.set_name("Player1")
 	p1.assign_id(1)
-	var p2 = temp_player.instance()
+	var p2 = temp_player1.instance()
 	p2.set_name("Player2")
 	p2.assign_id(2)
 	get_node("/root/Board").call_deferred("add_child",p1)

@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Prefabs/Components/Characters/Selector/Display.gd" type="Script" id=1]
+[ext_resource path="res://Prefabs/Components/Characters/Selector/SubSelector.gd" type="Script" id=2]
+
+[node name="SubSelector" type="Node2D"]
+script = ExtResource( 2 )
+option_name = "Items"
+
+[node name="Display" type="Control" parent="."]
+visible = false
+margin_bottom = 40.0
+rect_scale = Vector2( 0.6, 0.6 )
+script = ExtResource( 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Display"]
+margin_right = 40.0
+margin_bottom = 40.0
+custom_constants/separation = 68
