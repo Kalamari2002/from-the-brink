@@ -137,14 +137,14 @@ func end_quicktime():
 	
 	for p in participants: # determine the success of each participants, clear the remaining inputs
 		p.determine_success(p.is_finished())
-		p.clear_inputs()
-
+	
 	if participants[0].get_has_succeeded():
 		animation_player.play("left_wins")
 	elif participants[1].get_has_succeeded():
 		animation_player.play("right_wins")
 	else:
 		animation_player.play("draw")
+
 ###
 # This function actually ends the quick time after the results are determined at end_quicktime(). 
 # This is where we determine if the caller won or not. Called by animator.

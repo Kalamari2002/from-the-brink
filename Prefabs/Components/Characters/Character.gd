@@ -4,6 +4,7 @@
 ###
 extends Node2D
 
+signal turn_started
 signal turn_ended		# Signal is taken by GameStateManager to switch turns or end the game
 signal died				# Signaled when character dies
 signal id_assigned
@@ -16,7 +17,6 @@ var id		# Unique id assigned by the GameStateManager
 var position_manager
 var cursor_manager
 var health_manager
-var options_selector
 var selector
 var control_scheme
 
@@ -25,7 +25,6 @@ func _ready():
 	position_manager = get_node("PositionManager")
 	cursor_manager = get_node("CursorManager")
 	health_manager = get_node("HealthManager")
-	options_selector = get_node("OptionSelector")
 	selector = get_node("Selector")
 	control_scheme = get_node("ControlScheme")
 	
@@ -70,6 +69,7 @@ func start_turn():
 		return
 	curr_state = GameState.SELECTING
 	selector.activate()
+	emit_signal("turn_started")
 	print(String(get_path()) + " is selecting their action")
 	pass
 

@@ -39,7 +39,11 @@ func damage_characters(dmg):
 	for c in held_characters:
 		c.take_dmg(dmg)
 
-	###
+func apply_effect(effect, arg):
+	for c in held_characters:
+		c.get_node("EffectManager").apply_effect(effect,arg)
+
+###
 # Returns how many characters are standing in this quadrant.
 # @return character count
 ###

@@ -52,6 +52,11 @@ func attack_quadrants(dmg):
 		if q.is_selected():
 			q.damage_characters(dmg)
 
+func affect_quadrants(effect, arg):
+	for q in quadrants:
+		if q.is_selected():
+			q.apply_effect(effect,arg)
+
 func get_characters():
 	var chars = []
 	for q in quadrants:

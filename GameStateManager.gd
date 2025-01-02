@@ -6,6 +6,8 @@
 extends Node2D
 
 signal game_set
+signal top_of_the_round
+signal passed_turn
 
 var initiative_order = [] # A list of players, ordered by turn from first to last
 var initiative_idx = 0 # Keeps track of which player in the initiative_order is going currently
@@ -14,6 +16,7 @@ var round_count = 0 # The round number, is incremented at the top of the round
 var skip_intro = false # If set true, the intro lines are skipped 
 
 var player_count = 2 # Numbers of players playing
+var curr_player
 var game_over = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -28,10 +31,10 @@ func _ready():
 func instantiate_players():
 	var temp_player = preload("res://Prefabs/Components/Characters/Character.tscn")
 	var temp_player1 = preload("res://Prefabs/PCs/Aspen/Aspen.tscn")
-	var p1 = temp_player1.instance()
+	var p1 = temp_player.instance()
 	p1.set_name("Player1")
 	p1.assign_id(1)
-	var p2 = temp_player1.instance()
+	var p2 = temp_player.instance()
 	p2.set_name("Player2")
 	p2.assign_id(2)
 	get_node("/root/Board").call_deferred("add_child",p1)
@@ -42,12 +45,6 @@ func instantiate_players():
 	for i in initiative_order:
 		i.connect("turn_ended", self, "switch_turn")
 		i.connect("died", self, "game_set")
-#	p1.connect("turn_ended", self, "switch_turn")
-#	p2.connect("turn_ended", self, "switch_turn")
-	###
-	# For now, the initiative order will be by player number.
-	# It'll be shuffled later on in the roll_initiative function.
-	###
 	pass
 
 func _input(event):
@@ -83,6 +80,7 @@ func roll_initiative():
 ###
 func top_of_the_round():
 	round_count += 1
+	emit_signal("top_of_the_round")
 	print("\nTop of the round: ", round_count)
 	pass_control_to_player(current_player())
 	pass
@@ -100,6 +98,7 @@ func switch_turn():
 	else: # Reached last player, top_of_the_round
 		initiative_idx = 0
 		top_of_the_round()
+	emit_signal("passed_turn")
 	pass
 
 ###
@@ -116,6 +115,9 @@ func pass_control_to_player(player):
 func current_player():
 	return initiative_order[initiative_idx]
 
+func get_round_count():
+	return round_count
+
 func get_initiative_order():
 	return initiative_order
 
@@ -125,9 +127,7 @@ func game_set():
 	game_over = true
 	print("ended!!!")
 	emit_signal("game_set")
-	#var time_in_seconds = 3
-	#yield(get_tree().create_timer(time_in_seconds), "timeout")
-	#get_tree().change_scene("res://Scenes/VictoryScreen.tscn")
+	
 ###
 # To catch Broadcaster to Subscriber messages. Called by child Subscriber.
 # @param message is the received message from child Subscriber

@@ -1,31 +1,16 @@
-###
-# A base for quicktime event contests. It creates a quick time event and determines which side is the 
-# caller (atker) at. If caller side wins the contest, an effect is applied to the target. If not, 
-# nothing happens. Deletes the quicktime event object afterwards. 
-###
-
-extends Node2D
-
-signal start_qt_challenge		# attack on activation signal
-signal end_qt_challenge			# attack on deactivation signal
-var active = false				# determines if current option is active
+extends "res://Prefabs/Components/Characters/OptionBase.gd"
 
 var control_scheme
 var cursor_manager
 var position_manager
 
-var character			# Reference for the character calling this attack
 var target				# character to whom the effects will be applied if caller wins the contest
 
 var quicktimeevent = preload("res://Prefabs/Components/Characters/QuickTimeEvent.tscn")
 var quicktimeobject # used to reference the created quicktime event, deletes it l8r
 
+# Called when the node enters the scene tree for the first time.
 func _ready():
-	character = get_parent().get_parent().get_parent()
-	
-	connect("start_qt_challenge", character, "start_atking") # lets caller know when this attack has started
-	connect("end_qt_challenge", character,"end_turn") # lets caller know when this attack is over
-	
 	control_scheme = character.get_node("ControlScheme")
 	cursor_manager = character.get_node("CursorManager")
 	position_manager = character.get_node("PositionManager")
@@ -36,10 +21,16 @@ func _ready():
 # picks the target of the attack and initializes a quick time event
 ###
 func activate():
-	active = true
-	emit_signal("start_qt_challenge")
+	.activate()
 	determine_target()
 	initialize_event()
+###
+# Picks the target of the qt atk. It just gets the first character in the opposite column.
+# If more players are added this is gonna have to be changed.
+###
+func determine_target():
+	target = cursor_manager.get_adversary_column().get_characters()[0]
+	print("Target: " + target.get_path())
 
 ###
 # Creates a quick time event. It sets which side the attacker/caller is at and starts the qt event.
@@ -59,13 +50,6 @@ func initialize_event():
 	pass
 
 ###
-# Picks the target of the qt atk. It just gets the first character in the opposite column.
-# If more players are added this is gonna have to be changed.
-###
-func determine_target():
-	target = cursor_manager.get_adversary_column().get_characters()[0]
-
-###
 # Called when this object receives the quicktimeevent object's signal that the event is over.
 # If the caller was the winner of the contest, we apply an effect on the target. Deletes the
 # quicktime object and deactivates the atk.
@@ -73,6 +57,7 @@ func determine_target():
 func check_result():
 	if quicktimeobject.get_has_caller_won():
 		apply_effect()
+		print("Caller won")
 	
 	quicktimeobject.queue_free()
 	deactivate()
@@ -83,9 +68,3 @@ func check_result():
 func apply_effect():
 	target.take_dmg(40)
 
-###
-# Called to stop the atk. Sends signal to caller character that the attack is over.
-###
-func deactivate():
-	active = false
-	emit_signal("end_qt_challenge")

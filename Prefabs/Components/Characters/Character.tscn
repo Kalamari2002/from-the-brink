@@ -6,13 +6,13 @@
 [ext_resource path="res://Prefabs/PositionManager.gd" type="Script" id=4]
 [ext_resource path="res://Prefabs/Components/Characters/Character.gd" type="Script" id=5]
 [ext_resource path="res://Prefabs/Components/Characters/CursorManager.gd" type="Script" id=6]
-[ext_resource path="res://Prefabs/Components/Characters/InstaAtk.gd" type="Script" id=7]
-[ext_resource path="res://Prefabs/Components/Characters/OptionSelector.gd" type="Script" id=8]
-[ext_resource path="res://Prefabs/Components/Characters/ProjectileVolley.gd" type="Script" id=9]
+[ext_resource path="res://Prefabs/Abilities/InstaEffectBase.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Prefabs/Abilities/QuickTimeAtkBase.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Prefabs/Abilities/VolleyBase.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Prefabs/Components/Characters/ControlScheme.gd" type="Script" id=10]
-[ext_resource path="res://Prefabs/Components/Characters/QuickTimeEventChallenge.gd" type="Script" id=11]
 [ext_resource path="res://Prefabs/Subscriber.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Prefabs/Components/Characters/Selector/Selector.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Prefabs/Components/Characters/EffectManager.gd" type="Script" id=14]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Flash_Red"
@@ -51,42 +51,35 @@ script = ExtResource( 4 )
 [node name="CursorManager" type="Node2D" parent="."]
 script = ExtResource( 6 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Flash_Red = SubResource( 1 )
-
 [node name="AnimationManager" type="Node2D" parent="."]
 script = ExtResource( 3 )
 hit_animation = "Flash_Red"
 
-[node name="OptionSelector" type="Node2D" parent="."]
-script = ExtResource( 8 )
-
-[node name="InstaAtk" type="Node2D" parent="OptionSelector"]
-script = ExtResource( 7 )
-
-[node name="ProjectileVolley" type="Node2D" parent="OptionSelector"]
-script = ExtResource( 9 )
-
-[node name="Duration" type="Timer" parent="OptionSelector/ProjectileVolley"]
-wait_time = 5.0
-one_shot = true
-
-[node name="FireRate" type="Timer" parent="OptionSelector/ProjectileVolley"]
-wait_time = 0.3
-one_shot = true
-
-[node name="QuickTimeEventChallenge" type="Node2D" parent="OptionSelector"]
-script = ExtResource( 11 )
-
 [node name="ControlScheme" type="Node2D" parent="."]
 script = ExtResource( 10 )
+
+[node name="Selector" parent="." instance=ExtResource( 13 )]
+
+[node name="Options" type="Node2D" parent="Selector"]
+
+[node name="QuickTimeAtkBase" parent="Selector/Options" instance=ExtResource( 8 )]
+option_name = "Save"
+
+[node name="InstaEffectBase" parent="Selector/Options" instance=ExtResource( 7 )]
+option_name = "Melee"
+
+[node name="VolleyBase" parent="Selector/Options" instance=ExtResource( 9 )]
+option_name = "Fireball"
+
+[node name="EffectManager" type="Node2D" parent="."]
+script = ExtResource( 14 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Flash_Red = SubResource( 1 )
 
 [node name="Area2D" type="Area2D" parent="." groups=["characters"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource( 2 )
 
-[node name="Selector" parent="." instance=ExtResource( 13 )]
-
 [connection signal="health_depleted" from="HealthManager" to="." method="_on_HealthManager_health_depleted"]
-[connection signal="timeout" from="OptionSelector/ProjectileVolley/Duration" to="OptionSelector/ProjectileVolley" method="_on_Duration_timeout"]

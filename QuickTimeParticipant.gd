@@ -91,6 +91,9 @@ func get_id():
 func is_finished():
 	return (len(queue) == 0)
 
+func queue_len():
+	return len(queue)
+
 func get_has_succeeded():
 	return has_succeeded
 
