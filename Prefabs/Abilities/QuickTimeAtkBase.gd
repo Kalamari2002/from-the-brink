@@ -66,5 +66,5 @@ func check_result():
 # Effect applied to target
 ###
 func apply_effect():
-	target.take_dmg(40)
+	target.get_node("EffectManager").apply_effect("damage",40)
 

@@ -30,13 +30,17 @@ func _ready():
 ###
 func instantiate_players():
 	var temp_player = preload("res://Prefabs/Components/Characters/Character.tscn")
-	var temp_player1 = preload("res://Prefabs/PCs/Aspen/Aspen.tscn")
+	var aspen = preload("res://Prefabs/PCs/Aspen/Aspen.tscn")
+	var dummy = preload("res://Prefabs/NPCs/TrainingDummy.tscn")
+
 	var p1 = temp_player.instance()
 	p1.set_name("Player1")
 	p1.assign_id(1)
-	var p2 = temp_player.instance()
+	
+	var p2 = dummy.instance()
 	p2.set_name("Player2")
 	p2.assign_id(2)
+	
 	get_node("/root/Board").call_deferred("add_child",p1)
 	get_node("/root/Board").call_deferred("add_child",p2)
 	initiative_order.append(p1)

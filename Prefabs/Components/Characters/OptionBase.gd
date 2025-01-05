@@ -15,12 +15,14 @@ var active			# Determines if this option can act or not
 var parent_selector
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	character = get_parent().get_parent().get_parent()
+	character = self.owner
 	parent_selector = get_parent().get_parent()
 	connect("start_atk", parent_selector, "close")
 	
 	connect("start_atk", character, "start_atking") # Wanna let the caller know when this atk has started
 	connect("end_atk", character,"end_turn") # Wanna let the caller know when it's over
+	
+	add_to_group("abilities")
 	
 	active = false
 	pass # Replace with function body.

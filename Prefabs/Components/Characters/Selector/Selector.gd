@@ -33,6 +33,7 @@ var down_controls
 var confirm_controls
 var special_controls
 
+var abilities = []
 func _ready():
 	print("Base")
 	#active = true
@@ -132,6 +133,34 @@ func is_flipped():
 ###
 func get_control_scheme():
 	return [up_controls,down_controls,confirm_controls,special_controls]
+
+###
+# Returns all the selectable abilities of a character, useful for CPU
+# scripts. It clears the abilities array (in case the old list of abilities 
+# has been outdated) and calls a helper function to fill it up.
+# @return an array of all selectable abilities of a character.
+###
+func get_abilities():
+	abilities.clear()
+	traverse_options(self,abilities)
+	return abilities
+###
+# Helper function for get_abilities. Recursively traverses through the selection
+# tree and appends everything that belongs to the abilities group.
+# @param curr is the current node we're exploring
+# @param options is the array to which we'll append all abilities
+###
+func traverse_options(curr,options):
+	if "abilities" in curr.get_groups(): # base case means the current node is a selectable ability
+		options.append(curr)
+		return # stops us from exploring the ability's children (which aren't selectable)
+	
+	###
+	# If we get to this point, this must be a selector, not an ability. So we traverse
+	# its abilities (Option node's children).
+	###
+	for c in curr.get_node("Options").get_children():
+		traverse_options(c,options)
 
 ###
 # Creates a list of three elements [top neighbor, currently selected option, bottom neighbor]
