@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://Prefabs/PositionManager.gd" type="Script" id=2]
@@ -15,7 +15,8 @@
 [ext_resource path="res://Prefabs/Components/Characters/AnimationManager.gd" type="Script" id=13]
 [ext_resource path="res://Prefabs/NPCs/DummyMovement.gd" type="Script" id=14]
 [ext_resource path="res://Prefabs/NPCs/DummyAttack.gd" type="Script" id=15]
-[ext_resource path="res://Prefabs/Components/Characters/Selector/SubSelector.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Prefabs/NPCs/RandomCursor.gd" type="Script" id=16]
+[ext_resource path="res://Prefabs/NPCs/RandomVolley.gd" type="Script" id=17]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Flash_Red"
@@ -65,14 +66,6 @@ script = ExtResource( 4 )
 
 [node name="Options" type="Node2D" parent="Selector"]
 
-[node name="SubSelector2" parent="Selector/Options" instance=ExtResource( 16 )]
-option_name = "Maple"
-
-[node name="Options" type="Node2D" parent="Selector/Options/SubSelector2"]
-
-[node name="InstaEffectBase" parent="Selector/Options/SubSelector2/Options" instance=ExtResource( 8 )]
-option_name = "Sing"
-
 [node name="QuickTimeAtkBase" parent="Selector/Options" instance=ExtResource( 7 )]
 option_name = "Save"
 
@@ -81,19 +74,6 @@ option_name = "Melee"
 
 [node name="VolleyBase" parent="Selector/Options" instance=ExtResource( 6 )]
 option_name = "Fireball"
-
-[node name="SubSelector" parent="Selector/Options" instance=ExtResource( 16 )]
-
-[node name="Options" type="Node2D" parent="Selector/Options/SubSelector"]
-
-[node name="VolleyBase" parent="Selector/Options/SubSelector/Options" instance=ExtResource( 6 )]
-option_name = "Leech"
-
-[node name="VolleyBase2" parent="Selector/Options/SubSelector/Options" instance=ExtResource( 6 )]
-option_name = "FireBolt"
-
-[node name="VolleyBase3" parent="Selector/Options/SubSelector/Options" instance=ExtResource( 6 )]
-option_name = "Kobold"
 
 [node name="EffectManager" type="Node2D" parent="."]
 script = ExtResource( 11 )
@@ -112,11 +92,30 @@ shape = SubResource( 2 )
 script = ExtResource( 14 )
 
 [node name="Timer" type="Timer" parent="Behavior/DummyMovement"]
-wait_time = 0.6
+wait_time = 0.3
 autostart = true
 
 [node name="DummyAttack" type="Node2D" parent="Behavior"]
 script = ExtResource( 15 )
 
+[node name="RandomCursor" type="Node2D" parent="Behavior/DummyAttack"]
+script = ExtResource( 16 )
+
+[node name="ToHit" type="Timer" parent="Behavior/DummyAttack/RandomCursor"]
+wait_time = 3.0
+one_shot = true
+
+[node name="ChangeQuadrant" type="Timer" parent="Behavior/DummyAttack/RandomCursor"]
+wait_time = 0.1
+
+[node name="RandomVolley" type="Node2D" parent="Behavior/DummyAttack"]
+script = ExtResource( 17 )
+
+[node name="Fire" type="Timer" parent="Behavior/DummyAttack/RandomVolley"]
+wait_time = 0.4
+
 [connection signal="health_depleted" from="HealthManager" to="." method="_on_HealthManager_health_depleted"]
 [connection signal="timeout" from="Behavior/DummyMovement/Timer" to="Behavior/DummyMovement" method="_on_Timer_timeout"]
+[connection signal="timeout" from="Behavior/DummyAttack/RandomCursor/ToHit" to="Behavior/DummyAttack/RandomCursor" method="_on_ToHit_timeout"]
+[connection signal="timeout" from="Behavior/DummyAttack/RandomCursor/ChangeQuadrant" to="Behavior/DummyAttack/RandomCursor" method="_on_ChangeQuadrant_timeout"]
+[connection signal="timeout" from="Behavior/DummyAttack/RandomVolley/Fire" to="Behavior/DummyAttack/RandomVolley" method="_on_Fire_timeout"]

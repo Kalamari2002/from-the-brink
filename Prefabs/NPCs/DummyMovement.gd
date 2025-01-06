@@ -9,7 +9,7 @@ func _ready():
 	pass # Replace with function body.
 
 func random_move():
-	if curr_state() != character.GameState.WAITING:
+	if curr_state() == character.GameState.SELECTING or curr_state() == character.GameState.DEAD:
 		return
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()

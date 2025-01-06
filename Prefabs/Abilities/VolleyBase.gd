@@ -27,8 +27,7 @@ func _input(event):
 	if !active:
 		return
 	if event.is_action_pressed(control_scheme.confirm()):
-		if fire_rate.time_left == 0: # only if the fire rate cooldown is over we can fire a projectile
-			instantiate_projectile()
+		instantiate_projectile()
 		pass
 
 ###
@@ -52,6 +51,8 @@ func deactivate():
 # fired, we start the fire rate timer and we can't shoot another one until the timer is over.
 ###
 func instantiate_projectile():
+	if fire_rate.time_left != 0 or !active:
+		return
 	var p = projectile.instance()
 	p.position = spawn_pos()
 	p.set_dir(get_dir())

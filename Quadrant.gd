@@ -9,10 +9,8 @@ export var selected_texture : String
 # @param character is the character to be added to this quadrant
 ###
 func position_character(character):
-	print("position")
 	character.position = self.global_position 
 	held_characters.append(character)
-	print("len: ", len(held_characters)) 
 
 ###
 # Removes a character from this quadrant.

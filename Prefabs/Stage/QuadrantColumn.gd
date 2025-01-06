@@ -20,7 +20,6 @@ func step_to_quadrant(from, to, character):
 		to = len(quadrants) - 1
 	if from == to:
 		return false
-	print("moved")
 	quadrants[from].remove_character(character)
 	quadrants[to].position_character(character)
 	return true
