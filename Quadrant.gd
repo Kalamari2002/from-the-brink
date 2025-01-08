@@ -1,4 +1,5 @@
 extends Node2D
+
 var selected = false # Set to true if an aim cursor is "hovering" over it (aka, being selected by a player)
 var held_characters = [] # All characters standing in this quadrant
 export var default_texture : String

@@ -15,6 +15,7 @@ func _ready():
 	dir = get_parent().get_dir()
 	if dir == -1:
 		get_parent().get_node("Sprite").flip_h = true
+		get_parent().get_node("Area2D").scale = Vector2(-1,1)
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Prefabs/Abilities/VolleyBase.tscn" type="PackedScene" id=1]
+
+[node name="ScimitarsVolley" instance=ExtResource( 1 )]
+option_name = "Scimitars"
+projectile_path = "res://Prefabs/Components/Projectiles/Scimitars.tscn"
+
+[node name="FireRate" parent="." index="1"]
+wait_time = 0.8

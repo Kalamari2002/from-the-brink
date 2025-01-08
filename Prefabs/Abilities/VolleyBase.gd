@@ -6,7 +6,8 @@ extends "res://Prefabs/Components/Characters/OptionBase.gd"
 # var b = "text"
 
 var xoffset = 64		# horizontal offset from character's pos where projectile will be spawned
-const projectile = preload("res://Prefabs/Components/Projectiles/Projectile.tscn")
+export var projectile_path : String
+var projectile
 
 var control_scheme
 var duration_timer
@@ -16,20 +17,21 @@ var fire_rate			# Timer obj that determines how fast a projectile can be spammed
 func _ready():
 	duration_timer = get_node("Duration")
 	fire_rate = get_node("FireRate")
-
+	if projectile_path == "":
+		projectile = load("res://Prefabs/Components/Projectiles/Projectile.tscn")
+	else:
+		projectile = load(projectile_path)
 	control_scheme = character.get_node("ControlScheme")
 	pass # Replace with function body.
 	
 ###
 # Doesn't take inputs if the attack isn't active.
 ###
-func _input(event):
+func _process(delta):
 	if !active:
 		return
-	if event.is_action_pressed(control_scheme.confirm()):
+	if Input.is_action_pressed(control_scheme.confirm()):
 		instantiate_projectile()
-		pass
-
 ###
 # Called by OptionSelector to initiate this attack. Starts the duration timer and sends signal that
 # the attack has started.

@@ -4,3 +4,10 @@
 
 [node name="InstaEffectBase" type="Node2D"]
 script = ExtResource( 1 )
+TOTAL_ATK_CNT = 1
+
+[node name="AtkRate" type="Timer" parent="."]
+wait_time = 0.8
+one_shot = true
+
+[connection signal="timeout" from="AtkRate" to="." method="_on_AtkRate_timeout"]

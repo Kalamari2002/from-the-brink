@@ -29,14 +29,14 @@ func _ready():
 	if id % 2 == 0:	# If even will stand on the right
 		position_manager.set_home_column("/root/Board/Quadrants/right")
 		cursor_manager.set_adversary_column("/root/Board/Quadrants/left")
-		control_scheme.set_scheme("p2_move_up","p2_move_down","p2_confirm","p2_special")
+		control_scheme.set_scheme(0)
 		selector.flip_cards()
 		selector.define_control_scheme("p2_move_up","p2_move_down","p2_confirm","p2_special")
 		
 	else:			# If odd will stand on the left
 		position_manager.set_home_column("/root/Board/Quadrants/left")
 		cursor_manager.set_adversary_column("/root/Board/Quadrants/right")
-		control_scheme.set_scheme("p1_move_up","p1_move_down","p1_confirm","p1_special")
+		control_scheme.set_scheme(0)
 		selector.define_control_scheme("p1_move_up","p1_move_down","p1_confirm","p1_special")
 		
 	pass # Replace with function body.

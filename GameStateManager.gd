@@ -33,7 +33,7 @@ func instantiate_players():
 	var aspen = preload("res://Prefabs/PCs/Aspen/Aspen.tscn")
 	var dummy = preload("res://Prefabs/NPCs/TrainingDummy.tscn")
 
-	var p1 = temp_player.instance()
+	var p1 = aspen.instance()
 	p1.set_name("Player1")
 	p1.assign_id(1)
 	

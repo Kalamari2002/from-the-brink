@@ -55,7 +55,7 @@ func _input(event):
 	elif event.is_action_pressed(down_controls):
 		switch_selected(1)
 	
-	if event.is_action_pressed(confirm_controls):
+	if event.is_action_released(confirm_controls):
 		options[selected_idx].activate()
 
 ###

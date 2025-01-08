@@ -12,8 +12,8 @@ func _ready():
 	character = self.owner
 	selector = character.get_node("Selector")
 	
-	#character.connect("turn_started", self, "pick_attack",[2])
-	character.connect("turn_started", self, "pick_random_attack")
+	character.connect("turn_started", self, "pick_attack",[2])
+	#character.connect("turn_started", self, "pick_random_attack")
 	get_abilities()
 	connect_signals()
 	pass # Replace with function body.
