@@ -13,6 +13,8 @@ var curr_pos		# an integer that represents the quadrant where the character is s
 var home_column		# reference to the column where the character is standing
 var can_move = true	# determines if the position manager can make requests to the board in the first place 
 
+var is_right
+var spawn_offset = 64
 ###
 # Moves a character an X number of quadrants up or down if the character is currently allowed to move. 
 # Step prevents characters from looping across the column.
@@ -53,6 +55,14 @@ func get_curr_pos():
 func set_home_column(path):
 	home_column = get_node(path)
 
+func set_is_right(val):
+	is_right = val
+
+func get_spawn_offset():
+	return spawn_offset
+
+func get_is_right():
+	return is_right
 ###
 # Forces the character to stand in a position. Called by the character at the beginning to determine
 # which quadrant the character will start on.

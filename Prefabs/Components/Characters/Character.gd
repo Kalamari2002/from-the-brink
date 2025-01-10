@@ -34,6 +34,7 @@ func _ready():
 	
 	if id % 2 == 0:	# If even will stand on the right
 		position_manager.set_home_column("/root/Board/Quadrants/right")
+		position_manager.set_is_right(1)
 		cursor_manager.set_adversary_column("/root/Board/Quadrants/left")
 		#control_scheme.set_scheme("p2_move_up","p2_move_down","p2_confirm","p2_special")
 		control_scheme.set_scheme(2)
@@ -43,6 +44,7 @@ func _ready():
 		
 	else:			# If odd will stand on the left
 		position_manager.set_home_column("/root/Board/Quadrants/left")
+		position_manager.set_is_right(0)
 		cursor_manager.set_adversary_column("/root/Board/Quadrants/right")
 		#control_scheme.set_scheme("p1_move_up","p1_move_down","p1_confirm","p1_special")
 		control_scheme.set_scheme(1)
@@ -51,6 +53,7 @@ func _ready():
 	pass # Replace with function body.
 	position_manager.set_pos(1)
 	emit_signal("id_assigned")
+
 func _input(event):
 	if curr_state == GameState.DEAD:
 		return
@@ -124,6 +127,9 @@ func assign_id(id):
 ###
 func get_id():
 	return id
+
+func get_curr_state():
+	return curr_state
 
 func _on_HealthManager_health_depleted():
 	die()

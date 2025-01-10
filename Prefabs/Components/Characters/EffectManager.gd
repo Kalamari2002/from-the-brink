@@ -6,7 +6,7 @@
 
 extends Node2D
 
-signal took_damage		# Certain effects are triggered with damage. We use this signal everytime the character is dmged.
+signal took_damage(dmg)		# Certain effects are triggered with damage. We use this signal everytime the character is dmged.
 signal healed			# Signaled when a character is healed
 
 var health_manager		# Ref to the character's health manager
@@ -27,7 +27,7 @@ func _ready():
 # @param arg is an int that can be used to specify any quantity associated with the effect
 ###
 func apply_effect(effect, arg):
-	print(effect + " ",arg)
+	#print(effect + " ",arg)
 	if effect == "damage":
 		take_damage(arg)
 	if effect == "greenflame":
@@ -51,9 +51,8 @@ func apply_effect(effect, arg):
 # @param dmg to be dealt
 ###
 func take_damage(dmg):
-	print("damaged from effect manager")
 	health_manager.change_health(-dmg)
-	emit_signal("took_damage")
+	emit_signal("took_damage",dmg)
 	pass
 
 ###

@@ -48,7 +48,7 @@ func reset_charge():
 	progress_bar.value = 0
 
 func shoot_projectile():
-	print(charge)
+	#print(charge)
 	if charge <= 0.3 or !active:
 		reset_charge()
 		return

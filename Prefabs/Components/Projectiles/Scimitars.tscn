@@ -68,7 +68,7 @@ shape = SubResource( 1 )
 script = ExtResource( 5 )
 
 [node name="Timer" type="Timer" parent="SelfDestroyTimer"]
-wait_time = 10.0
+wait_time = 6.0
 autostart = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

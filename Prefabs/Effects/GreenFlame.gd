@@ -5,7 +5,7 @@
 
 extends "res://Prefabs/Effects/EffectBase.gd"
 
-const DAMAGE = 7
+const MULTIPLIER = 0.5
 var health_manager
 
 
@@ -14,7 +14,8 @@ func _ready():
 	get_parent().connect("took_damage", self, "combust")
 	pass
 
-func combust():
-	health_manager.change_health(-DAMAGE)
+func combust(dmg):
+	var extra_damage = int(MULTIPLIER * dmg)
+	health_manager.change_health(-extra_damage)
 	end_effect()
 	pass

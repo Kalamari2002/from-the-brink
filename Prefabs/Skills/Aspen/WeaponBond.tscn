@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Prefabs/Components/Characters/SkillBase.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Prefabs/Skills/Aspen/WeaponBond.gd" type="Script" id=2]
+
+[node name="WeaponBond" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+projectile_path = "res://Prefabs/Components/Projectiles/Scimitars.tscn"
+
+[node name="Cooldown" parent="." index="0"]
+wait_time = 6.0
