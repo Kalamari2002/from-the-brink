@@ -37,7 +37,7 @@ func instantiate_players():
 	p1.set_name("Player1")
 	p1.assign_id(1)
 	
-	var p2 = dummy.instance()
+	var p2 = aspen.instance()
 	p2.set_name("Player2")
 	p2.assign_id(2)
 	

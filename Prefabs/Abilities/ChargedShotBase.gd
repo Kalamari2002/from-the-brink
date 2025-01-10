@@ -6,55 +6,59 @@ var projectile
 
 var control_scheme
 var duration_timer
-var fire_rate			# Timer obj that determines how fast a projectile can be spammed
+var charge = 0
 
+var progress_bar
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	duration_timer = get_node("Duration")
-	fire_rate = get_node("FireRate")
+	progress_bar = self.owner.get_node("CharacterDisplay/ChargeBar")
 	if projectile_path == "":
 		projectile = load("res://Prefabs/Components/Projectiles/Projectile.tscn")
 	else:
 		projectile = load(projectile_path)
 	control_scheme = character.get_node("ControlScheme")
 	pass # Replace with function body.
-	
-###
-# Doesn't take inputs if the attack isn't active.
-###
+
 func _process(delta):
 	if !active:
 		return
 	if Input.is_action_pressed(control_scheme.confirm()):
-		instantiate_projectile()
-###
-# Called by OptionSelector to initiate this attack. Starts the duration timer and sends signal that
-# the attack has started.
-###
+		build_charge(delta)
+		pass
+	if Input.is_action_just_released(control_scheme.confirm()):
+		shoot_projectile()
+
 func activate():
 	.activate()
 	duration_timer.start()
-	pass
+	progress_bar.visible = true
 
-###
-# Called when the duration timer times out to end the attack.
-###
 func deactivate():
-	if !active:
-		return
 	.deactivate()
-###
-# Creates a projectile at the position of the character + some xoffset. As soon as a projectile is
-# fired, we start the fire rate timer and we can't shoot another one until the timer is over.
-###
-func instantiate_projectile():
-	if fire_rate.time_left != 0 or !active:
+	charge = 0
+	progress_bar.visible = false
+
+func build_charge(delta):
+	charge = clamp(charge + delta, 0, 1)
+	progress_bar.value = charge * 10
+
+func reset_charge():
+	charge = 0
+	progress_bar.value = 0
+
+func shoot_projectile():
+	print(charge)
+	if charge <= 0.3 or !active:
+		reset_charge()
 		return
 	var p = projectile.instance()
 	p.position = spawn_pos()
 	p.set_dir(get_dir())
 	get_node("/root/Board").add_child(p)
-	fire_rate.start()
+	p.set_charge(charge)
+	reset_charge()
+	pass
 	
 ###
 # Determines if the offset should be to the left or right depending on which column the character
@@ -75,7 +79,6 @@ func get_dir():
 	if character.get_id() % 2 == 0:
 		return -1
 	return 1
-
 
 func _on_Duration_timeout():
 	deactivate()

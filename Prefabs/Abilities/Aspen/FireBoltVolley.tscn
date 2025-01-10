@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Prefabs/Abilities/VolleyBase.tscn" type="PackedScene" id=1]
+
+[node name="FireBoltVolley" instance=ExtResource( 1 )]
+option_name = "FireBolt"
+projectile_path = "res://Prefabs/Components/Projectiles/FireBolt.tscn"

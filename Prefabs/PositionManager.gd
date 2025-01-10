@@ -5,6 +5,8 @@
 
 extends Node2D
 
+signal changed_quadrants
+
 var curr_pos		# an integer that represents the quadrant where the character is standing
 					# 0 = top, 1 = mid, 2 = bottom
 
@@ -27,6 +29,7 @@ func step(dir):
 	###
 	if home_column.step_to_quadrant(curr_pos, destination, get_parent()):
 		curr_pos = destination # update the current position.
+		emit_signal("changed_quadrants")
 
 ###
 # Not implemented yet but the idea is that this is a step() function that lets characters loop

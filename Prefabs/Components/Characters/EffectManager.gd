@@ -12,6 +12,7 @@ signal healed			# Signaled when a character is healed
 var health_manager		# Ref to the character's health manager
 
 var green_flame = preload("res://Prefabs/Effects/GreenFlame.tscn")	# Green Flame effect
+const burnin = preload("res://Prefabs/Effects/Burnin.tscn")
 var hbox				# the horizontal boxed used to keep icons
 
 # Called when the node enters the scene tree for the first time.
@@ -32,6 +33,15 @@ func apply_effect(effect, arg):
 	if effect == "greenflame":
 		var new_green = green_flame.instance()
 		add_child(new_green)
+	if effect == "burnin":
+		if get_node_or_null("Burnin") == null:
+			var new_burn = burnin.instance()
+			add_child(new_burn)
+		else:
+			get_node("Burnin").reset_count()
+		pass
+	if effect == "heal":
+		heal(arg)
 	# Else add effect as a child if not already existent
 	pass
 
@@ -63,6 +73,7 @@ func remove_icon(icon):
 
 
 func heal(health):
+	health_manager.change_health(health)
 	emit_signal("healed")
 	pass
 	

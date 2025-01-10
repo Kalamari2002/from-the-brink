@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Prefabs/Abilities/ChargedShotBase.tscn" type="PackedScene" id=1]
+
+[node name="ArrowChargeShot" instance=ExtResource( 1 )]
+option_name = "Arrows"
+projectile_path = "res://Prefabs/Components/Projectiles/Arrow.tscn"

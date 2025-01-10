@@ -1,7 +1,20 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Prefabs/Components/Projectiles/ProjectileComponents/EffectOnCollisionBase.tscn" type="PackedScene" id=1]
-[ext_resource path="res://ScimitarsOnCollision.gd" type="Script" id=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends \"res://Prefabs/Components/Projectiles/ProjectileComponents/EffectOnCollisionBase.gd\"
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+func inflict_character(character):
+	.inflict_character(character)
+	character.get_node(\"EffectManager\").apply_effect(\"greenflame\", 0)
+	pass
+"
 
 [node name="ScimitarsOnCollision" instance=ExtResource( 1 )]
-script = ExtResource( 2 )
+script = SubResource( 1 )

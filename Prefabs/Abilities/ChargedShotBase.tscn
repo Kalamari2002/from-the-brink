@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Prefabs/Components/Characters/Options/OptionBase.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Prefabs/Abilities/ChargedShotBase.gd" type="Script" id=2]
+
+[node name="ChargedShotBase" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+projectile_path = ""
+
+[node name="Duration" type="Timer" parent="." index="0"]
+wait_time = 6.0
+one_shot = true
+
+[connection signal="timeout" from="Duration" to="." method="_on_Duration_timeout"]

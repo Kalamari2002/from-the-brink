@@ -19,6 +19,7 @@ var cursor_manager
 var health_manager
 var selector
 var control_scheme
+var character_display
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -27,6 +28,7 @@ func _ready():
 	health_manager = get_node("HealthManager")
 	selector = get_node("Selector")
 	control_scheme = get_node("ControlScheme")
+	character_display = get_node("CharacterDisplay")
 	
 	curr_state = GameState.WAITING # Starts waiting, can't select actions but can move around
 	
@@ -36,6 +38,7 @@ func _ready():
 		#control_scheme.set_scheme("p2_move_up","p2_move_down","p2_confirm","p2_special")
 		control_scheme.set_scheme(2)
 		selector.flip_cards()
+		character_display.flip_self()
 		selector.define_control_scheme("p2_move_up","p2_move_down","p2_confirm","p2_special")
 		
 	else:			# If odd will stand on the left

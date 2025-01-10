@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Prefabs/Effects/EffectBase.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Prefabs/Effects/Burnin.gd" type="Script" id=2]
+
+[node name="Burnin" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+init_duration = 1
+decrement_type = 1
+icon_name = "Burnin_icon"
+
+[node name="ToDamage" type="Timer" parent="." index="0"]
+wait_time = 0.8
+autostart = true
+
+[connection signal="timeout" from="ToDamage" to="." method="_on_ToDamage_timeout"]
