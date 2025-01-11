@@ -1,0 +1,890 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Prefabs/Components/UI/MeleeBar.gd" type="Script" id=1]
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 1, 1, 1, 0.196078 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 1, 1, 1, 0.196078 )
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0.172549, 0.764706, 0.752941, 0.196078 )
+border_color = Color( 0.172549, 0.764706, 0.752941, 1 )
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 0.25098, 0.513726, 0.258824, 0.196078 )
+border_color = Color( 0.25098, 0.513726, 0.258824, 1 )
+
+[sub_resource type="StyleBoxFlat" id=11]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.282353, 0.0627451, 0.0627451, 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 1, 1, 1, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.172549, 0.764706, 0.752941, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.172549, 0.764706, 0.752941, 1 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.25098, 0.513726, 0.258824, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.282353, 0.0627451, 0.0627451, 1 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "charge"
+length = 4.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Nuggets/Panel20:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Nuggets/Panel19:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 3.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Nuggets/Panel18:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.3, 3.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Nuggets/Panel17:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.4, 3.7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Nuggets/Panel16:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.5, 3.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Nuggets/Panel15:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.6, 3.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Nuggets/Panel14:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.7, 3.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Nuggets/Panel13:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.8, 3.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Nuggets/Panel12:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 0.9, 3.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Nuggets/Panel11:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 1, 3.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Nuggets/Panel10:visible")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0, 1.1, 3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Nuggets/Panel9:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0, 1.2, 2.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Nuggets/Panel8:visible")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0, 1.3, 2.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Nuggets/Panel7:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0, 1.4, 2.7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/14/type = "value"
+tracks/14/path = NodePath("Nuggets/Panel6:visible")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"times": PoolRealArray( 0, 1.5, 2.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("Nuggets/Panel5:visible")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"times": PoolRealArray( 0, 1.6, 2.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/16/type = "value"
+tracks/16/path = NodePath("Nuggets/Panel4:visible")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/keys = {
+"times": PoolRealArray( 0, 1.7, 2.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/17/type = "value"
+tracks/17/path = NodePath("Nuggets/Panel3:visible")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/keys = {
+"times": PoolRealArray( 0, 1.8, 2.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/18/type = "value"
+tracks/18/path = NodePath("Nuggets/Panel2:visible")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/keys = {
+"times": PoolRealArray( 0, 1.9, 2.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/19/type = "value"
+tracks/19/path = NodePath("Nuggets/Panel:visible")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/keys = {
+"times": PoolRealArray( 0, 2, 2.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/20/type = "method"
+tracks/20/path = NodePath(".")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/keys = {
+"times": PoolRealArray( 0, 0.6, 1.1, 1.6, 2.5, 3, 3.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "low"
+}, {
+"args": [  ],
+"method": "base"
+}, {
+"args": [  ],
+"method": "high"
+}, {
+"args": [  ],
+"method": "critical"
+}, {
+"args": [  ],
+"method": "high"
+}, {
+"args": [  ],
+"method": "base"
+}, {
+"args": [  ],
+"method": "low"
+} ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "charge_aspen"
+length = 4.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Nuggets/Panel20:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Nuggets/Panel19:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 3.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Nuggets/Panel18:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.3, 3.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Nuggets/Panel17:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.4, 3.7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Nuggets/Panel16:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.5, 3.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Nuggets/Panel15:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.6, 3.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Nuggets/Panel14:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.7, 3.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Nuggets/Panel13:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.8, 3.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Nuggets/Panel12:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 0.9, 3.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Nuggets/Panel11:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 1, 3.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Nuggets/Panel10:visible")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0, 1.1, 3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Nuggets/Panel9:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0, 1.2, 2.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Nuggets/Panel8:visible")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0, 1.3, 2.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Nuggets/Panel7:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0, 1.4, 2.7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/14/type = "value"
+tracks/14/path = NodePath("Nuggets/Panel6:visible")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"times": PoolRealArray( 0, 1.5, 2.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("Nuggets/Panel5:visible")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"times": PoolRealArray( 0, 1.6, 2.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/16/type = "value"
+tracks/16/path = NodePath("Nuggets/Panel4:visible")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/keys = {
+"times": PoolRealArray( 0, 1.7, 2.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/17/type = "value"
+tracks/17/path = NodePath("Nuggets/Panel3:visible")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/keys = {
+"times": PoolRealArray( 0, 1.8, 2.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/18/type = "value"
+tracks/18/path = NodePath("Nuggets/Panel2:visible")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/keys = {
+"times": PoolRealArray( 0, 1.9, 2.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/19/type = "value"
+tracks/19/path = NodePath("Nuggets/Panel:visible")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/keys = {
+"times": PoolRealArray( 0, 2, 2.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/20/type = "method"
+tracks/20/path = NodePath(".")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/keys = {
+"times": PoolRealArray( 0, 0.5, 1.7, 2, 2.1, 2.4, 3.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "low"
+}, {
+"args": [  ],
+"method": "base"
+}, {
+"args": [  ],
+"method": "high"
+}, {
+"args": [  ],
+"method": "critical"
+}, {
+"args": [  ],
+"method": "high"
+}, {
+"args": [  ],
+"method": "base"
+}, {
+"args": [  ],
+"method": "low"
+} ]
+}
+
+[node name="AspenMeleeBar" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -1000.0
+margin_bottom = -475.0
+script = ExtResource( 1 )
+speed = 2
+character_name = "aspen"
+
+[node name="Background" type="Panel" parent="."]
+margin_right = 24.0
+margin_bottom = 124.0
+
+[node name="ReferenceNuggets" type="Control" parent="."]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 22.0
+margin_bottom = 123.0
+
+[node name="Panel" type="Panel" parent="ReferenceNuggets"]
+margin_right = 20.0
+margin_bottom = 5.0
+custom_styles/panel = SubResource( 8 )
+
+[node name="Panel2" type="Panel" parent="ReferenceNuggets"]
+margin_top = 6.0
+margin_right = 20.0
+margin_bottom = 11.0
+custom_styles/panel = SubResource( 9 )
+
+[node name="Panel3" type="Panel" parent="ReferenceNuggets"]
+margin_top = 12.0
+margin_right = 20.0
+margin_bottom = 17.0
+custom_styles/panel = SubResource( 9 )
+
+[node name="Panel4" type="Panel" parent="ReferenceNuggets"]
+margin_top = 18.0
+margin_right = 20.0
+margin_bottom = 23.0
+custom_styles/panel = SubResource( 9 )
+
+[node name="Panel5" type="Panel" parent="ReferenceNuggets"]
+margin_top = 24.0
+margin_right = 20.0
+margin_bottom = 29.0
+custom_styles/panel = SubResource( 10 )
+
+[node name="Panel6" type="Panel" parent="ReferenceNuggets"]
+margin_top = 30.0
+margin_right = 20.0
+margin_bottom = 35.0
+custom_styles/panel = SubResource( 10 )
+
+[node name="Panel7" type="Panel" parent="ReferenceNuggets"]
+margin_top = 36.0
+margin_right = 20.0
+margin_bottom = 41.0
+custom_styles/panel = SubResource( 10 )
+
+[node name="Panel8" type="Panel" parent="ReferenceNuggets"]
+margin_top = 42.0
+margin_right = 20.0
+margin_bottom = 47.0
+custom_styles/panel = SubResource( 10 )
+
+[node name="Panel9" type="Panel" parent="ReferenceNuggets"]
+margin_top = 48.0
+margin_right = 20.0
+margin_bottom = 53.0
+custom_styles/panel = SubResource( 10 )
+
+[node name="Panel10" type="Panel" parent="ReferenceNuggets"]
+margin_top = 54.0
+margin_right = 20.0
+margin_bottom = 59.0
+custom_styles/panel = SubResource( 10 )
+
+[node name="Panel11" type="Panel" parent="ReferenceNuggets"]
+margin_top = 60.0
+margin_right = 20.0
+margin_bottom = 65.0
+custom_styles/panel = SubResource( 10 )
+
+[node name="Panel12" type="Panel" parent="ReferenceNuggets"]
+margin_top = 66.0
+margin_right = 20.0
+margin_bottom = 71.0
+custom_styles/panel = SubResource( 10 )
+
+[node name="Panel13" type="Panel" parent="ReferenceNuggets"]
+margin_top = 72.0
+margin_right = 20.0
+margin_bottom = 77.0
+custom_styles/panel = SubResource( 10 )
+
+[node name="Panel14" type="Panel" parent="ReferenceNuggets"]
+margin_top = 78.0
+margin_right = 20.0
+margin_bottom = 83.0
+custom_styles/panel = SubResource( 10 )
+
+[node name="Panel15" type="Panel" parent="ReferenceNuggets"]
+margin_top = 84.0
+margin_right = 20.0
+margin_bottom = 89.0
+custom_styles/panel = SubResource( 10 )
+
+[node name="Panel16" type="Panel" parent="ReferenceNuggets"]
+margin_top = 90.0
+margin_right = 20.0
+margin_bottom = 95.0
+custom_styles/panel = SubResource( 10 )
+
+[node name="Panel17" type="Panel" parent="ReferenceNuggets"]
+margin_top = 96.0
+margin_right = 20.0
+margin_bottom = 101.0
+custom_styles/panel = SubResource( 11 )
+
+[node name="Panel18" type="Panel" parent="ReferenceNuggets"]
+margin_top = 102.0
+margin_right = 20.0
+margin_bottom = 107.0
+custom_styles/panel = SubResource( 11 )
+
+[node name="Panel19" type="Panel" parent="ReferenceNuggets"]
+margin_top = 108.0
+margin_right = 20.0
+margin_bottom = 113.0
+custom_styles/panel = SubResource( 11 )
+
+[node name="Panel20" type="Panel" parent="ReferenceNuggets"]
+margin_top = 114.0
+margin_right = 20.0
+margin_bottom = 119.0
+custom_styles/panel = SubResource( 11 )
+
+[node name="Nuggets" type="Control" parent="."]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 22.0
+margin_bottom = 123.0
+
+[node name="Panel" type="Panel" parent="Nuggets"]
+visible = false
+margin_right = 20.0
+margin_bottom = 5.0
+custom_styles/panel = SubResource( 4 )
+
+[node name="Panel2" type="Panel" parent="Nuggets"]
+visible = false
+margin_top = 6.0
+margin_right = 20.0
+margin_bottom = 11.0
+custom_styles/panel = SubResource( 5 )
+
+[node name="Panel3" type="Panel" parent="Nuggets"]
+visible = false
+margin_top = 12.0
+margin_right = 20.0
+margin_bottom = 17.0
+custom_styles/panel = SubResource( 5 )
+
+[node name="Panel4" type="Panel" parent="Nuggets"]
+visible = false
+margin_top = 18.0
+margin_right = 20.0
+margin_bottom = 23.0
+custom_styles/panel = SubResource( 5 )
+
+[node name="Panel5" type="Panel" parent="Nuggets"]
+visible = false
+margin_top = 24.0
+margin_right = 20.0
+margin_bottom = 29.0
+custom_styles/panel = SubResource( 6 )
+
+[node name="Panel6" type="Panel" parent="Nuggets"]
+visible = false
+margin_top = 30.0
+margin_right = 20.0
+margin_bottom = 35.0
+custom_styles/panel = SubResource( 6 )
+
+[node name="Panel7" type="Panel" parent="Nuggets"]
+visible = false
+margin_top = 36.0
+margin_right = 20.0
+margin_bottom = 41.0
+custom_styles/panel = SubResource( 6 )
+
+[node name="Panel8" type="Panel" parent="Nuggets"]
+visible = false
+margin_top = 42.0
+margin_right = 20.0
+margin_bottom = 47.0
+custom_styles/panel = SubResource( 6 )
+
+[node name="Panel9" type="Panel" parent="Nuggets"]
+visible = false
+margin_top = 48.0
+margin_right = 20.0
+margin_bottom = 53.0
+custom_styles/panel = SubResource( 6 )
+
+[node name="Panel10" type="Panel" parent="Nuggets"]
+visible = false
+margin_top = 54.0
+margin_right = 20.0
+margin_bottom = 59.0
+custom_styles/panel = SubResource( 6 )
+
+[node name="Panel11" type="Panel" parent="Nuggets"]
+visible = false
+margin_top = 60.0
+margin_right = 20.0
+margin_bottom = 65.0
+custom_styles/panel = SubResource( 6 )
+
+[node name="Panel12" type="Panel" parent="Nuggets"]
+visible = false
+margin_top = 66.0
+margin_right = 20.0
+margin_bottom = 71.0
+custom_styles/panel = SubResource( 6 )
+
+[node name="Panel13" type="Panel" parent="Nuggets"]
+visible = false
+margin_top = 72.0
+margin_right = 20.0
+margin_bottom = 77.0
+custom_styles/panel = SubResource( 6 )
+
+[node name="Panel14" type="Panel" parent="Nuggets"]
+visible = false
+margin_top = 78.0
+margin_right = 20.0
+margin_bottom = 83.0
+custom_styles/panel = SubResource( 6 )
+
+[node name="Panel15" type="Panel" parent="Nuggets"]
+visible = false
+margin_top = 84.0
+margin_right = 20.0
+margin_bottom = 89.0
+custom_styles/panel = SubResource( 6 )
+
+[node name="Panel16" type="Panel" parent="Nuggets"]
+visible = false
+margin_top = 90.0
+margin_right = 20.0
+margin_bottom = 95.0
+custom_styles/panel = SubResource( 6 )
+
+[node name="Panel17" type="Panel" parent="Nuggets"]
+visible = false
+margin_top = 96.0
+margin_right = 20.0
+margin_bottom = 101.0
+custom_styles/panel = SubResource( 3 )
+
+[node name="Panel18" type="Panel" parent="Nuggets"]
+visible = false
+margin_top = 102.0
+margin_right = 20.0
+margin_bottom = 107.0
+custom_styles/panel = SubResource( 3 )
+
+[node name="Panel19" type="Panel" parent="Nuggets"]
+visible = false
+margin_top = 108.0
+margin_right = 20.0
+margin_bottom = 113.0
+custom_styles/panel = SubResource( 3 )
+
+[node name="Panel20" type="Panel" parent="Nuggets"]
+visible = false
+margin_top = 114.0
+margin_right = 20.0
+margin_bottom = 119.0
+custom_styles/panel = SubResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/charge = SubResource( 2 )
+anims/charge_aspen = SubResource( 7 )

@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://MeleeChargeBar.gd" type="Script" id=1]
+[ext_resource path="res://Prefabs/Components/UI/ChargeNuggetLow.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Prefabs/Components/UI/ChargeNuggetBase.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Prefabs/Components/UI/ChargeNuggetHigh.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Prefabs/Components/UI/ChargeNuggetCritical.tscn" type="PackedScene" id=5]
+
+[node name="MeleeChargeBar" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -1004.0
+margin_bottom = -490.0
+rect_scale = Vector2( 1, -1 )
+script = ExtResource( 1 )
+nugget_low = ExtResource( 2 )
+nugget_base = ExtResource( 3 )
+nugget_high = ExtResource( 4 )
+nugget_critical = ExtResource( 5 )
+
+[node name="Panel" type="Panel" parent="."]
+margin_left = -2.0
+margin_top = -3.0
+margin_right = 22.0
+margin_bottom = 122.0
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_right = 20.0
+margin_bottom = 100.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_right = 20.0
+margin_bottom = 100.0
+custom_constants/separation = 6

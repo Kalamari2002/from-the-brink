@@ -1,6 +1,5 @@
 extends "res://Prefabs/Components/Characters/OptionBase.gd"
 
-var xoffset = 64		# horizontal offset from character's pos where projectile will be spawned
 export var projectile_path : String
 var projectile
 
@@ -68,6 +67,7 @@ func shoot_projectile():
 ###
 func spawn_pos():
 	var pos = character.global_position
+	var xoffset = character.get_node("PositionManager").get_spawn_offset()
 	pos.x += get_dir() * xoffset
 	return pos
 
