@@ -10,6 +10,7 @@ extends Node2D
 signal opened_selector		# Whenever this selector is activated, signal this
 signal option_picked		# Whenever an option is picked, signal this
 signal go_back				# For subselectors, gives control back to the previous menu/selector
+signal seize
 
 var options = []			# All selectable options in the selector
 var selected_idx			# The currently selected option 
@@ -39,7 +40,6 @@ func _ready():
 	#active = true
 	display = get_node("Display")
 	character = get_parent()
-	
 	for c in get_node("Options").get_children():
 		options.append(c)
 	
@@ -106,6 +106,10 @@ func close():
 	display.visible = false
 	emit_signal("option_picked")
 
+func seize_selector():
+	close()
+	emit_signal("seize")
+
 ###
 # Goes up or down the option list. Update the menu/display with the new 
 # selected option at the center, and neighbors on top/bottom.
@@ -144,6 +148,14 @@ func get_abilities():
 	abilities.clear()
 	traverse_options(self,abilities)
 	return abilities
+
+func find_ability(nam):
+	if len(abilities) == 0:
+		get_abilities()
+	for a in abilities:
+		if a.name == nam:
+			return a
+	return null
 ###
 # Helper function for get_abilities. Recursively traverses through the selection
 # tree and appends everything that belongs to the abilities group.

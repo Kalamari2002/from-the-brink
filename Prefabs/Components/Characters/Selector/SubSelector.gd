@@ -16,7 +16,7 @@ func _ready():
 	connect("opened_selector", parent_selector, "deactivate")
 	connect("option_picked", parent_selector, "close")
 	connect("go_back", parent_selector, "activate")
-
+	parent_selector.connect("seize", self, "seize_selector")
 	pass # Replace with function body.
 
 func _input(event):

@@ -58,6 +58,9 @@ func deactivate():
 #func _process(delta):
 #	pass
 
+func seize():
+	.seize()
+	cursor_manager.disable_cursor()
 
 func _on_AtkRate_timeout():
 	can_atk = true

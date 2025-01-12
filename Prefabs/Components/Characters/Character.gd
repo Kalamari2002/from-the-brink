@@ -75,7 +75,8 @@ func _input(event):
 func start_turn():
 	if curr_state == GameState.DEAD:
 		return
-	curr_state = GameState.SELECTING
+	#curr_state = GameState.SELECTING
+	change_state(GameState.SELECTING)
 	selector.activate()
 	emit_signal("turn_started")
 	print(String(get_path()) + " is selecting their action")
@@ -86,10 +87,12 @@ func start_turn():
 # before passing the turn to another player. Called by the GameStateManager.
 ###
 func end_turn():
-	curr_state = GameState.ENDING
+	#curr_state = GameState.ENDING
+	change_state(GameState.ENDING)
 	var time_in_seconds = 2
 	yield(get_tree().create_timer(time_in_seconds), "timeout")
-	curr_state = GameState.WAITING
+	if !change_state(GameState.WAITING):
+		return
 	emit_signal("turn_ended")
 	print(String(get_path()) + " has ended their turn")
 	pass
@@ -98,7 +101,8 @@ func end_turn():
 # Sets game state to attacking. This is called on signals by attack options.
 ###
 func start_atking():
-	curr_state = GameState.ATTACKING
+	#curr_state = GameState.ATTACKING
+	change_state(GameState.ATTACKING)
 
 ###
 # Tells health manager to decrease health by x amount.
@@ -114,6 +118,7 @@ func die():
 	if curr_state == GameState.DEAD:
 		return
 	curr_state = GameState.DEAD
+	selector.seize_selector()
 	emit_signal("died") # Lets other objects know that this character is dead
 
 ###
@@ -121,6 +126,12 @@ func die():
 ###
 func assign_id(id):
 	self.id = id
+
+func change_state(state):
+	if curr_state == GameState.DEAD:
+		return false
+	curr_state = state
+	return true
 
 ###
 # @return id of the character

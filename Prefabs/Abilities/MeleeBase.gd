@@ -55,6 +55,12 @@ func confirm_effect():
 	if atk_count == 0:
 		deactivate() # Ends attack
 
+func decrement_atk_count():
+	atk_count -= 1
+
+func get_atk_count():
+	return atk_count
+
 func calc_damage():
 	return int(BASE_DAMAGE * multiplier)
 	
@@ -71,3 +77,8 @@ func deactivate():
 	cursor_manager.disable_cursor()
 	melee_bar.reset_charge()
 	melee_bar.visible = false
+
+func seize():
+	.seize()
+	melee_bar.visible = false
+	cursor_manager.disable_cursor()

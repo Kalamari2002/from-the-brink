@@ -4,12 +4,10 @@ export var projectile_path : String
 var projectile
 
 var control_scheme
-var duration_timer
 var fire_rate			# Timer obj that determines how fast a projectile can be spammed
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	duration_timer = get_node("Duration")
 	fire_rate = get_node("FireRate")
 	if projectile_path == "":
 		projectile = load("res://Prefabs/Components/Projectiles/Projectile.tscn")
@@ -30,10 +28,9 @@ func _process(delta):
 # Called by OptionSelector to initiate this attack. Starts the duration timer and sends signal that
 # the attack has started.
 ###
-func activate():
-	.activate()
-	duration_timer.start()
-	pass
+#func activate():
+#	.activate()
+#	pass
 
 ###
 # Called when the duration timer times out to end the attack.

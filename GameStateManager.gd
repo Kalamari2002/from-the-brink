@@ -95,7 +95,7 @@ func top_of_the_round():
 ###
 func switch_turn():
 	if game_over:
-		get_tree().change_scene("res://Scenes/VictoryScreen.tscn")
+		return
 	initiative_idx += 1
 	if initiative_idx < player_count: # Next player
 		pass_control_to_player(current_player())
@@ -131,6 +131,9 @@ func game_set():
 	game_over = true
 	print("ended!!!")
 	emit_signal("game_set")
+	var time_in_seconds = 3
+	yield(get_tree().create_timer(time_in_seconds), "timeout")
+	get_tree().change_scene("res://Scenes/VictoryScreen.tscn")
 	
 ###
 # To catch Broadcaster to Subscriber messages. Called by child Subscriber.
@@ -144,8 +147,4 @@ func receive_message(message):
 		roll_initiative()
 	if message == "ready_ended":
 		top_of_the_round()
-	if message == "player1_died" or message == "player2_died":
-		var time_in_seconds = 3
-		yield(get_tree().create_timer(time_in_seconds), "timeout")
-		get_tree().change_scene("res://Scenes/VictoryScreen.tscn")
 	pass

@@ -4,13 +4,11 @@ export var projectile_path : String
 var projectile
 
 var control_scheme
-var duration_timer
 var charge = 0
 
 var progress_bar
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	duration_timer = get_node("Duration")
 	progress_bar = self.owner.get_node("CharacterDisplay/ChargeBar")
 	if projectile_path == "":
 		projectile = load("res://Prefabs/Components/Projectiles/Projectile.tscn")
@@ -30,12 +28,15 @@ func _process(delta):
 
 func activate():
 	.activate()
-	duration_timer.start()
 	progress_bar.visible = true
 
 func deactivate():
 	.deactivate()
 	charge = 0
+	progress_bar.visible = false
+
+func seize():
+	.seize()
 	progress_bar.visible = false
 
 func build_charge(delta):

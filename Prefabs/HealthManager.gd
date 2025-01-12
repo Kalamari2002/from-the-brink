@@ -15,6 +15,7 @@ var curr_health : int
 
 func _ready():
 	curr_health = max_health
+	connect("health_depleted",get_parent(),"die")
 
 ###
 # Called by the character to either take damage or heal. Changes their health accordingly
