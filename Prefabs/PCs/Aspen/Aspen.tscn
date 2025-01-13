@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Prefabs/Components/Characters/Selector/Selector.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Prefabs/PCs/Aspen/Aspen.gd" type="Script" id=2]
@@ -19,6 +19,15 @@
 [ext_resource path="res://Prefabs/Components/Characters/SkillManager.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Prefabs/Skills/Aspen/WeaponBond.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Prefabs/Abilities/Aspen/UI/AspenMeleeBar.tscn" type="PackedScene" id=20]
+[ext_resource path="res://Prefabs/Skills/Aspen/Bladesong.tscn" type="PackedScene" id=21]
+[ext_resource path="res://Prefabs/Components/Characters/ResourceManager.tscn" type="PackedScene" id=22]
+[ext_resource path="res://Prefabs/Components/UI/BladesongGauge.tscn" type="PackedScene" id=23]
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.172549, 0.627451, 0.388235, 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.392157, 0.0941176, 0.0941176, 1 )
 
 [sub_resource type="Animation" id=1]
 resource_name = "Flash_Red"
@@ -38,12 +47,6 @@ tracks/0/keys = {
 [sub_resource type="CircleShape2D" id=2]
 radius = 26.1725
 
-[sub_resource type="StyleBoxFlat" id=3]
-bg_color = Color( 0.172549, 0.627451, 0.388235, 1 )
-
-[sub_resource type="StyleBoxFlat" id=4]
-bg_color = Color( 0.392157, 0.0941176, 0.0941176, 1 )
-
 [node name="Aspen" type="Node2D"]
 scale = Vector2( 1.5, 1.5 )
 script = ExtResource( 2 )
@@ -52,9 +55,41 @@ script = ExtResource( 2 )
 scale = Vector2( 0.04, 0.04 )
 texture = ExtResource( 3 )
 
+[node name="CharacterDisplay" parent="." instance=ExtResource( 14 )]
+
+[node name="ChargeBar" type="ProgressBar" parent="CharacterDisplay"]
+visible = false
+margin_left = -56.0
+margin_top = 43.3333
+margin_right = 35.0
+margin_bottom = 57.3333
+rect_rotation = -90.0
+custom_styles/fg = SubResource( 3 )
+custom_styles/bg = SubResource( 4 )
+max_value = 10.0
+percent_visible = false
+
+[node name="MeleeBar" parent="CharacterDisplay" instance=ExtResource( 20 )]
+visible = false
+margin_left = 70.6667
+margin_top = -58.6667
+margin_right = 30.6667
+margin_bottom = -98.6667
+
+[node name="BladesongGauge" parent="CharacterDisplay" instance=ExtResource( 23 )]
+margin_left = -96.0
+margin_top = -64.0
+margin_right = -96.0
+margin_bottom = -64.0
+
 [node name="HealthManager" type="Node2D" parent="."]
 script = ExtResource( 10 )
 max_health = 100
+
+[node name="ResourceManager" parent="." instance=ExtResource( 22 )]
+display_name = "BladesongGauge"
+MAX_VALUE = 6
+is_capped = true
 
 [node name="PositionManager" type="Node2D" parent="."]
 script = ExtResource( 12 )
@@ -95,6 +130,7 @@ option_name = "Volley"
 [node name="FireBoltVolley" parent="Selector/Options/SubSelector/Options" instance=ExtResource( 16 )]
 
 [node name="AspenMeleeCharge" parent="Selector/Options" instance=ExtResource( 17 )]
+BASE_DAMAGE = 5
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Flash_Red = SubResource( 1 )
@@ -107,30 +143,12 @@ shape = SubResource( 2 )
 [node name="EffectManager" parent="." instance=ExtResource( 8 )]
 position = Vector2( -35.3333, -61.3333 )
 
-[node name="CharacterDisplay" parent="." instance=ExtResource( 14 )]
-
-[node name="ChargeBar" type="ProgressBar" parent="CharacterDisplay"]
-visible = false
-margin_left = -56.0
-margin_top = 43.3333
-margin_right = 35.0
-margin_bottom = 57.3333
-rect_rotation = -90.0
-custom_styles/fg = SubResource( 3 )
-custom_styles/bg = SubResource( 4 )
-max_value = 10.0
-percent_visible = false
-
-[node name="MeleeBar" parent="CharacterDisplay" instance=ExtResource( 20 )]
-visible = false
-margin_left = 70.6667
-margin_top = -58.6667
-margin_right = 30.6667
-margin_bottom = -98.6667
-
 [node name="SkillManager" parent="." instance=ExtResource( 18 )]
+spc_tap = "Bladesong"
 both_release = "WeaponBond"
 
 [node name="WeaponBond" parent="SkillManager" instance=ExtResource( 19 )]
+
+[node name="Bladesong" parent="SkillManager" instance=ExtResource( 21 )]
 
 [connection signal="health_depleted" from="HealthManager" to="." method="_on_HealthManager_health_depleted"]

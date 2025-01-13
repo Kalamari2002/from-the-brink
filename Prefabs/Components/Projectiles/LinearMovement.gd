@@ -7,4 +7,4 @@ extends "res://Prefabs/Components/Projectiles/ProjectileComponents/ProjectileMov
 
 func _physics_process(delta):
 	var travel_vector = Vector2(dir,0)
-	get_parent().move_and_collide(travel_vector * delta * curr_speed)
+	get_parent().move_and_collide(travel_vector * delta * curr_base)

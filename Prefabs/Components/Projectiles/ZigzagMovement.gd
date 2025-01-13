@@ -38,7 +38,7 @@ func _physics_process(delta):
 func move(delta):
 	if !can_move:
 		return
-	get_parent().move_and_collide(travel_vector * delta * curr_speed)
+	get_parent().move_and_collide(travel_vector * delta * curr_base)
 
 func switch_direction():
 	#print("switched direction")

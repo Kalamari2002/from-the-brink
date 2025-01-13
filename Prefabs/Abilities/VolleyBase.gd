@@ -5,10 +5,12 @@ var projectile
 
 var control_scheme
 var fire_rate			# Timer obj that determines how fast a projectile can be spammed
-
+var init_fire_rate
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	fire_rate = get_node("FireRate")
+	init_fire_rate = fire_rate.wait_time
+	
 	if projectile_path == "":
 		projectile = load("res://Prefabs/Components/Projectiles/Projectile.tscn")
 	else:
@@ -24,13 +26,6 @@ func _process(delta):
 		return
 	if Input.is_action_pressed(control_scheme.confirm()):
 		instantiate_projectile()
-###
-# Called by OptionSelector to initiate this attack. Starts the duration timer and sends signal that
-# the attack has started.
-###
-#func activate():
-#	.activate()
-#	pass
 
 ###
 # Called when the duration timer times out to end the attack.
@@ -51,7 +46,7 @@ func instantiate_projectile():
 	p.set_dir(get_dir())
 	get_node("/root/Board").add_child(p)
 	fire_rate.start()
-	
+
 ###
 # Determines if the offset should be to the left or right depending on which column the character
 # is standing (projectiles fired from right column are offset to the left, projectiles fired from

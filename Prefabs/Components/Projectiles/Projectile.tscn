@@ -17,6 +17,7 @@ script = ExtResource( 2 )
 base_speed = 500
 
 [node name="EffectOnCollisionBase" parent="." instance=ExtResource( 3 )]
+damage = 5
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.05, 0.05 )

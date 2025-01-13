@@ -54,9 +54,6 @@ func deactivate():
 	.deactivate()
 	atk_rate.stop()
 	cursor_manager.disable_cursor()
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
 
 func seize():
 	.seize()

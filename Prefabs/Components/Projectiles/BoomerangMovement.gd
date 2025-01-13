@@ -24,9 +24,10 @@ func _physics_process(delta):
 		switch_speed()
 	
 	var travel_vector = Vector2(dir,0)
-	get_parent().move_and_collide(travel_vector * delta * curr_speed)
+	get_parent().move_and_collide(travel_vector * delta * curr_base)
 	if going_back:
-		curr_speed -= acceleration
+		apply_acceleration(-acceleration)
+		#curr_speed -= acceleration
 
 func switch_speed():
 	going_back = true

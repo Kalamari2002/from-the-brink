@@ -30,7 +30,6 @@ func _ready():
 	
 	connect("start_atk", character, "start_atking") # Wanna let the caller know when this atk has started
 	connect("end_atk", character,"end_turn") # Wanna let the caller know when it's over
-	
 	character.connect("died", self, "seize")
 	
 	add_to_group("abilities")
@@ -61,6 +60,7 @@ func seize():
 	active = false
 	duration_timer.stop()
 	duration_label.stop()
+
 ###
 # @return option name/text label
 ###

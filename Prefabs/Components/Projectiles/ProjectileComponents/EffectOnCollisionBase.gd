@@ -22,7 +22,7 @@ func collide(area):
 	if area.is_in_group("characters"):
 		if can_inflict_character(area.get_parent()):
 			inflict_character(area.get_parent())
-	pass # Replace with function body.
+	pass
 
 func inflict_character(character):
 	if damage != 0:

@@ -10,4 +10,9 @@ TOTAL_ATK_CNT = 1
 wait_time = 0.8
 one_shot = true
 
+[node name="Duration" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
 [connection signal="timeout" from="AtkRate" to="." method="_on_AtkRate_timeout"]
+[connection signal="timeout" from="Duration" to="." method="_on_Duration_timeout"]

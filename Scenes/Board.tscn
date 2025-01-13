@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Prefabs/Subscriber.tscn" type="PackedScene" id=1]
 [ext_resource path="res://GameStateManager.gd" type="Script" id=2]
@@ -9,6 +9,39 @@
 [ext_resource path="res://Prefabs/UI.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Prefabs/Ready.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Prefabs/Stage/AttackDuration.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/TimeScaleManager.gd" type="Script" id=11]
+
+[sub_resource type="Animation" id=1]
+resource_name = "FadeIn"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 0.313726 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "FadeOut"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0.313726 ), Color( 0, 0, 0, 0 ) ]
+}
 
 [node name="Board" type="Node2D"]
 
@@ -29,6 +62,12 @@ script = ExtResource( 2 )
 
 [node name="Subscriber" parent="GameManager/GameStateManager" instance=ExtResource( 1 )]
 
+[node name="TimeScaleManager" type="Node2D" parent="GameManager"]
+script = ExtResource( 11 )
+
+[node name="Quadrants" parent="." instance=ExtResource( 4 )]
+position = Vector2( 384, 192 )
+
 [node name="Control" type="Control" parent="."]
 margin_right = 1027.0
 margin_bottom = 596.0
@@ -41,5 +80,11 @@ margin_bottom = 596.0
 
 [node name="UI" parent="Control" instance=ExtResource( 7 )]
 
-[node name="Quadrants" parent="." instance=ExtResource( 4 )]
-position = Vector2( 384, 192 )
+[node name="BulletTimeDim" type="ColorRect" parent="Control"]
+margin_right = 1835.0
+margin_bottom = 999.0
+color = Color( 0, 0, 0, 0 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Control/BulletTimeDim"]
+anims/FadeIn = SubResource( 1 )
+anims/FadeOut = SubResource( 2 )
