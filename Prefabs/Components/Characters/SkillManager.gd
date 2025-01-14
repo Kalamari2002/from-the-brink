@@ -8,8 +8,10 @@ var control_scheme
 
 export var atk_tap : String
 export var atk_release : String
-export var spc_tap : String
-export var spc_release : String
+export var dfs_spc_tap : String
+export var dfs_spc_release : String
+export var off_spc_tap : String
+export var off_spc_release : String
 export var both_release : String
 
 var skill_map = {}
@@ -21,8 +23,10 @@ func _ready():
 	skill_map = {
 		"atk_tap" : atk_tap,
 		"atk_release" : atk_release,
-		"spc_tap" : spc_tap,
-		"spc_release" : spc_release,
+		"dfs_spc_tap" : dfs_spc_tap,
+		"dfs_spc_release" : dfs_spc_release,
+		"off_spc_tap" : off_spc_tap,
+		"off_spc_release" : off_spc_release,
 		"both_release" : both_release
 	}
 	pass # Replace with function body.
@@ -36,7 +40,8 @@ func _process(delta):
 		pass
 		
 	if Input.is_action_just_pressed(control_scheme.special()):
-		trigger_ability("spc_tap")
+		#trigger_ability("dfs_spc_tap")
+		trigger_ability(curr_spc("tap"))
 		pass
 
 	if Input.is_action_just_released(control_scheme.confirm()):
@@ -56,10 +61,17 @@ func _process(delta):
 			trigger_both = true
 		else:
 			if !trigger_both:
-				trigger_ability("spc_release")
+				#trigger_ability("dfs_spc_release")
+				trigger_ability(curr_spc("release"))
+				
 			else:
 				trigger_both = false
 		both_pressed = false
+
+func curr_spc(action):
+	if character.get_curr_state() != character.GameState.ATTACKING:
+		return "dfs_spc_"+action
+	return "off_spc_"+action
 
 func trigger_ability(command):
 	if skill_map[command] == "":

@@ -20,8 +20,11 @@ func restore_damage():
 
 func collide(area):
 	if area.is_in_group("characters"):
-		if can_inflict_character(area.get_parent()):
-			inflict_character(area.get_parent())
+		var character = area.get_parent()
+		if character.get_curr_state() == character.GameState.SELECTING:
+			return
+		if can_inflict_character(character):
+			inflict_character(character)
 	pass
 
 func inflict_character(character):

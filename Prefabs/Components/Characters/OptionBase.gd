@@ -61,6 +61,12 @@ func seize():
 	duration_timer.stop()
 	duration_label.stop()
 
+func hasten():
+	pass
+
+func unhaste():
+	pass
+
 ###
 # @return option name/text label
 ###

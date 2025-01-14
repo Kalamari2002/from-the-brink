@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Prefabs/Components/Characters/Selector/Selector.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Prefabs/PCs/Aspen/Aspen.gd" type="Script" id=2]
@@ -22,6 +22,7 @@
 [ext_resource path="res://Prefabs/Skills/Aspen/Bladesong.tscn" type="PackedScene" id=21]
 [ext_resource path="res://Prefabs/Components/Characters/ResourceManager.tscn" type="PackedScene" id=22]
 [ext_resource path="res://Prefabs/Components/UI/BladesongGauge.tscn" type="PackedScene" id=23]
+[ext_resource path="res://Prefabs/Abilities/VolleyBase.tscn" type="PackedScene" id=24]
 
 [sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 0.172549, 0.627451, 0.388235, 1 )
@@ -77,10 +78,10 @@ margin_right = 30.6667
 margin_bottom = -98.6667
 
 [node name="BladesongGauge" parent="CharacterDisplay" instance=ExtResource( 23 )]
-margin_left = -96.0
-margin_top = -64.0
-margin_right = -96.0
-margin_bottom = -64.0
+margin_left = -90.0
+margin_top = -72.0
+margin_right = -90.0
+margin_bottom = -72.0
 
 [node name="HealthManager" type="Node2D" parent="."]
 script = ExtResource( 10 )
@@ -88,7 +89,7 @@ max_health = 100
 
 [node name="ResourceManager" parent="." instance=ExtResource( 22 )]
 display_name = "BladesongGauge"
-MAX_VALUE = 6
+MAX_VALUE = 5
 is_capped = true
 
 [node name="PositionManager" type="Node2D" parent="."]
@@ -129,6 +130,10 @@ option_name = "Volley"
 
 [node name="FireBoltVolley" parent="Selector/Options/SubSelector/Options" instance=ExtResource( 16 )]
 
+[node name="VolleyBase" parent="Selector/Options/SubSelector/Options" instance=ExtResource( 24 )]
+option_name = "Generic"
+projectile_path = "res://Prefabs/Components/Projectiles/Projectile.tscn"
+
 [node name="AspenMeleeCharge" parent="Selector/Options" instance=ExtResource( 17 )]
 BASE_DAMAGE = 5
 
@@ -144,7 +149,8 @@ shape = SubResource( 2 )
 position = Vector2( -35.3333, -61.3333 )
 
 [node name="SkillManager" parent="." instance=ExtResource( 18 )]
-spc_tap = "Bladesong"
+dfs_spc_tap = "Bladesong"
+off_spc_release = "WeaponBond"
 both_release = "WeaponBond"
 
 [node name="WeaponBond" parent="SkillManager" instance=ExtResource( 19 )]

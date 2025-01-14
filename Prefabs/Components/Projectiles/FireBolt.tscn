@@ -16,7 +16,7 @@ script = ExtResource( 2 )
 script = ExtResource( 5 )
 
 [node name="EffectOnCollisionBase" parent="." instance=ExtResource( 1 )]
-damage = 7
+damage = 3
 effect = "burnin"
 
 [node name="Sprite" type="Sprite" parent="."]

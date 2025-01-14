@@ -6,6 +6,7 @@ var projectile
 var control_scheme
 var fire_rate			# Timer obj that determines how fast a projectile can be spammed
 var init_fire_rate
+const HASTE_FACTOR = 0.7
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	fire_rate = get_node("FireRate")
@@ -46,6 +47,12 @@ func instantiate_projectile():
 	p.set_dir(get_dir())
 	get_node("/root/Board").add_child(p)
 	fire_rate.start()
+
+func hasten():
+	fire_rate.wait_time *= HASTE_FACTOR
+
+func unhaste():
+	fire_rate.wait_time = init_fire_rate
 
 ###
 # Determines if the offset should be to the left or right depending on which column the character

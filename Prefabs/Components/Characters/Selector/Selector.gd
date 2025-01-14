@@ -13,6 +13,7 @@ signal go_back				# For subselectors, gives control back to the previous menu/se
 signal seize
 
 var options = []			# All selectable options in the selector
+var last_pick				# Most recently picked option
 var selected_idx			# The currently selected option 
 var display					# Ref to the Display child
 
@@ -57,7 +58,7 @@ func _input(event):
 	
 	if event.is_action_released(confirm_controls):
 		options[selected_idx].activate()
-
+		last_pick = options[selected_idx]
 ###
 # Called by the character that owns this menu. It sets which actions
 # are up, down, confirm and special to navigate this menu.
@@ -103,6 +104,7 @@ func deactivate():
 ###
 func close():
 	deactivate()
+	print("PICKED")
 	display.visible = false
 	emit_signal("option_picked")
 
@@ -110,6 +112,15 @@ func seize_selector():
 	close()
 	emit_signal("seize")
 
+###
+# Used by Subselectors to let the selector know which option was the previously
+# picked one.
+###
+func set_last_pick(pick):
+	last_pick = pick
+
+func get_last_pic():
+	return last_pick
 ###
 # Goes up or down the option list. Update the menu/display with the new 
 # selected option at the center, and neighbors on top/bottom.

@@ -121,7 +121,7 @@ wait_time = 0.1
 script = ExtResource( 17 )
 
 [node name="Fire" type="Timer" parent="Behavior/DummyAttack/RandomVolley"]
-wait_time = 0.8
+wait_time = 0.3
 
 [connection signal="health_depleted" from="HealthManager" to="." method="_on_HealthManager_health_depleted"]
 [connection signal="timeout" from="Behavior/DummyMovement/Timer" to="Behavior/DummyMovement" method="_on_Timer_timeout"]

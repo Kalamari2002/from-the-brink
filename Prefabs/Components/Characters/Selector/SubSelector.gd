@@ -61,6 +61,10 @@ func get_name():
 func get_icon_path():
 	return icon_path
 
+func close():
+	parent_selector.set_last_pick(options[selected_idx])
+	.close()
+
 ###
 # Prevents player from interacting with this subselector and
 # gives control back to the parent selector.
