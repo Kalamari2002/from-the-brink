@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Prefabs/Components/Projectiles/ProjectileComponents/EffectOnCollisionBase.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Prefabs/Components/Projectiles/ProjectileComponents/SlipperEffectOnCollisionBase.gd" type="Script" id=2]
+
+[node name="SlipperEffectOnCollisionBase" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+damage = 3
+recover_on_hit = 0.2

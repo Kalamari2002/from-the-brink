@@ -40,6 +40,8 @@ func apply_effect(effect, arg):
 		else:
 			get_node("Burnin").reset_count()
 		pass
+	if effect == "replenish_resource":
+		get_parent().get_node("ResourceManager").replenish(arg)
 	if effect == "heal":
 		heal(arg)
 	# Else add effect as a child if not already existent
