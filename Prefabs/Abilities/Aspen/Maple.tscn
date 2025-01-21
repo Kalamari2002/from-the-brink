@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Prefabs/Components/Characters/Selector/SubSelector.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Prefabs/Abilities/Aspen/Scavenge.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Prefabs/Abilities/Aspen/Sing.tscn" type="PackedScene" id=3]
 
 [node name="Maple" instance=ExtResource( 1 )]
 option_name = "Maple"
@@ -11,3 +12,5 @@ option_name = "Maple"
 [node name="Scavenge" parent="Options" index="0" instance=ExtResource( 2 )]
 option_name = "Scavenge"
 TOTAL_ATK_CNT = 1
+
+[node name="Sing" parent="Options" index="1" instance=ExtResource( 3 )]

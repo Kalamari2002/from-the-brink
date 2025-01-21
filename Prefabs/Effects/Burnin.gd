@@ -2,7 +2,7 @@ extends "res://Prefabs/Effects/EffectBase.gd"
 
 var position_manager
 
-const INIT_COUNT = 15
+const INIT_COUNT = 3
 var move_count
 
 # Called when the node enters the scene tree for the first time.
@@ -12,7 +12,7 @@ func _ready():
 	position_manager.connect("changed_quadrants",self,"decrement_move_count")
 	pass # Replace with function body.
 
-func reset_count():
+func reset_effect():
 	move_count = INIT_COUNT
 
 func decrement_move_count():

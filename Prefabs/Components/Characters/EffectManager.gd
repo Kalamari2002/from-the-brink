@@ -9,15 +9,26 @@ extends Node2D
 signal took_damage(dmg)		# Certain effects are triggered with damage. We use this signal everytime the character is dmged.
 signal healed			# Signaled when a character is healed
 
-var health_manager		# Ref to the character's health manager
+var health_manager : Node2D		# Ref to the character's health manager
+var character : Node2D
+var hbox : HBoxContainer			# the horizontal boxed used to keep icons
 
-var green_flame = preload("res://Prefabs/Effects/GreenFlame.tscn")	# Green Flame effect
-const burnin = preload("res://Prefabs/Effects/Burnin.tscn")
-var hbox				# the horizontal boxed used to keep icons
+const GREENFLAME = preload("res://Prefabs/Effects/GreenFlame.tscn")
+const BURNIN = preload("res://Prefabs/Effects/Burnin.tscn")
+const MAPLED = preload("res://Prefabs/Effects/Mapled.tscn")
+
+var effect_dict = {
+	"greenflame" : GREENFLAME,
+	"burnin" : BURNIN,
+	"mapled" : MAPLED
+}
+
+var curr_effects = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	health_manager = get_parent().get_node("HealthManager")
+	character = get_parent()
+	health_manager = character.get_node("HealthManager")
 	hbox = get_node("EffectIcons/MarginContainer/HBoxContainer")
 	pass # Replace with function body.
 
@@ -28,23 +39,25 @@ func _ready():
 ###
 func apply_effect(effect, arg):
 	#print(effect + " ",arg)
+	if effect == "":
+		return
 	if effect == "damage":
 		take_damage(arg)
-	if effect == "greenflame":
-		var new_green = green_flame.instance()
-		add_child(new_green)
-	if effect == "burnin":
-		if get_node_or_null("Burnin") == null:
-			var new_burn = burnin.instance()
-			add_child(new_burn)
-		else:
-			get_node("Burnin").reset_count()
-		pass
+		return
 	if effect == "replenish_resource":
-		get_parent().get_node("ResourceManager").replenish(arg)
+		character.get_node("ResourceManager").replenish(arg)
+		return
 	if effect == "heal":
 		heal(arg)
-	# Else add effect as a child if not already existent
+		return
+		
+	if not effect in curr_effects: # If we don't have the current effect
+		var new_effect = effect_dict[effect].instance()	#add the new effect
+		new_effect.initialize(self,character)
+		add_child(new_effect)
+		curr_effects[effect] = new_effect.get_name()	#add it to the records
+	else:	#otherwise
+		get_node(curr_effects[effect]).reset_effect()	#we just reset the effect
 	pass
 
 ###
@@ -57,6 +70,21 @@ func take_damage(dmg):
 	emit_signal("took_damage",dmg)
 	pass
 
+func heal(health):
+	health_manager.change_health(health)
+	emit_signal("healed")
+	pass
+
+###
+# Removes the effect from the world and records
+###
+func remove_effect(effect):
+	var key = effect.get_name().to_lower()
+	curr_effects.erase(key)
+	remove_icon(effect.get_icon())
+	remove_child(effect)
+	effect.queue_free()
+	
 ###
 # Called by an effect, takes a TextureRect scene and adds it to the hbox.
 # @param icon is the TextureRect object.
@@ -71,10 +99,3 @@ func add_icon(icon):
 func remove_icon(icon):
 	hbox.remove_child(icon)
 	icon.queue_free()
-
-
-func heal(health):
-	health_manager.change_health(health)
-	emit_signal("healed")
-	pass
-	

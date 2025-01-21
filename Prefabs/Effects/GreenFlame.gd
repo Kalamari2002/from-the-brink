@@ -14,6 +14,12 @@ func _ready():
 	get_parent().connect("took_damage", self, "combust")
 	pass
 
+###
+# This is a parent function. Greenflame can't be reset.
+###
+func reset_effect():
+	pass
+
 func combust(dmg):
 	var extra_damage = int(MULTIPLIER * dmg)
 	health_manager.change_health(-extra_damage)
