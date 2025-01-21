@@ -10,14 +10,38 @@ export var icon_path : String		# Path of the icon
 var parent_selector
 var sub_offset = Vector2(180,0)
 var sub_flip_offset = Vector2(-180,0)
-func _ready():
+
+
+###
+# Because Godot 3.5 doesnt let me override _ready (only extend it), this
+# is a work around.
+###
+func on_ready():
+	display = get_node("Display")
 	active = false
-	parent_selector = get_parent().get_parent()
+	pass
+
+###
+# Called by the parent selector. Defines the selector and character that own 
+# this subselector, allowing it to make connections without calling get_parent()
+# and preserving the parent to child hierarchy.
+###
+func initialize(pselecter, charactr):
+	
+	parent_selector = pselecter
+	character = charactr
+	
 	connect("opened_selector", parent_selector, "deactivate")
 	connect("option_picked", parent_selector, "close")
 	connect("go_back", parent_selector, "activate")
 	parent_selector.connect("seize", self, "seize_selector")
-	pass # Replace with function body.
+	
+	for c in get_node("Options").get_children():
+		c.initialize(self,character)
+		options.append(c)
+	selected_idx = int( len(options)/2 ) # Starting option is the middle one
+	create_cards()
+	
 
 func _input(event):
 	if !active:

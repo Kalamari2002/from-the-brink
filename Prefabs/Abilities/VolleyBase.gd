@@ -3,7 +3,6 @@ extends "res://Prefabs/Components/Characters/OptionBase.gd"
 export var projectile_path : String
 var projectile
 
-var control_scheme
 var fire_rate			# Timer obj that determines how fast a projectile can be spammed
 var init_fire_rate
 const HASTE_FACTOR = 0.7
@@ -16,9 +15,8 @@ func _ready():
 		projectile = load("res://Prefabs/Components/Projectiles/Projectile.tscn")
 	else:
 		projectile = load(projectile_path)
-	control_scheme = character.get_node("ControlScheme")
 	pass # Replace with function body.
-	
+
 ###
 # Doesn't take inputs if the attack isn't active.
 ###

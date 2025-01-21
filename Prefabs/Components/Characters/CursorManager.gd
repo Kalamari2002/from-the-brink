@@ -39,6 +39,9 @@ func step(dir):
 	if adversary_column.step_cursor(curr_pos, destination): # if adversary column lets cursor move to requested quadrant
 		curr_pos = destination # update the current position of the cursor
 
+func get_curr_pos():
+	return curr_pos
+
 ###
 # Determines in which column the cursor will be at. Called by the character on ready.
 # @param path of the column where we'll deploy the cursor

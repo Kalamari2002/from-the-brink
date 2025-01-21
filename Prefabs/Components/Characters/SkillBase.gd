@@ -4,9 +4,12 @@ var character
 var cooldown
 
 func _ready():
-	character = get_parent().get_parent()
+#	character = get_parent().get_parent()
 	cooldown = get_node("Cooldown")
 	pass
+
+func initialize(charactr):
+	character = charactr
 
 func trigger():
 	if cooldown.time_left != 0 or !is_active():

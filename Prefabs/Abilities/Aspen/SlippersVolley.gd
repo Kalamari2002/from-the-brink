@@ -6,6 +6,6 @@ func instantiate_projectile():
 	var p = projectile.instance()
 	p.position = spawn_pos()
 	p.set_dir(get_dir())
-	p.set_origin(self.owner)
+	p.set_origin(character)
 	get_node("/root/Board").add_child(p)
 	fire_rate.start()

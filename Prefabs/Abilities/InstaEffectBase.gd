@@ -4,7 +4,6 @@ extends "res://Prefabs/Components/Characters/OptionBase.gd"
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-var control_scheme
 var cursor_manager
 var position_manager
 var atk_rate
@@ -15,17 +14,19 @@ var can_atk = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	atk_rate = get_node("AtkRate")
+	atk_count = TOTAL_ATK_CNT
+	pass # Replace with function body.
 
+func initialize(pselecter, charactr):
+	.initialize(pselecter, charactr)
+	
 	control_scheme = character.get_node("ControlScheme")
 	cursor_manager = character.get_node("CursorManager")
 	position_manager = character.get_node("PositionManager")
-	
-	atk_rate = get_node("AtkRate")
-	
 	connect("start_atk", position_manager,"set_can_move",[false])	# Stops position manager from moving when this atk has started 
 	connect("end_atk", position_manager,"set_can_move",[true])	# Lets position manager retake control when atk is over
-	atk_count = TOTAL_ATK_CNT
-	pass # Replace with function body.
+	pass
 
 func _input(event):
 	if !active:

@@ -19,7 +19,8 @@ var display					# Ref to the Display child
 
 # Dummy options are used to hide the top or bottom options when the player reaches any end of the list
 var dummy_option = preload("res://Prefabs/Components/Characters/Options/DummyOption.tscn")
-
+var debug = load("res://Prefabs/Abilities/Aspen/FireBoltVolley.tscn")
+var other = load("res://Prefabs/Abilities/Aspen/FireBoltVolley.tscn")
 var active = false			# Determines if this selector can be currently navigated/selected from
 var flipped = false			# True if this menu belongs to a player on the right column
 
@@ -37,13 +38,18 @@ var special_controls
 
 var abilities = []
 func _ready():
+	on_ready()
+	pass
+
+func on_ready():
 	print("Base")
-	#active = true
+
 	display = get_node("Display")
 	character = get_parent()
+
 	for c in get_node("Options").get_children():
+		c.initialize(self, character)
 		options.append(c)
-	
 	selected_idx = int( len(options)/2 ) # Starting option is the middle one
 	create_cards()
 	pass
@@ -59,6 +65,10 @@ func _input(event):
 	if event.is_action_released(confirm_controls):
 		options[selected_idx].activate()
 		last_pick = options[selected_idx]
+	
+#	if event.is_action_pressed("ui_accept"):
+#		add_option(debug)
+	
 ###
 # Called by the character that owns this menu. It sets which actions
 # are up, down, confirm and special to navigate this menu.
@@ -80,6 +90,19 @@ func define_control_scheme(up,down,confirm,special):
 func create_cards():
 	position = offset
 	display.create_cards()
+###
+# Takes the path of an option, instantiates it and adds it as a selectable option
+# in the selector.
+###
+func add_option(opt_path):
+	print("added")
+	var option = load(opt_path)
+	var new_opt = option.instance()
+	new_opt.initialize(self, character)
+	get_node("Options").add_child(new_opt)
+	options.append(new_opt)
+	display.update_cards()
+	pass
 
 ###
 # Called by the character after creating the cards if they are in the right column. 
@@ -143,6 +166,9 @@ func curr_selected():
 func is_flipped():
 	return flipped
 
+func get_character():
+	return character
+
 ###
 # @return the actions corresponding to the player's controls as a list of strings.
 ###
@@ -173,9 +199,9 @@ func find_ability(nam):
 # @param curr is the current node we're exploring
 # @param options is the array to which we'll append all abilities
 ###
-func traverse_options(curr,options):
+func traverse_options(curr,options_array):
 	if "abilities" in curr.get_groups(): # base case means the current node is a selectable ability
-		options.append(curr)
+		options_array.append(curr)
 		return # stops us from exploring the ability's children (which aren't selectable)
 	
 	###
@@ -183,7 +209,7 @@ func traverse_options(curr,options):
 	# its abilities (Option node's children).
 	###
 	for c in curr.get_node("Options").get_children():
-		traverse_options(c,options)
+		traverse_options(c,options_array)
 
 ###
 # Creates a list of three elements [top neighbor, currently selected option, bottom neighbor]

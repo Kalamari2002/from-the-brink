@@ -3,19 +3,20 @@ extends "res://Prefabs/Components/Characters/OptionBase.gd"
 export var projectile_path : String
 var projectile
 
-var control_scheme
 var charge = 0
 
 var progress_bar
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	progress_bar = self.owner.get_node("CharacterDisplay/ChargeBar")
 	if projectile_path == "":
 		projectile = load("res://Prefabs/Components/Projectiles/Projectile.tscn")
 	else:
 		projectile = load(projectile_path)
-	control_scheme = character.get_node("ControlScheme")
 	pass # Replace with function body.
+
+func initialize(pselecter, charactr):
+	.initialize(pselecter, charactr)
+	progress_bar = character.get_node("CharacterDisplay/ChargeBar")
 
 func _process(delta):
 	if !active:

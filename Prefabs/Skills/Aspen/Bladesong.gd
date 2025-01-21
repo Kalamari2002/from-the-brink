@@ -5,13 +5,21 @@ var control_scheme
 var resource_manager
 var is_bullet_time = false
 var BULLET_TIME_SCALE = 1
+
 func _ready():
-	control_scheme = character.get_node("ControlScheme")
-	resource_manager = character.get_node("ResourceManager")
-	resource_manager.connect("depleted", self, "stop_bullet_time")
 	time_manager = get_node("/root/Board/GameManager/TimeScaleManager")
 	BULLET_TIME_SCALE = time_manager.get_bullet_time_scale()
+
+func initialize(charactr):
+	.initialize(charactr)
 	character.connect("turn_started", self, "stop_bullet_time")
+	
+	control_scheme = character.get_node("ControlScheme")
+	
+	resource_manager = character.get_node("ResourceManager")
+	resource_manager.connect("depleted", self, "stop_bullet_time")
+	pass
+
 func trigger():
 	if !is_active():
 		return

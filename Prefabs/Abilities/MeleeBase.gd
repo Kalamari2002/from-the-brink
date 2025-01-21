@@ -1,6 +1,6 @@
 extends "res://Prefabs/Components/Characters/OptionBase.gd"
 
-var control_scheme
+
 var cursor_manager
 var position_manager
 var melee_bar
@@ -18,9 +18,19 @@ var multiplier = 1.0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 
+	
+	atk_count = TOTAL_ATK_CNT
+	pass # Replace with function body.
+
+func initialize(pselecter, charactr):
+	.initialize(pselecter, charactr)
 	control_scheme = character.get_node("ControlScheme")
 	cursor_manager = character.get_node("CursorManager")
 	position_manager = character.get_node("PositionManager")
+
+	connect("start_atk", position_manager,"set_can_move",[false])	# Stops position manager from moving when this atk has started 
+	connect("end_atk", position_manager,"set_can_move",[true])	# Lets position manager retake control when atk is over
+	
 	melee_bar = character.get_node("CharacterDisplay/MeleeBar")
 	
 	melee_bar.connect("low", self, "update_multiplier", [LOW_MULT])
@@ -28,11 +38,7 @@ func _ready():
 	melee_bar.connect("high", self, "update_multiplier", [HIGH_MULT])
 	melee_bar.connect("critical", self, "update_multiplier", [CRIT_MULT])
 	
-	connect("start_atk", position_manager,"set_can_move",[false])	# Stops position manager from moving when this atk has started 
-	connect("end_atk", position_manager,"set_can_move",[true])	# Lets position manager retake control when atk is over
-	atk_count = TOTAL_ATK_CNT
-	pass # Replace with function body.
-
+	pass
 
 func update_multiplier(mult):
 	multiplier = mult

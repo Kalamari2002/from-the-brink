@@ -1,6 +1,5 @@
 extends "res://Prefabs/Components/Characters/OptionBase.gd"
 
-var control_scheme
 var cursor_manager
 var position_manager
 
@@ -11,11 +10,16 @@ var quicktimeobject # used to reference the created quicktime event, deletes it 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+#	control_scheme = character.get_node("ControlScheme")
+#	cursor_manager = character.get_node("CursorManager")
+#	position_manager = character.get_node("PositionManager")
+	pass # Replace with function body.
+
+func initialize(pselecter, charactr):
+	.initialize(pselecter, charactr)
 	control_scheme = character.get_node("ControlScheme")
 	cursor_manager = character.get_node("CursorManager")
 	position_manager = character.get_node("PositionManager")
-	pass # Replace with function body.
-
 ###
 # Called by OptionSelector to initiate this attack. Emits signal that the attack has begun,
 # picks the target of the attack and initializes a quick time event

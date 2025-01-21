@@ -1,11 +1,9 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Prefabs/Components/Characters/Selector/Selector.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Prefabs/PCs/Aspen/Aspen.gd" type="Script" id=2]
 [ext_resource path="res://Sprites/Characters/Players/Tokens/aspen_token.PNG" type="Texture" id=3]
-[ext_resource path="res://Prefabs/Abilities/Aspen/SlippersVolley.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Prefabs/Abilities/Aspen/ArrowChargeShot.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Prefabs/Components/Characters/Selector/SubSelector.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Prefabs/Abilities/Aspen/Items.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Prefabs/Subscriber.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Prefabs/Components/Characters/EffectManager.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Prefabs/Components/Characters/CursorManager.gd" type="Script" id=9]
@@ -14,8 +12,6 @@
 [ext_resource path="res://Prefabs/PositionManager.gd" type="Script" id=12]
 [ext_resource path="res://Prefabs/Components/Characters/ControlScheme.gd" type="Script" id=13]
 [ext_resource path="res://Prefabs/Components/Characters/CharacterDisplay.tscn" type="PackedScene" id=14]
-[ext_resource path="res://Prefabs/Abilities/Aspen/LeechArrowsVolley.tscn" type="PackedScene" id=15]
-[ext_resource path="res://Prefabs/Abilities/Aspen/FireBoltVolley.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Prefabs/Abilities/Aspen/AspenMeleeCharge.tscn" type="PackedScene" id=17]
 [ext_resource path="res://Prefabs/Components/Characters/SkillManager.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Prefabs/Skills/Aspen/WeaponBond.tscn" type="PackedScene" id=19]
@@ -23,7 +19,7 @@
 [ext_resource path="res://Prefabs/Skills/Aspen/Bladesong.tscn" type="PackedScene" id=21]
 [ext_resource path="res://Prefabs/Components/Characters/ResourceManager.tscn" type="PackedScene" id=22]
 [ext_resource path="res://Prefabs/Components/UI/BladesongGauge.tscn" type="PackedScene" id=23]
-[ext_resource path="res://Prefabs/Abilities/VolleyBase.tscn" type="PackedScene" id=24]
+[ext_resource path="res://Prefabs/Abilities/Aspen/Maple.tscn" type="PackedScene" id=24]
 
 [sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 0.172549, 0.627451, 0.388235, 1 )
@@ -120,25 +116,12 @@ special2 = "p2_special"
 
 [node name="Options" type="Node2D" parent="Selector"]
 
-[node name="SubSelector" parent="Selector/Options" instance=ExtResource( 6 )]
-option_name = "Volley"
-
-[node name="Options" type="Node2D" parent="Selector/Options/SubSelector"]
-
-[node name="ArrowChargeShot" parent="Selector/Options/SubSelector/Options" instance=ExtResource( 5 )]
-
-[node name="LeechArrowsVolley" parent="Selector/Options/SubSelector/Options" instance=ExtResource( 15 )]
-
-[node name="FireBoltVolley" parent="Selector/Options/SubSelector/Options" instance=ExtResource( 16 )]
-
-[node name="SlippersVolley" parent="Selector/Options/SubSelector/Options" instance=ExtResource( 4 )]
-
-[node name="VolleyBase" parent="Selector/Options/SubSelector/Options" instance=ExtResource( 24 )]
-option_name = "Generic"
-projectile_path = "res://Prefabs/Components/Projectiles/Projectile.tscn"
+[node name="Items" parent="Selector/Options" instance=ExtResource( 4 )]
 
 [node name="AspenMeleeCharge" parent="Selector/Options" instance=ExtResource( 17 )]
 BASE_DAMAGE = 5
+
+[node name="Maple" parent="Selector/Options" instance=ExtResource( 24 )]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Flash_Red = SubResource( 1 )

@@ -8,13 +8,19 @@ var curr_scimitar
 var melee_active = false
 
 func _ready():
-	melee = character.get_node("Selector").find_ability("AspenMeleeCharge")
-	print("MELEE PATH: " + melee.get_path())
 	projectile = load(projectile_path)
-	position_manager = character.get_node("PositionManager")
+
+func initialize(charactr):
+	.initialize(charactr)
+	
 	character.get_node("Area2D").connect("area_entered",self,"on_area_entered")
+	
+	melee = character.get_node("Selector").find_ability("AspenMeleeCharge")
 	melee.connect("start_atk", self, "set_melee_active",[true])
 	melee.connect("end_atk", self, "set_melee_active",[false])
+	
+	position_manager = character.get_node("PositionManager")
+	pass
 
 func instantiate_projectile():
 	curr_scimitar = projectile.instance()
