@@ -9,11 +9,12 @@ signal end_atk		# signaled when the option ends its behavior
 
 export var option_name : String		# Name that appears in the selector label
 export var icon_path : String		# icon path
-
+export var instruction : String
 
 var active			# Determines if this option can act or not
 var parent_selector
 var character		# Character calling this option
+var instruction_label
 var control_scheme
 
 var duration_timer
@@ -34,6 +35,8 @@ func _ready():
 func initialize(pselecter, charactr):
 	parent_selector = pselecter
 	character = charactr
+	
+	instruction_label = character.get_node("Instructions/Label")
 	control_scheme = character.get_node("ControlScheme")
 	
 	connect("start_atk", parent_selector, "close")
@@ -53,6 +56,8 @@ func activate():
 	duration_timer.start()
 	print(option_name)
 	duration_label.start(duration_timer.time_left)
+	instruction_label.visible = true
+	instruction_label.text = instruction
 	emit_signal("start_atk")
 
 ###
@@ -62,6 +67,7 @@ func deactivate():
 	duration_timer.stop()
 	duration_label.stop()
 	active = false
+	instruction_label.visible = false
 	emit_signal("end_atk")
 
 func seize():

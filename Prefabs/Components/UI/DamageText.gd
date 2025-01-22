@@ -6,6 +6,7 @@ export (Color) var heal_color
 
 var text_color : Color
 var quantity_text : String
+var animation : String
 
 var label : Label
 
@@ -26,16 +27,18 @@ func _ready():
 	label.text = quantity_text
 	label.add_color_override("font_color",text_color)
 	
-	$AnimationPlayer.play("FadeOut")
+	$AnimationPlayer.play(animation)
 	pass # Replace with function body.
 
 func initialize(is_damage, quantity):
 	if is_damage:
 		text_color = damage_color
 		quantity_text = "-" + str(quantity)
+		animation = "FadeOut"
 	else:
 		text_color = heal_color
 		quantity_text = "+" + str(quantity)
+		animation = "FadeOutHeal"
 	pass
 
 func _physics_process(delta):

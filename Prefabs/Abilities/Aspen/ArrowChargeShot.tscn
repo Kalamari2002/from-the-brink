@@ -4,4 +4,8 @@
 
 [node name="ArrowChargeShot" instance=ExtResource( 1 )]
 option_name = "Arrows"
+instruction = "hold + release ATK"
 projectile_path = "res://Prefabs/Components/Projectiles/Arrow.tscn"
+
+[node name="Duration" parent="." index="1"]
+wait_time = 10.0

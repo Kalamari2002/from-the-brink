@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Fonts/DUNGRG__.TTF" type="DynamicFontData" id=1]
 [ext_resource path="res://Prefabs/Components/UI/DamageText.gd" type="Script" id=2]
@@ -37,6 +37,36 @@ tracks/1/keys = {
 } ]
 }
 
+[sub_resource type="Animation" id=3]
+resource_name = "FadeOutHeal"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Label:custom_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.0941176, 0.713726, 0.0235294, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "self_destroy"
+} ]
+}
+
 [node name="DamageText" type="KinematicBody2D"]
 position = Vector2( 460, 342 )
 script = ExtResource( 2 )
@@ -46,9 +76,10 @@ heal_color = Color( 0.0941176, 0.713726, 0.0235294, 1 )
 [node name="Label" type="Label" parent="."]
 margin_right = 276.0
 margin_bottom = 97.0
-custom_colors/font_color = Color( 0.894118, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 1 )
 text = "Damage"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/FadeOut = SubResource( 2 )
+anims/FadeOutHeal = SubResource( 3 )

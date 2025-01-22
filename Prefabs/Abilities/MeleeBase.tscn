@@ -6,6 +6,7 @@
 [node name="MeleeBase" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 option_name = "Charged Melee"
+instruction = "hold + release ATK"
 TOTAL_ATK_CNT = 1
 BASE_DAMAGE = 10
 LOW_MULT = 0.5
