@@ -2,15 +2,19 @@ extends "res://Prefabs/Effects/EffectBase.gd"
 
 var position_manager
 
-const INIT_COUNT = 3
+const INIT_COUNT = 15
 var move_count
+var x_offset = 20
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	move_count = INIT_COUNT
 	position_manager = character.get_node("PositionManager")
 	position_manager.connect("changed_quadrants",self,"decrement_move_count")
-	pass # Replace with function body.
+	if position_manager.get_is_right():
+		$MashDirectionsInstruction.position.x = 130
+	else:
+		$MashDirectionsInstruction.position.x = -60
+	pass
 
 func reset_effect():
 	move_count = INIT_COUNT
