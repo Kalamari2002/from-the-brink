@@ -5,6 +5,8 @@
 ###
 extends CanvasLayer
 
+signal ready_ended
+
 ###
 # Called when the initative order's end is broadcasted.
 ###
@@ -17,6 +19,7 @@ func play_animation():
 ###
 func end_ready():
 	print("end ready")
+	emit_signal("ready_ended")
 	get_node("Subscriber").send_message("ready_ended")
 
 ###

@@ -11,6 +11,7 @@
 [ext_resource path="res://Prefabs/Components/Characters/CursorManager.gd" type="Script" id=9]
 [ext_resource path="res://Prefabs/HealthManager.gd" type="Script" id=10]
 [ext_resource path="res://Prefabs/Components/Characters/AnimationManager.gd" type="Script" id=11]
+[ext_resource path="res://Prefabs/Components/Characters/BladesongManager.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Prefabs/Components/Characters/ControlScheme.gd" type="Script" id=13]
 [ext_resource path="res://Prefabs/Components/Characters/CharacterDisplay.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Prefabs/Abilities/Aspen/AspenMeleeCharge.tscn" type="PackedScene" id=17]
@@ -18,7 +19,6 @@
 [ext_resource path="res://Prefabs/Skills/Aspen/WeaponBond.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Prefabs/Abilities/Aspen/UI/AspenMeleeBar.tscn" type="PackedScene" id=20]
 [ext_resource path="res://Prefabs/Skills/Aspen/Bladesong.tscn" type="PackedScene" id=21]
-[ext_resource path="res://Prefabs/Components/Characters/ResourceManager.tscn" type="PackedScene" id=22]
 [ext_resource path="res://Prefabs/Components/UI/BladesongGauge.tscn" type="PackedScene" id=23]
 [ext_resource path="res://Prefabs/Abilities/Aspen/Maple.tscn" type="PackedScene" id=24]
 
@@ -87,10 +87,10 @@ margin_bottom = -72.0
 script = ExtResource( 10 )
 max_health = 100
 
-[node name="ResourceManager" parent="." instance=ExtResource( 22 )]
-display_name = "BladesongGauge"
-MAX_VALUE = 5
-is_capped = true
+[node name="EffectManager" parent="." instance=ExtResource( 8 )]
+position = Vector2( -35.3333, -61.3333 )
+
+[node name="ResourceManager" parent="." instance=ExtResource( 12 )]
 
 [node name="PositionManager" parent="." instance=ExtResource( 7 )]
 init_end_lag = 0.02
@@ -134,9 +134,6 @@ anims/Flash_Red = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource( 2 )
-
-[node name="EffectManager" parent="." instance=ExtResource( 8 )]
-position = Vector2( -35.3333, -61.3333 )
 
 [node name="SkillManager" parent="." instance=ExtResource( 18 )]
 dfs_spc_tap = "Bladesong"

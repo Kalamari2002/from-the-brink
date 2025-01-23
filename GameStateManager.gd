@@ -6,6 +6,7 @@
 extends Node2D
 
 signal game_set
+signal game_started
 signal top_of_the_round
 signal passed_turn
 
@@ -21,7 +22,7 @@ var game_over = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	instantiate_players()
-	#game_start()
+	get_node("/root/Board/Control/Ready").connect("ready_ended",self,"start_game")
 	pass # Replace with function body.
 
 ###
@@ -49,6 +50,7 @@ func instantiate_players():
 	for i in initiative_order:
 		i.connect("turn_ended", self, "switch_turn")
 		i.connect("died", self, "game_set")
+		connect("game_started",i,"on_game_start")
 	pass
 
 func _input(event):
@@ -77,6 +79,11 @@ func roll_initiative():
 	get_node("Subscriber").send_message("gege"+toBroadcast) # Broadcast initiative order, received by InitiativeRoll
 	pass
 	
+func start_game():
+	emit_signal("game_started")
+	top_of_the_round()
+	pass
+
 ###
 # Name is self explanatory. Called every time the last player finishes their turn
 # and increments the round_count. Called for first time when the Ready object broadcasts
@@ -146,6 +153,4 @@ func receive_message(message):
 		pass
 	if message == "intro_ended":
 		roll_initiative()
-	if message == "ready_ended":
-		top_of_the_round()
 	pass

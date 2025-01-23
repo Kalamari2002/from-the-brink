@@ -3,7 +3,7 @@ extends Node2D
 signal depleted
 
 export var display_name : String
-var display
+var display : Control
 var depleted = false
 export var MAX_VALUE : int
 export var is_capped : bool

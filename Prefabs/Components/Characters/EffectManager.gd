@@ -16,11 +16,13 @@ var hbox : HBoxContainer			# the horizontal boxed used to keep icons
 const GREENFLAME = preload("res://Prefabs/Effects/GreenFlame.tscn")
 const BURNIN = preload("res://Prefabs/Effects/Burnin.tscn")
 const MAPLED = preload("res://Prefabs/Effects/Mapled.tscn")
+const BURNEDOUT = preload("res://Prefabs/Effects/Burnedout.tscn")
 
 var effect_dict = {
 	"greenflame" : GREENFLAME,
 	"burnin" : BURNIN,
-	"mapled" : MAPLED
+	"mapled" : MAPLED,
+	"burnedout" : BURNEDOUT
 }
 
 var curr_effects = {}

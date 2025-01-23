@@ -1,6 +1,6 @@
 extends Node2D
 
-
+var enabled = false
 var trigger_both = false
 var both_pressed = false
 var character : Node2D
@@ -35,6 +35,8 @@ func _ready():
 	pass # Replace with function body.
 
 func _process(delta):
+	if !enabled:
+		return
 	if Input.is_action_pressed(control_scheme.confirm()) and Input.is_action_pressed(control_scheme.special()):
 		both_pressed = true
 	
@@ -70,6 +72,12 @@ func _process(delta):
 			else:
 				trigger_both = false
 		both_pressed = false
+
+func enable():
+	enabled = true
+
+func disable():
+	enabled = false
 
 func curr_spc(action):
 	if character.get_curr_state() != character.GameState.ATTACKING:

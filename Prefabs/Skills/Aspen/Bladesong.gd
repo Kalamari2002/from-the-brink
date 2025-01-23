@@ -21,7 +21,7 @@ func initialize(charactr):
 	pass
 
 func trigger():
-	if cooldown.time_left != 0 or !is_active():
+	if cooldown.time_left != 0 or !is_active() or !resource_manager.is_available():
 		return
 	begin()
 	pass
@@ -35,7 +35,6 @@ func _input(event):
 func _process(delta):
 	if is_bullet_time:
 		resource_manager.consume(delta/BULLET_TIME_SCALE)
-	print(cooldown.time_left)
 
 func begin():
 	if resource_manager.get_remaining_resource() <= 0:

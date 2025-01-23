@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Prefabs/Components/Characters/ResourceManager.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Prefabs/Components/Characters/BladesongManager.gd" type="Script" id=2]
+
+[node name="BladesongManager" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+display_name = "BladesongGauge"
+MAX_VALUE = 5
+is_capped = true

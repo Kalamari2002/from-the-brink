@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Prefabs/Effects/EffectBase.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Prefabs/Effects/Burnedout.gd" type="Script" id=2]
+
+[node name="Burnedout" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+init_duration = 3
+icon_name = "Burnedout_icon"
