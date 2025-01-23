@@ -1,8 +1,8 @@
 extends "res://Prefabs/Components/Characters/SkillBase.gd"
 
-var time_manager
-var control_scheme
-var resource_manager
+var time_manager : Node2D
+var control_scheme : Node2D
+var resource_manager : Node2D
 var is_bullet_time = false
 var BULLET_TIME_SCALE = 1
 
@@ -21,7 +21,7 @@ func initialize(charactr):
 	pass
 
 func trigger():
-	if !is_active():
+	if cooldown.time_left != 0 or !is_active():
 		return
 	begin()
 	pass
@@ -35,6 +35,8 @@ func _input(event):
 func _process(delta):
 	if is_bullet_time:
 		resource_manager.consume(delta/BULLET_TIME_SCALE)
+	print(cooldown.time_left)
+
 func begin():
 	if resource_manager.get_remaining_resource() <= 0:
 		return
@@ -45,8 +47,11 @@ func start_bullet_time():
 	time_manager.enter_bullet_time()
 	
 func stop_bullet_time():
+	if !is_bullet_time:
+		return
 	is_bullet_time = false
 	time_manager.normalize_time_scale()
+	cooldown.start()
 
 func is_active():
 	if character.get_curr_state() != character.GameState.WAITING:

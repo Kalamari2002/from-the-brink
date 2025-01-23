@@ -11,8 +11,8 @@ var animation : String
 var label : Label
 
 const GRAVITY = 10
-const X_RANGE = 70
-const Y_RANGE = -370
+const X_RANGE = 90
+const Y_RANGE = -380
 
 var direction : Vector2
 

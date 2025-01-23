@@ -1,7 +1,7 @@
 extends Node2D
 
-var character
-var cooldown
+var character : Node2D
+var cooldown : Timer
 
 func _ready():
 #	character = get_parent().get_parent()

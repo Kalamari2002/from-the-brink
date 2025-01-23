@@ -3,8 +3,8 @@ extends Node2D
 
 var trigger_both = false
 var both_pressed = false
-var character
-var control_scheme
+var character : Node2D
+var control_scheme : Node2D
 
 export var atk_tap : String
 export var atk_release : String
