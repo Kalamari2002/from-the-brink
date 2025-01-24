@@ -13,10 +13,7 @@ func _ready():
 	if dir == -1:
 		get_parent().get_node("Sprite").flip_h = true
 		get_parent().get_node("Area2D").scale = Vector2(-1,1)
-	pass # Replace with function body.
-
-func apply_acceleration(delta):
-	curr_base += (delta * time_manager.get_curr_scale())
+	pass
 	
 func multiply_speed(mult):
 	curr_base *= mult

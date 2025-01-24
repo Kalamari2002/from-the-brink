@@ -13,7 +13,7 @@ script = ExtResource( 2 )
 
 [node name="LinearMovement" type="Node2D" parent="."]
 script = ExtResource( 3 )
-base_speed = 5000
+base_speed = 90
 
 [node name="EffectOnCollisionBase" parent="." instance=ExtResource( 1 )]
 damage = 12

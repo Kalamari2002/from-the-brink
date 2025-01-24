@@ -74,7 +74,7 @@ playback_speed = 1.2
 anims/FadeIn = SubResource( 4 )
 
 [node name="ArcMovement" parent="." instance=ExtResource( 4 )]
-base_speed = 800
+base_speed = 14
 
 [node name="SlipperEffectOnCollisionBase" parent="." instance=ExtResource( 1 )]
 

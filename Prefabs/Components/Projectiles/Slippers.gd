@@ -33,14 +33,13 @@ func set_origin(character):
 	effect_manager = character.get_node("EffectManager")
 
 func _process(delta):
-	if abs(global_position.y - y_origin) <= 100:
-		collision_shape.disabled = false
-	if abs(global_position.y - y_origin) <= 50 and arc_movement.get_curr_y_vel() > 0:
+	if abs(global_position.y - y_origin) <= 20 and arc_movement.get_curr_y_vel() > 0:
 		bounce()
 
 func bounce():
 	if bounced:
 		return
+	collision_shape.disabled = false
 	animation_player.stop(false)
 	bounced = true
 	arc_movement.bounce()

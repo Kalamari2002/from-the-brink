@@ -48,7 +48,7 @@ script = ExtResource( 2 )
 
 [node name="BoomerangMovement" type="Node2D" parent="."]
 script = ExtResource( 6 )
-base_speed = 800
+base_speed = 20
 
 [node name="EffectOnCollisionBase" parent="." instance=ExtResource( 1 )]
 damage = 8

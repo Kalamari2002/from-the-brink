@@ -4,7 +4,8 @@ extends "res://Prefabs/Components/Projectiles/ProjectileComponents/ProjectileMov
 var left_column
 var right_column
 var going_back = false
-var acceleration = 15
+var acceleration = 40
+var bullet_time_offset = 2
 var animation_player
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -24,10 +25,9 @@ func _physics_process(delta):
 		switch_speed()
 	
 	var travel_vector = Vector2(dir,0)
-	get_parent().move_and_collide(travel_vector * delta * curr_base)
+	get_parent().move_and_collide(travel_vector * curr_base * time_manager.get_curr_scale())
 	if going_back:
-		apply_acceleration(-acceleration)
-		#curr_speed -= acceleration
+		curr_base -= (acceleration * delta)
 
 func switch_speed():
 	going_back = true
