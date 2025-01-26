@@ -36,3 +36,6 @@ func replenish(val):
 
 func get_remaining_resource():
 	return curr_value
+
+func is_available():
+	return !depleted

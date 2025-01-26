@@ -29,6 +29,3 @@ func replenish(val):
 		display.color_available()
 		depleted = false
 	display.update_value(curr_value)
-
-func is_available():
-	return !depleted

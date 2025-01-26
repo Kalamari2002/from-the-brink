@@ -1,17 +1,12 @@
 extends Node2D
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
 
+func self_destroy():
+	print("destroyed")
+	get_parent().queue_free()
 
 func _on_Timer_timeout():
-	print("destroy")
-	get_parent().queue_free()
+	self_destroy()
 	pass # Replace with function body.

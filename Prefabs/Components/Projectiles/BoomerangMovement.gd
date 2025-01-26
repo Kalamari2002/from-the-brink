@@ -1,13 +1,16 @@
 extends "res://Prefabs/Components/Projectiles/ProjectileComponents/ProjectileMovementBase.gd"
 
 
-var left_column
-var right_column
+var left_column : Node2D
+var right_column : Node2D
+
 var going_back = false
+var stopped = true
+
 var acceleration = 40
 var bullet_time_offset = 2
 var animation_player
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
 
 	left_column = get_tree().get_root().get_node("Board/Quadrants/left")
@@ -20,6 +23,11 @@ func _ready():
 		animation_player.play("Rotate")
 
 func _physics_process(delta):
+	movement(delta)
+
+func movement(delta):
+	if stopped:
+		return
 	
 	if global_position.x > right_column.global_position.x or global_position.x < left_column.global_position.x:
 		switch_speed()
@@ -28,6 +36,16 @@ func _physics_process(delta):
 	get_parent().move_and_collide(travel_vector * curr_base * time_manager.get_curr_scale())
 	if going_back:
 		curr_base -= (acceleration * delta)
+	pass
+
+func move():
+	stopped = false
+	curr_base = base_speed
+
+func stop():
+	stopped = true
+	curr_base = 0
+	going_back = false
 
 func switch_speed():
 	going_back = true

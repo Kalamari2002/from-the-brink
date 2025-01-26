@@ -1,14 +1,17 @@
 extends "res://Prefabs/Components/Characters/SkillBase.gd"
 
-var melee
-export var projectile_path : String
-var projectile
-var position_manager
-var curr_scimitar
+###
+# I think making it so that scimitars aren't instantiated and are just a child of Aspen
+# would make it easier to manage (and more practical performance wise).
+###
+const projectile = preload("res://Prefabs/Components/Projectiles/Scimitars.tscn")
+var position_manager : Node2D
+var resource_manager : Node2D
+var melee : Node2D
+var curr_scimitar : Node2D
 var melee_active = false
-
-func _ready():
-	projectile = load(projectile_path)
+var failed_catch = false
+const BLADESONG_COST  = 1.25
 
 func initialize(charactr):
 	.initialize(charactr)
@@ -20,13 +23,24 @@ func initialize(charactr):
 	melee.connect("end_atk", self, "set_melee_active",[false])
 	
 	position_manager = character.get_node("PositionManager")
+	resource_manager = character.get_node("ResourceManager")
 	pass
 
-func instantiate_projectile():
-	curr_scimitar = projectile.instance()
-	curr_scimitar.position = spawn_pos()
-	curr_scimitar.set_dir(get_dir())
-	get_node("/root/Board").add_child(curr_scimitar)
+func _input(event):
+	if event.is_action_pressed("ui_accept"):
+		print(curr_scimitar)
+
+func trigger():
+	if !is_active():
+		return
+	if cooldown.time_left != 0:
+		if !resource_manager.is_available() or !failed_catch:
+			return
+		elif failed_catch:
+			resource_manager.consume(BLADESONG_COST)
+	begin()
+	cooldown.start()
+	pass
 
 func begin():
 	if melee_active:
@@ -37,6 +51,14 @@ func begin():
 	.begin()
 	instantiate_projectile()
 
+func instantiate_projectile():
+	curr_scimitar = projectile.instance()
+	curr_scimitar.position = spawn_pos()
+	curr_scimitar.set_dir(get_dir())
+	curr_scimitar.get_node("SelfDestroyTimer").connect("self_destroyed",self,"fail_catch")
+	get_node("/root/Board").add_child(curr_scimitar)
+	failed_catch = false
+	
 func set_melee_active(val):
 	melee_active = val
 
@@ -58,6 +80,9 @@ func catch_scimitar():
 	end_cooldown()
 	curr_scimitar.queue_free()
 
+func fail_catch():
+	failed_catch = true
+
 func on_area_entered(area):
 	if curr_scimitar == null:
 		return
@@ -77,3 +102,7 @@ func is_active():
 	if character.get_curr_state() != character.GameState.ATTACKING:
 		return false
 	return true
+
+func _on_Cooldown_timeout():
+	failed_catch = false
+	pass # Replace with function body.

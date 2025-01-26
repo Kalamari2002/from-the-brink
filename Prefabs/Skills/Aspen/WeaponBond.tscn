@@ -5,7 +5,8 @@
 
 [node name="WeaponBond" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-projectile_path = "res://Prefabs/Components/Projectiles/Scimitars.tscn"
 
 [node name="Cooldown" parent="." index="0"]
-wait_time = 6.0
+wait_time = 20.0
+
+[connection signal="timeout" from="Cooldown" to="." method="_on_Cooldown_timeout"]
