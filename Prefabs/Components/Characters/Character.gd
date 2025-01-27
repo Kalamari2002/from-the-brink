@@ -41,8 +41,7 @@ func _ready():
 		control_scheme.set_scheme(2)
 		selector.flip_cards()
 		character_display.flip_self()
-		selector.define_control_scheme("p2_move_up","p2_move_down","p2_confirm","p2_special")
-		
+		selector.define_control_scheme("p2_move_up","p2_move_down","p2_confirm","p2_special")	
 	else:			# If odd will stand on the left
 		position_manager.set_home_column("/root/Board/Quadrants/left")
 		position_manager.set_is_right(0)
@@ -50,7 +49,6 @@ func _ready():
 		control_scheme.set_scheme(1)
 		selector.define_control_scheme("p1_move_up","p1_move_down","p1_confirm","p1_special")
 		
-	pass # Replace with function body.
 	position_manager.set_pos(1)
 	emit_signal("id_assigned")
 

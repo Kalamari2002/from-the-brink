@@ -34,7 +34,8 @@ func inflict_character(character):
 	pass
 
 func can_inflict_character(character):
-	if character.get_id() % 2 == 0:
+	var char_position_manager = character.get_node("PositionManager")
+	if char_position_manager.get_is_right():
 		if get_parent().get_dir() == -1 and !reflected:
 			return false
 	else:

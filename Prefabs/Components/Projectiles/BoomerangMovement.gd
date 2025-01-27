@@ -12,15 +12,9 @@ var bullet_time_offset = 2
 var animation_player
 
 func _ready():
-
 	left_column = get_tree().get_root().get_node("Board/Quadrants/left")
 	right_column = get_tree().get_root().get_node("Board/Quadrants/right")
 	animation_player = get_parent().get_node("AnimationPlayer")
-	
-	if dir == -1:
-		animation_player.play("Rotate_Reverse")
-	else:
-		animation_player.play("Rotate")
 
 func _physics_process(delta):
 	movement(delta)
@@ -38,14 +32,21 @@ func movement(delta):
 		curr_base -= (acceleration * delta)
 	pass
 
-func move():
+func move(direction : int):
+	dir = direction
 	stopped = false
 	curr_base = base_speed
+	
+	if dir == -1:
+		animation_player.play("Rotate_Reverse")
+	else:
+		animation_player.play("Rotate")
 
 func stop():
 	stopped = true
 	curr_base = 0
 	going_back = false
+	animation_player.stop()
 
 func switch_speed():
 	going_back = true
