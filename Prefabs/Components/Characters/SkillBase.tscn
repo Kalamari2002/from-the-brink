@@ -4,6 +4,7 @@
 
 [node name="SkillBase" type="Node2D"]
 script = ExtResource( 1 )
+icon_path = "res://Prefabs/Components/UI/SkillIcons/WeaponBond_icon.tscn"
 
 [node name="Cooldown" type="Timer" parent="."]
 one_shot = true

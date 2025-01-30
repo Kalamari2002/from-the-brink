@@ -5,3 +5,4 @@
 
 [node name="Bladesong" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+icon_path = "res://Prefabs/Components/UI/SkillIcons/Bladesong_icon.tscn"

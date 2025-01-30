@@ -20,6 +20,12 @@ func initialize(charactr):
 	resource_manager.connect("depleted", self, "stop_bullet_time")
 	pass
 
+func _process(delta):
+	if is_bullet_time:
+		resource_manager.consume(delta/BULLET_TIME_SCALE)
+	if cooldown.time_left != 0:
+		icon.update_bar(cooldown.time_left)
+
 func trigger():
 	if cooldown.time_left != 0 or !is_active() or !resource_manager.is_available():
 		return
@@ -31,10 +37,6 @@ func _input(event):
 		return
 	if event.is_action_released(control_scheme.special()):
 		stop_bullet_time()
-
-func _process(delta):
-	if is_bullet_time:
-		resource_manager.consume(delta/BULLET_TIME_SCALE)
 
 func begin():
 	if resource_manager.get_remaining_resource() <= 0:
@@ -52,8 +54,14 @@ func stop_bullet_time():
 	time_manager.normalize_time_scale()
 	cooldown.start()
 
+func on_character_state_change(state):
+	if state == character.GameState.ATTACKING or state == character.GameState.SELECTING:
+		icon_make_unavailable()
+	elif state == character.GameState.WAITING:
+		icon_make_available()
+	pass
+
 func is_active():
 	if character.get_curr_state() != character.GameState.WAITING:
 		return false
 	return true
-

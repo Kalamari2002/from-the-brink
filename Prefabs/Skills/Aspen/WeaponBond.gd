@@ -5,12 +5,11 @@ extends "res://Prefabs/Components/Characters/SkillBase.gd"
 # would make it easier to manage (and more practical performance wise).
 ###
 const projectile = preload("res://Prefabs/Components/Projectiles/BondedScimitar.tscn")
-const icon_ref = preload("res://Prefabs/Components/UI/SkillIcons/WeaponBond_icon.tscn")
+
 var scimitar : Node2D
 var position_manager : Node2D
 var resource_manager : Node2D
 var melee : Node2D
-var icon : Control
 var melee_active = false
 const BLADESONG_COST  = 1.25
 
@@ -25,10 +24,6 @@ func initialize(charactr):
 	position_manager = character.get_node("PositionManager")
 	resource_manager = character.get_node("ResourceManager")
 	
-	icon = icon_ref.instance()
-	character.get_node("CharacterDisplay/SkillIcons").add_child(icon)
-	icon.set_max_value(cooldown.wait_time)
-	character.connect("state_changed", self, "on_character_state_change")
 	character.connect("id_assigned", self, "instantiate_projectile")
 	pass
 
@@ -82,23 +77,6 @@ func set_melee_active(val):
 	melee_active = val
 	pass
 
-func on_character_state_change(state):
-	if state == character.GameState.ATTACKING:
-		icon_make_available()
-	else:
-		icon_make_unavailable()
-	pass
-
-func icon_make_available():
-	if !is_active():
-		return
-	icon.available()
-	pass
-
-func icon_make_unavailable():
-	icon.unavailable()
-	pass
-
 func end_cooldown():
 	.end_cooldown()
 	icon.update_bar(0)
@@ -109,6 +87,13 @@ func end_cooldown():
 ###
 func catch_scimitar():
 	end_cooldown()
+
+func on_character_state_change(state):
+	if state == character.GameState.ATTACKING:
+		icon_make_available()
+	else:
+		icon_make_unavailable()
+	pass
 
 ###
 # Gets the direction to which the projectile should be fired (if it's fired by a character standing
