@@ -126,6 +126,9 @@ func set_pos(pos):
 ###
 func get_curr_pos():
 	return curr_pos
+
+func get_character_pos():
+	return get_parent().global_position
 	
 ###
 # @return true if character is on the right side, false if on the left
@@ -137,7 +140,10 @@ func get_is_right():
 # Some projectiles might require an offset to be spawned. This is their reference.
 ###
 func get_spawn_offset():
-	return spawn_offset
+	var direction = 1
+	if is_right:
+		direction = -1
+	return spawn_offset * direction
 
 ###
 # When a quick time event starts, no character can move. Characters regain movement when a quick time event

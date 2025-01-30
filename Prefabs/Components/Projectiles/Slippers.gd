@@ -29,7 +29,8 @@ func _ready():
 	var animation_speed = rng.randf_range(0.6, 1.4)
 	animation_player.playback_speed = animation_speed
 
-func set_origin(character):
+func initialize(character):
+	.initialize(character)
 	effect_manager = character.get_node("EffectManager")
 
 func _process(delta):

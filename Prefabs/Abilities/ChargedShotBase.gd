@@ -54,10 +54,9 @@ func shoot_projectile():
 		reset_charge()
 		return
 	var p = projectile.instance()
-	p.position = spawn_pos()
-	p.set_dir(get_dir())
-	get_node("/root/Board").add_child(p)
+	p.initialize(character)
 	p.set_charge(charge)
+	get_node("/root/Board").add_child(p)
 	reset_charge()
 	pass
 	

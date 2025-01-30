@@ -6,11 +6,10 @@ var effect_manager
 func _ready():
 	pass # Replace with function body.
 
-func set_origin(character):
+func initialize(character):
+	.initialize(character)
 	effect_manager = character.get_node("EffectManager")
-	var position_manager = character.get_node("PositionManager")
-	set_origin_quadrant(position_manager.get_curr_pos())
-	get_node("ZigzagMovement").set_origin_quadrant(position_manager.get_curr_pos())
+	get_node("ZigzagMovement").set_origin_quadrant(origin_quadrant)
 
 func get_effect_manager():
 	return effect_manager

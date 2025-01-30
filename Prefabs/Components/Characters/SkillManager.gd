@@ -32,7 +32,7 @@ func _ready():
 	
 	for c in get_children():
 		c.initialize(character)
-	pass # Replace with function body.
+	pass
 
 func _process(delta):
 	if !enabled:

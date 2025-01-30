@@ -8,6 +8,7 @@ var hide_timer : Timer
 var collision_shape : CollisionShape2D
 var active = false
 var was_caught = true
+var xoffset : int
 
 func _ready():
 	movement = get_node("BoomerangMovement")
@@ -18,26 +19,32 @@ func _ready():
 	hide()
 	pass
 
+func initialize(character):
+	var position_manager = character.get_node("PositionManager")
+	xoffset = position_manager.get_spawn_offset()
+	dir = 1
+	if position_manager.get_is_right():
+		dir = -1
+	origin_quadrant = position_manager.get_curr_pos()
+
 ###
 # Makes itself visible, enables its collision and starts following its trajectory.
 # @param origin is the initial point from where the scimitar is tossed
 # @param direction is the direction where the scimitar will be heading at first, 1 = heading right, -1 = heading left
 # @return true if the toss was successful, false if it was unsuccessful
 ###
-func toss(origin : Vector2, direction : int) -> bool:
+func toss(origin : Vector2) -> bool:
 	if active:
 		return false
 	active = true
-	
 	visible = true
-	global_position = origin
+	global_position = Vector2(origin.x + xoffset, origin.y)
 	collision_shape.set_deferred("disabled",false)
-
-	set_dir(direction)
-	if direction == -1:
+	print(dir)
+	if dir == -1:
 		get_node("Sprite").flip_h = true
 		
-	movement.move(direction)
+	movement.move(dir)
 	hide_timer.start()
 	return true
 

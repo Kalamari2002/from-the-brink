@@ -29,16 +29,16 @@ func initialize(charactr):
 	character.get_node("CharacterDisplay/SkillIcons").add_child(icon)
 	icon.set_max_value(cooldown.wait_time)
 	character.connect("state_changed", self, "on_character_state_change")
-
-	instantiate_projectile()
+	character.connect("id_assigned", self, "instantiate_projectile")
 	pass
 
 func instantiate_projectile():
 	scimitar = projectile.instance()
-	scimitar.position = spawn_pos()
+	scimitar.initialize(character)
+	#scimitar.set_auto_catch_timer(cooldown.wait_time)
+	cooldown.connect("timeout", scimitar, "on_cooldown_end")
 	scimitar.connect("succeeded_catch", self, "catch_scimitar")
 	get_node("/root/Board").add_child(scimitar)
-	print(scimitar.get_dir())
 	pass
 
 func _process(delta):
@@ -56,6 +56,12 @@ func begin():
 	if scimitar.get_active(): # Means the scimitar is still on its trajectory
 		return
 	
+	if !scimitar.get_was_caught(): # If you try summoning the scimitars after failing to catch them
+		if resource_manager.is_available(): # Check if you have bladesong to spend
+			resource_manager.consume(BLADESONG_COST)
+		else: # If not, you can't toss the scimitar
+			return
+	
 	if melee_active: # Means Aspen is currently doing a melee attack
 		if melee.get_atk_count() > 1:
 			melee.decrement_atk_count()
@@ -63,18 +69,12 @@ func begin():
 		else:
 			return
 	
-	if !scimitar.get_was_caught(): # If you try summoning the scimitars after failing to catch them
-		if resource_manager.is_available(): # Check if you have bladesong to spend
-			resource_manager.consume(BLADESONG_COST)
-		else: # If not, you can't toss the scimitar
-			return
-	
 	.begin()
 	toss_scimitar()
 	pass
 
 func toss_scimitar():
-	scimitar.toss(spawn_pos(), get_dir())
+	scimitar.toss(character.global_position)
 	cooldown.start()
 	pass
 
@@ -98,19 +98,6 @@ func icon_make_available():
 func icon_make_unavailable():
 	icon.unavailable()
 	pass
-
-###
-# Determines if the offset should be to the left or right depending on which column the character
-# is standing (projectiles fired from right column are offset to the left, projectiles fired from
-# left are offset to the right).
-# @return the spawn pos of the projectile
-###
-func spawn_pos() -> Vector2:
-	var pos = character.global_position
-	var offset = character.get_node("PositionManager").get_spawn_offset()
-	print(offset)
-	pos.x += get_dir() * offset
-	return pos
 
 func end_cooldown():
 	.end_cooldown()
@@ -136,7 +123,3 @@ func is_active() -> bool:
 	if character.get_curr_state() != character.GameState.ATTACKING:
 		return false
 	return true
-
-func _on_Cooldown_timeout():
-	scimitar.on_cooldown_end()
-	pass # Replace with function body.

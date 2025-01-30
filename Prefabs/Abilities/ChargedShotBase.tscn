@@ -7,8 +7,5 @@
 script = ExtResource( 2 )
 projectile_path = ""
 
-[node name="Duration" type="Timer" parent="." index="0"]
+[node name="Duration" parent="." index="0"]
 wait_time = 6.0
-one_shot = true
-
-[connection signal="timeout" from="Duration" to="." method="_on_Duration_timeout"]
