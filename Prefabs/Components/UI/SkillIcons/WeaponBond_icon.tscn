@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Prefabs/Components/UI/SkillIcons/SkillIconBase.tscn" type="PackedScene" id=1]
+
+[node name="WeaponBond_icon" instance=ExtResource( 1 )]
+margin_right = -25.272
+margin_bottom = -25.0
+
+[node name="Unavailable" parent="." index="2"]
+visible = true

@@ -5,10 +5,12 @@ extends "res://Prefabs/Components/Characters/SkillBase.gd"
 # would make it easier to manage (and more practical performance wise).
 ###
 const projectile = preload("res://Prefabs/Components/Projectiles/BondedScimitar.tscn")
+const icon_ref = preload("res://Prefabs/Components/UI/SkillIcons/WeaponBond_icon.tscn")
 var scimitar : Node2D
 var position_manager : Node2D
 var resource_manager : Node2D
 var melee : Node2D
+var icon : Control
 var melee_active = false
 const BLADESONG_COST  = 1.25
 
@@ -18,10 +20,16 @@ func initialize(charactr):
 	melee = character.get_node("Selector").find_ability("AspenMeleeCharge")
 	melee.connect("start_atk", self, "set_melee_active",[true])
 	melee.connect("end_atk", self, "set_melee_active",[false])
+	melee.connect("melee_attacked", self, "icon_make_unavailable")
 	
 	position_manager = character.get_node("PositionManager")
 	resource_manager = character.get_node("ResourceManager")
 	
+	icon = icon_ref.instance()
+	character.get_node("CharacterDisplay/SkillIcons").add_child(icon)
+	icon.set_max_value(cooldown.wait_time)
+	character.connect("state_changed", self, "on_character_state_change")
+
 	instantiate_projectile()
 	pass
 
@@ -33,11 +41,15 @@ func instantiate_projectile():
 	print(scimitar.get_dir())
 	pass
 
+func _process(delta):
+	if cooldown.time_left != 0:
+		icon.update_bar(cooldown.time_left)
+	pass
+
 func trigger():
 	if !is_active():
 		return
 	begin()
-	cooldown.start()
 	pass
 	
 func begin():
@@ -47,6 +59,7 @@ func begin():
 	if melee_active: # Means Aspen is currently doing a melee attack
 		if melee.get_atk_count() > 1:
 			melee.decrement_atk_count()
+			icon_make_unavailable()
 		else:
 			return
 	
@@ -62,10 +75,28 @@ func begin():
 
 func toss_scimitar():
 	scimitar.toss(spawn_pos(), get_dir())
+	cooldown.start()
 	pass
 
 func set_melee_active(val):
 	melee_active = val
+	pass
+
+func on_character_state_change(state):
+	if state == character.GameState.ATTACKING:
+		icon_make_available()
+	else:
+		icon_make_unavailable()
+	pass
+
+func icon_make_available():
+	if !is_active():
+		return
+	icon.available()
+	pass
+
+func icon_make_unavailable():
+	icon.unavailable()
 	pass
 
 ###
@@ -80,6 +111,10 @@ func spawn_pos() -> Vector2:
 	print(offset)
 	pos.x += get_dir() * offset
 	return pos
+
+func end_cooldown():
+	.end_cooldown()
+	icon.update_bar(0)
 
 ###
 # Called on signal after scimitar collides with the character. Instantly ends this ability's

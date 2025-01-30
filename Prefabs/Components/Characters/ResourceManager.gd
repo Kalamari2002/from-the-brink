@@ -37,5 +37,8 @@ func replenish(val):
 func get_remaining_resource():
 	return curr_value
 
+func get_max_value():
+	return MAX_VALUE
+
 func is_available():
 	return !depleted

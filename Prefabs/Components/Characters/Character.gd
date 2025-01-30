@@ -8,6 +8,7 @@ signal turn_started
 signal turn_ended		# Signal is taken by GameStateManager to switch turns or end the game
 signal died				# Signaled when character dies
 signal id_assigned
+signal state_changed(state)
 
 enum GameState {WAITING, SELECTING, ATTACKING, ENDING, DEAD} # Determines what kinds of actions the player can take
 var curr_state			# current game state of the character
@@ -133,6 +134,7 @@ func change_state(state):
 	if curr_state == GameState.DEAD:
 		return false
 	curr_state = state
+	emit_signal("state_changed",curr_state)
 	return true
 
 ###

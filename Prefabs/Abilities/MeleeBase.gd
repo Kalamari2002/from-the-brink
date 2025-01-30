@@ -1,9 +1,9 @@
 extends "res://Prefabs/Components/Characters/OptionBase.gd"
 
 
-var cursor_manager
-var position_manager
-var melee_bar
+var cursor_manager : Node2D
+var position_manager : Node2D
+var melee_bar : Control
 
 export var TOTAL_ATK_CNT : int
 export var BASE_DAMAGE : int
@@ -17,8 +17,6 @@ var is_charging = false
 var multiplier = 1.0
 # Called when the node enters the scene tree for the first time.
 func _ready():
-
-	
 	atk_count = TOTAL_ATK_CNT
 	pass # Replace with function body.
 
