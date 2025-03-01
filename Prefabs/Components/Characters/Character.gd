@@ -15,23 +15,17 @@ var curr_state			# current game state of the character
 
 var id		# Unique id assigned by the GameStateManager
 
-var position_manager : Node2D
-var cursor_manager : Node2D
-var health_manager : Node2D
-var skill_manager : Node2D
-var selector : Node2D
-var control_scheme : Node2D
-var character_display : Control
+onready var position_manager = $PositionManager
+onready var cursor_manager = $CursorManager
+onready var health_manager = $HealthManager
+onready var skill_manager = $SkillManager
+onready var selector = $Selector
+onready var control_scheme = $ControlScheme
+onready var character_display = $CharacterDisplay
+onready var animation_manager = $AnimationManager
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	position_manager = get_node("PositionManager")
-	cursor_manager = get_node("CursorManager")
-	health_manager = get_node("HealthManager")
-	skill_manager = get_node("SkillManager")
-	selector = get_node("Selector")
-	control_scheme = get_node("ControlScheme")
-	character_display = get_node("CharacterDisplay")
 	
 	curr_state = GameState.WAITING # Starts waiting, can't select actions but can move around
 	
@@ -51,6 +45,7 @@ func _ready():
 		selector.define_control_scheme("p1_move_up","p1_move_down","p1_confirm","p1_special")
 		
 	position_manager.set_pos(1)
+	animation_manager.initialize(self)
 	emit_signal("id_assigned")
 
 func _input(event):
@@ -120,7 +115,8 @@ func take_dmg(dmg):
 func die():
 	if curr_state == GameState.DEAD:
 		return
-	curr_state = GameState.DEAD
+	#curr_state = GameState.DEAD
+	change_state(GameState.DEAD)
 	selector.seize_selector()
 	emit_signal("died") # Lets other objects know that this character is dead
 
