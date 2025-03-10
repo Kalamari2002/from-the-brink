@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://Prefabs/Components/Characters/Selector/Selector.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Prefabs/PCs/Aspen/Aspen.gd" type="Script" id=2]
@@ -9,7 +9,7 @@
 [ext_resource path="res://Prefabs/Components/Characters/PositionManager.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Prefabs/Components/Characters/EffectManager.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Prefabs/Components/Characters/CursorManager.gd" type="Script" id=9]
-[ext_resource path="res://Prefabs/HealthManager.gd" type="Script" id=10]
+[ext_resource path="res://Prefabs/Components/Characters/Selector/HealthManager.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Prefabs/Components/Characters/AnimationManager.gd" type="Script" id=11]
 [ext_resource path="res://Prefabs/Components/Characters/BladesongManager.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Prefabs/Components/Characters/ControlScheme.gd" type="Script" id=13]
@@ -24,6 +24,7 @@
 [ext_resource path="res://Sprites/Characters/Players/Aspen/Aspen_dead.png" type="Texture" id=22]
 [ext_resource path="res://Prefabs/Components/UI/BladesongGauge.tscn" type="PackedScene" id=23]
 [ext_resource path="res://Prefabs/Abilities/Aspen/Maple.tscn" type="PackedScene" id=24]
+[ext_resource path="res://Sprites/Characters/Players/Aspen/Aspen_damaged.png" type="Texture" id=25]
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 26.1725
@@ -33,6 +34,9 @@ bg_color = Color( 0.172549, 0.627451, 0.388235, 1 )
 
 [sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 0.392157, 0.0941176, 0.0941176, 1 )
+
+[sub_resource type="Animation" id=11]
+resource_name = "Aspen_damaged"
 
 [sub_resource type="Animation" id=5]
 resource_name = "Aspen_idle"
@@ -94,6 +98,36 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ ExtResource( 16 ) ]
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "damaged"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 25 ), ExtResource( 25 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.3 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "recover_from_hit"
+} ]
 }
 
 [sub_resource type="Animation" id=10]
@@ -245,9 +279,7 @@ margin_bottom = -72.0
 
 [node name="Instructions" parent="." instance=ExtResource( 6 )]
 
-[node name="HealthManager" type="Node2D" parent="."]
-script = ExtResource( 10 )
-max_health = 10
+[node name="HealthManager" parent="." instance=ExtResource( 10 )]
 
 [node name="EffectManager" parent="." instance=ExtResource( 8 )]
 position = Vector2( -35.3333, -61.3333 )
@@ -261,11 +293,14 @@ init_end_lag = 0.02
 script = ExtResource( 9 )
 
 [node name="AnimationManager" type="Node2D" parent="."]
+position = Vector2( 0, 3 )
+scale = Vector2( 1, 0.9 )
 script = ExtResource( 11 )
 hit_animation = "Flash_Red"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimationManager"]
 root_node = NodePath("../..")
+anims/Aspen_damaged = SubResource( 11 )
 anims/Aspen_idle = SubResource( 5 )
 anims/Flash_Red = SubResource( 1 )
 
@@ -273,12 +308,13 @@ anims/Flash_Red = SubResource( 1 )
 anims/step = SubResource( 7 )
 
 [node name="Sprite" type="Sprite" parent="AnimationManager"]
-position = Vector2( 0, -8.667 )
+position = Vector2( 0, 8.66667 )
 scale = Vector2( 0.15, 0.15 )
-texture = ExtResource( 22 )
+texture = ExtResource( 25 )
 
 [node name="SpriteAnimator" type="AnimationPlayer" parent="AnimationManager/Sprite"]
 anims/attacking = SubResource( 9 )
+anims/damaged = SubResource( 12 )
 anims/dead = SubResource( 10 )
 anims/idle = SubResource( 6 )
 anims/selecting = SubResource( 8 )
@@ -313,5 +349,3 @@ both_release = "WeaponBond"
 [node name="WeaponBond" parent="SkillManager" instance=ExtResource( 19 )]
 
 [node name="Bladesong" parent="SkillManager" instance=ExtResource( 21 )]
-
-[connection signal="health_depleted" from="HealthManager" to="." method="_on_HealthManager_health_depleted"]

@@ -3,6 +3,9 @@
 # or depleted.
 ###
 
+###
+# TODO: ADD INVULNERABILITY ON HIT (INVULNERABILITY TIMER)
+###
 extends Node2D
 
 signal health_change
@@ -10,13 +13,16 @@ signal health_depleted
 signal took_damaged
 signal healed
 
+onready var invul_timer = $Invulnerability
+
 export var max_health : int	# determines character initial and max health from inspector
-var curr_health : int
+
+onready var curr_health = max_health
+onready var invulnerable = false
 
 const damage_text = preload("res://Prefabs/Components/UI/DamageText.tscn")
 
 func _ready():
-	curr_health = max_health
 	connect("health_depleted",get_parent(),"die")
 
 ###
@@ -26,9 +32,10 @@ func _ready():
 ###
 func change_health(amount):
 	var new_text = damage_text.instance()
-	if curr_health + amount < curr_health: # damage
+	if (curr_health + amount < curr_health) and invul_timer.time_left == 0: # damage
 		emit_signal("took_damaged")
 		new_text.initialize(true, amount)
+		#invul_timer.start()
 	elif curr_health + amount > curr_health: # heal
 		emit_signal("healed")
 		new_text.initialize(false, amount)
@@ -52,3 +59,8 @@ func change_health(amount):
 ###
 func get_curr_health():
 	return curr_health
+
+func enable_invulnerability():
+	invulnerable = true
+func disable_invulnerability():
+	invulnerable = false
