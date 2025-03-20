@@ -59,7 +59,6 @@ func change_quadrant():
 	# Ask the home column if we can move to our destination. 
 	# if the column lets this character move to the requested position
 	###
-	print(curr_end_lag)
 	if curr_end_lag > 0:
 		endlag.start()
 	

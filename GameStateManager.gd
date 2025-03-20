@@ -44,8 +44,9 @@ func instantiate_players():
 	
 	get_node("/root/Board").call_deferred("add_child",p1)
 	get_node("/root/Board").call_deferred("add_child",p2)
-	initiative_order.append(p1)
 	initiative_order.append(p2)
+	initiative_order.append(p1)
+
 	
 	for i in initiative_order:
 		i.connect("turn_ended", self, "switch_turn")
@@ -66,8 +67,8 @@ func _input(event):
 ###
 func roll_initiative():
 	
-	randomize()
-	initiative_order.shuffle()
+	#randomize()
+	#initiative_order.shuffle()
 	
 	var allPlayers = ""
 	for i in initiative_order: # Get all nodes in the initiative order and extract their names
