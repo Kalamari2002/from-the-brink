@@ -32,13 +32,13 @@ func _ready():
 ###
 func change_health(amount):
 	var new_text = damage_text.instance()
-	if (curr_health + amount < curr_health) and invul_timer.time_left == 0: # damage
-		emit_signal("took_damaged")
-		new_text.initialize(true, amount)
-		#invul_timer.start()
-	elif curr_health + amount > curr_health: # heal
+
+	if curr_health + amount > curr_health: # heal
 		emit_signal("healed")
 		new_text.initialize(false, amount)
+	else:
+		emit_signal("took_damaged")
+		new_text.initialize(true, amount)
 	
 	new_text.global_position = global_position
 	get_node("/root/Board").add_child(new_text)

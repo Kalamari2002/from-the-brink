@@ -5,7 +5,6 @@ extends Node2D
 
 export var hit_animation : String
 
-
 var character : Node2D
 var position_manager : Node2D
 var health_manager : Node2D
@@ -13,8 +12,8 @@ var effect_manager : Node2D
 
 var lingering_animations = ["burnin"]
 
-onready var last_requested_animation = "idle"
-onready var curr_lingering_animation = ""
+onready var last_requested_animation = "idle"	# used to keep track of which animation to go back to after recovering from a hit or lingering animation
+onready var curr_lingering_animation = ""	# reflects the currently playing lingering animation. set to "" if no lingering animations are playing
 onready var animation_player = $AnimationPlayer
 onready var sprite_animator = $Sprite/SpriteAnimator
 onready var movement_animator = $MovementAnimator
@@ -30,7 +29,7 @@ func initialize(parent):
 	
 	effect_manager = character.get_node("EffectManager")
 	effect_manager.connect("applied_effect", self, "on_effect_apply")
-	effect_manager.connect("removed_effect", self, "on_effect_remove")
+	effect_manager.connect("removed_effect", self, "end_lingering_animation")
 	
 	position_manager = character.get_node("PositionManager")
 	position_manager.connect("changed_quadrants",self,"on_step")
@@ -44,19 +43,16 @@ func initialize(parent):
 	pass
 
 func on_effect_apply(effect_name : String):
-
 	if effect_name in lingering_animations:
 		print("Animation effect: " + effect_name)
 		play_lingering_animation(effect_name)
 	pass
 func on_effect_remove(effect_name: String):
-
 	if effect_name in lingering_animations:
 		end_lingering_animation(effect_name)
 	pass
 
 func play_sprite_animation(animation : String):
-
 	if animation == "dead":
 		sprite_animator.play(animation)
 	print("Current animation: ", curr_lingering_animation)
@@ -68,7 +64,6 @@ func play_sprite_animation(animation : String):
 	pass
 
 func play_hit_animation():
-
 	if character.get_curr_state() == character.GameState.DEAD or curr_lingering_animation != "":
 		return
 	animation_player.play(hit_animation)
@@ -79,7 +74,6 @@ func recover_from_hit():
 	pass
 
 func play_lingering_animation(animation : String):
-
 	var curr_state = character.get_curr_state()
 	if curr_state == character.GameState.DEAD:
 		return
@@ -88,7 +82,6 @@ func play_lingering_animation(animation : String):
 	sprite_animator.play(animation)
 	curr_lingering_animation = animation
 func end_lingering_animation(animation : String):
-
 	if animation != curr_lingering_animation:
 		return
 	curr_lingering_animation = ""

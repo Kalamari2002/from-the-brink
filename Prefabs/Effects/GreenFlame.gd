@@ -21,7 +21,7 @@ func reset_effect():
 	pass
 
 func combust(dmg):
-	var extra_damage = int(MULTIPLIER * dmg)
+	var extra_damage = max(1, int(MULTIPLIER * dmg))
 	health_manager.change_health(-extra_damage)
 	end_effect()
 	pass
