@@ -8,6 +8,8 @@ extends Node2D
 
 signal took_damage(dmg)		# Certain effects are triggered with damage. We use this signal everytime the character is dmged.
 signal healed			# Signaled when a character is healed
+signal applied_effect(effect_name)
+signal removed_effect(effect_name)
 
 var health_manager : Node2D		# Ref to the character's health manager
 var character : Node2D
@@ -58,6 +60,8 @@ func apply_effect(effect, arg):
 		new_effect.initialize(self,character)
 		add_child(new_effect)
 		curr_effects[effect] = new_effect.get_name()	#add it to the records
+		
+		emit_signal("applied_effect", effect)
 	else:	#otherwise
 		get_node(curr_effects[effect]).reset_effect()	#we just reset the effect
 	pass
@@ -83,6 +87,7 @@ func heal(health):
 func remove_effect(effect):
 	var key = effect.get_name().to_lower()
 	curr_effects.erase(key)
+	emit_signal("removed_effect",key)
 	remove_icon(effect.get_icon())
 	remove_child(effect)
 	effect.queue_free()
