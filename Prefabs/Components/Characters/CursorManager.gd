@@ -9,9 +9,14 @@ var active = false			# determines if cursor can behave/act or not
 var curr_pos				# current position of the cursor
 var adversary_column		# ref to the adversary column
 
-func _ready():
+func initialize(character):
 	curr_pos = 0 # by default, cursor starts at the top quadrant of the adversary column
-	pass # Replace with function body.
+	var character_id = character.get_id()
+	if character_id % 2 == 0:
+		set_adversary_column("/root/Board/Quadrants/left")
+	else:
+		set_adversary_column("/root/Board/Quadrants/right")
+	pass
 
 ###
 # Displays cursor position and makes it active. Called by attack options.

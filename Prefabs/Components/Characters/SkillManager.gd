@@ -17,8 +17,6 @@ export var both_release : String
 var skill_map = {}
 # Called when the node enters the scene tree for the first time.
 func _ready():
-#	character = get_parent()
-#	control_scheme = character.get_node("ControlScheme")
 	
 	skill_map = {
 		"atk_tap" : atk_tap,
@@ -30,8 +28,6 @@ func _ready():
 		"both_release" : both_release
 	}
 	
-#	for c in get_children():
-#		c.initialize(character)
 	pass
 
 func initialize(character):
