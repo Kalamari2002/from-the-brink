@@ -4,14 +4,18 @@ signal depleted
 
 export var display_name : String
 var display : Control
+
+var character : Node2D
+
 var depleted = false
 export var MAX_VALUE : int
 export var is_capped : bool
 var curr_value
 
-func _ready():
+func initialize(character:Node2D):
+	self.character = character
 	curr_value = MAX_VALUE
-	display = get_parent().get_node("CharacterDisplay/" + display_name)
+	display = character.get_node("CharacterDisplay/" + display_name)
 	display.update_value(curr_value)
 
 func consume(val):

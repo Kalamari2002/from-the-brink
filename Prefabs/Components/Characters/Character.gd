@@ -21,12 +21,15 @@ onready var effect_manager = $EffectManager
 onready var position_manager = $PositionManager
 onready var cursor_manager = $CursorManager
 onready var selector = $Selector
+onready var resource_manager = $ResourceManager
 onready var skill_manager = $SkillManager
 onready var animation_manager = $AnimationManager
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
+	on_ready()
+
+func on_ready():
 	if id % 2 == 0:	# If even will stand on the right
 		character_display.flip_self()
 		
@@ -37,6 +40,7 @@ func _ready():
 	position_manager.initialize(self)
 	cursor_manager.initialize(self)
 	selector.initialize(null,self)
+	resource_manager.initialize(self)
 	skill_manager.initialize(self)
 	animation_manager.initialize(self)
 	
