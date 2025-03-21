@@ -22,8 +22,8 @@ onready var invulnerable = false
 
 const damage_text = preload("res://Prefabs/Components/UI/DamageText.tscn")
 
-func _ready():
-	connect("health_depleted",get_parent(),"die")
+func initialize(character : Node2D):
+	connect("health_depleted",character,"die")
 
 ###
 # Called by the character's effect manager to take damage. Changes their health accordingly

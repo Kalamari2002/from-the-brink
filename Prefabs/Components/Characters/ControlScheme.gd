@@ -14,6 +14,15 @@ export var down2 : String
 export var confirm2 : String
 export var special2 : String
 
+
+func initialize(character: Node2D):
+	var character_id = character.get_id()
+	if character_id % 2 == 0:
+		set_scheme(2)
+	else:
+		set_scheme(1)
+	pass
+
 ###
 # Takes action labels and maps them to inputs.
 ###

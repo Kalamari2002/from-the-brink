@@ -27,28 +27,18 @@ onready var animation_manager = $AnimationManager
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
-	curr_state = GameState.WAITING # Starts waiting, can't select actions but can move around
-	
 	if id % 2 == 0:	# If even will stand on the right
-		position_manager.set_home_column("/root/Board/Quadrants/right")
-		position_manager.set_is_right(1)
-		cursor_manager.set_adversary_column("/root/Board/Quadrants/left")
-		control_scheme.set_scheme(2)
-		selector.initialize(null, self)
-		selector.flip_cards()
 		character_display.flip_self()
-		selector.define_control_scheme("p2_move_up","p2_move_down","p2_confirm","p2_special")	
-	else:			# If odd will stand on the left
-		position_manager.set_home_column("/root/Board/Quadrants/left")
-		position_manager.set_is_right(0)
-		cursor_manager.set_adversary_column("/root/Board/Quadrants/right")
-		control_scheme.set_scheme(1)
-		selector.initialize(null, self)
-		selector.define_control_scheme("p1_move_up","p1_move_down","p1_confirm","p1_special")
 		
-	position_manager.set_pos(1)
+	curr_state = GameState.WAITING # Starts waiting, can't select actions but can move around
+	health_manager.initialize(self)
+	position_manager.initialize(self)
+	cursor_manager.initialize(self)
+	control_scheme.initialize(self)
+	selector.initialize(null,self)
 	animation_manager.initialize(self)
 	skill_manager.initialize(self)
+	
 	emit_signal("id_assigned")
 
 func _input(event):
