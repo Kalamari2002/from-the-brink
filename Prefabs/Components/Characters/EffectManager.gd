@@ -72,12 +72,14 @@ func apply_effect(effect, arg):
 # @param dmg to be dealt
 ###
 func take_damage(dmg):
-	health_manager.change_health(-dmg)
+	#health_manager.change_health(-dmg)
+	health_manager.damage(dmg)
 	emit_signal("took_damage",dmg)
 	pass
 
 func heal(health):
-	health_manager.change_health(health)
+	#health_manager.change_health(health)
+	health_manager.heal(health)
 	emit_signal("healed")
 	pass
 

@@ -13,9 +13,9 @@ signal health_depleted
 signal took_damaged
 signal healed
 
-onready var invul_timer = $Invulnerability
-
 export var max_health : int	# determines character initial and max health from inspector
+
+onready var invul_timer = $Invulnerability
 
 onready var curr_health = max_health
 onready var invulnerable = false
@@ -26,31 +26,46 @@ func _ready():
 	connect("health_depleted",get_parent(),"die")
 
 ###
-# Called by the character to either take damage or heal. Changes their health accordingly
-# and sends a signal of whether the change was damage or heal, and if the health has depleted.
-# @param amount by which the health will be changed.
+# Called by the character's effect manager to take damage. Changes their health accordingly
+# and sends a signals that the character was damaged, and if the health has depleted.
+# @param damage to be taken.
 ###
-func change_health(amount):
+func damage(amount):
 	var new_text = damage_text.instance()
-
-	if curr_health + amount > curr_health: # heal
-		emit_signal("healed")
-		new_text.initialize(false, amount)
-	else:
-		emit_signal("took_damaged")
-		new_text.initialize(true, amount)
+	
+	emit_signal("took_damaged")
+	new_text.initialize(true, amount)
 	
 	new_text.global_position = global_position
 	get_node("/root/Board").add_child(new_text)
 	
-	if curr_health + amount > max_health: # prevent overheal
-		curr_health = max_health
-	elif curr_health + amount <= 0: # prevent health to go below 0 and signal that health is depleted
+	curr_health -= amount
+	
+	if curr_health <= 0:
 		curr_health = 0
-		print("depleted")
 		emit_signal("health_depleted")
-	else:
-		curr_health += amount
+
+	emit_signal("health_change")
+
+###
+# Called by the character's effect manager to heal. Changes their health accordingly
+# and sends a signals that the character was healed, adjusts health so it doesn't overheal.
+# @param health to be restored.
+###
+func heal(amount):
+	var new_text = damage_text.instance()
+	
+	emit_signal("healed")
+	new_text.initialize(false, amount)
+	
+	new_text.global_position = global_position
+	get_node("/root/Board").add_child(new_text)
+	
+	curr_health += amount
+	
+	if curr_health > max_health:
+		curr_health = max_health
+
 	emit_signal("health_change")
 
 ###
