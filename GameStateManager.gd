@@ -44,10 +44,9 @@ func instantiate_players():
 	
 	get_node("/root/Board").call_deferred("add_child",p1)
 	get_node("/root/Board").call_deferred("add_child",p2)
-	initiative_order.append(p2)
 	initiative_order.append(p1)
+	initiative_order.append(p2)
 
-	
 	for i in initiative_order:
 		i.connect("turn_ended", self, "switch_turn")
 		i.connect("died", self, "game_set")

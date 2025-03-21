@@ -11,25 +11,18 @@ var parent_selector
 var sub_offset = Vector2(180,0)
 var sub_flip_offset = Vector2(-180,0)
 
-
-###
-# Because Godot 3.5 doesnt let me override _ready (only extend it), this
-# is a work around.
-###
-func on_ready():
-	display = get_node("Display")
-	active = false
-	pass
-
 ###
 # Called by the parent selector. Defines the selector and character that own 
 # this subselector, allowing it to make connections without calling get_parent()
 # and preserving the parent to child hierarchy.
 ###
-func initialize(pselecter, charactr):
+func initialize(pselecter : Node2D, charactr : Node2D):
+	
+	active = false
 	
 	parent_selector = pselecter
 	character = charactr
+	display = get_node("Display")
 	
 	connect("opened_selector", parent_selector, "deactivate")
 	connect("option_picked", parent_selector, "close")
@@ -41,7 +34,6 @@ func initialize(pselecter, charactr):
 		options.append(c)
 	selected_idx = int( len(options)/2 ) # Starting option is the middle one
 	create_cards()
-	
 
 func _input(event):
 	if !active:

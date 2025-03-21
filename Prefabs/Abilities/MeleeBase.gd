@@ -4,6 +4,7 @@ extends "res://Prefabs/Components/Characters/OptionBase.gd"
 var cursor_manager : Node2D
 var position_manager : Node2D
 var melee_bar : Control
+var damage_data : Node
 
 export var TOTAL_ATK_CNT : int
 export var BASE_DAMAGE : int
@@ -15,13 +16,17 @@ export var CRIT_MULT : float
 var atk_count
 var is_charging = false
 var multiplier = 1.0
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	atk_count = TOTAL_ATK_CNT
 	pass # Replace with function body.
 
 func initialize(pselecter, charactr):
+	
 	.initialize(pselecter, charactr)
+	
 	control_scheme = character.get_node("ControlScheme")
 	cursor_manager = character.get_node("CursorManager")
 	position_manager = character.get_node("PositionManager")
@@ -35,6 +40,14 @@ func initialize(pselecter, charactr):
 	melee_bar.connect("base", self, "update_multiplier", [1])
 	melee_bar.connect("high", self, "update_multiplier", [HIGH_MULT])
 	melee_bar.connect("critical", self, "update_multiplier", [CRIT_MULT])
+	
+	damage_data = $DamageData
+	damage_data.set_origin(character)
+	print("origin: ", damage_data.origin.get_name())
+	print("target: ", damage_data.target_column)
+	print("damage: ", damage_data.value)
+	print("damage type: ", damage_data.dmg_type)
+	print("attack type: ", damage_data.atk_type)
 	
 	pass
 

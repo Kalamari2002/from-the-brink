@@ -37,18 +37,13 @@ var confirm_controls
 var special_controls
 
 var abilities = []
-func _ready():
-	on_ready()
-	pass
 
-func on_ready():
-	print("Base")
-
+func initialize(parent_selector : Node2D, character : Node2D):
 	display = get_node("Display")
-	character = get_parent()
+	self.character = character
 
 	for c in get_node("Options").get_children():
-		c.initialize(self, character)
+		c.initialize(self, self.character)
 		options.append(c)
 	selected_idx = int( len(options)/2 ) # Starting option is the middle one
 	create_cards()
@@ -90,6 +85,7 @@ func define_control_scheme(up,down,confirm,special):
 func create_cards():
 	position = offset
 	display.create_cards()
+
 ###
 # Takes the path of an option, instantiates it and adds it as a selectable option
 # in the selector.
