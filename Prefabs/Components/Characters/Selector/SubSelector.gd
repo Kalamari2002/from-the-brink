@@ -16,23 +16,20 @@ var sub_flip_offset = Vector2(-180,0)
 # this subselector, allowing it to make connections without calling get_parent()
 # and preserving the parent to child hierarchy.
 ###
-func initialize(pselecter : Node2D, charactr : Node2D):
-	
+func initialize(parent_selector : Node2D, character : Node2D):
+
+	display = get_node("Display")
 	active = false
 	
-	parent_selector = pselecter
-	character = charactr
-	display = get_node("Display")
+	self.character = character	
+
+	self.parent_selector = parent_selector
+	connect("opened_selector", self.parent_selector, "deactivate")
+	connect("option_picked", self.parent_selector, "close")
+	connect("go_back", self.parent_selector, "activate")
+	self.parent_selector.connect("seize", self, "seize_selector")
 	
-	connect("opened_selector", parent_selector, "deactivate")
-	connect("option_picked", parent_selector, "close")
-	connect("go_back", parent_selector, "activate")
-	parent_selector.connect("seize", self, "seize_selector")
-	
-	for c in get_node("Options").get_children():
-		c.initialize(self,character)
-		options.append(c)
-	selected_idx = int( len(options)/2 ) # Starting option is the middle one
+	initialize_children()
 	create_cards()
 
 func _input(event):
