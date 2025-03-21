@@ -14,14 +14,14 @@ enum GameState {WAITING, SELECTING, ATTACKING, ENDING, DEAD} # Determines what k
 var curr_state			# current game state of the character
 
 var id		# Unique id assigned by the GameStateManager
-
+onready var character_display = $CharacterDisplay
+onready var control_scheme = $ControlScheme
+onready var health_manager = $HealthManager
+onready var effect_manager = $EffectManager
 onready var position_manager = $PositionManager
 onready var cursor_manager = $CursorManager
-onready var health_manager = $HealthManager
-onready var skill_manager = $SkillManager
 onready var selector = $Selector
-onready var control_scheme = $ControlScheme
-onready var character_display = $CharacterDisplay
+onready var skill_manager = $SkillManager
 onready var animation_manager = $AnimationManager
 
 # Called when the node enters the scene tree for the first time.
@@ -31,13 +31,14 @@ func _ready():
 		character_display.flip_self()
 		
 	curr_state = GameState.WAITING # Starts waiting, can't select actions but can move around
+	control_scheme.initialize(self)
 	health_manager.initialize(self)
+	effect_manager.initialize(self)
 	position_manager.initialize(self)
 	cursor_manager.initialize(self)
-	control_scheme.initialize(self)
 	selector.initialize(null,self)
-	animation_manager.initialize(self)
 	skill_manager.initialize(self)
+	animation_manager.initialize(self)
 	
 	emit_signal("id_assigned")
 

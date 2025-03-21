@@ -29,12 +29,11 @@ var effect_dict = {
 
 var curr_effects = {}
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	character = get_parent()
-	health_manager = character.get_node("HealthManager")
+func initialize(character:Node2D):
+	self.character = character
+	health_manager = self.character.get_node("HealthManager")
 	hbox = get_node("EffectIcons/MarginContainer/HBoxContainer")
-	pass # Replace with function body.
+	pass
 
 ###
 # Takes a string and adds a corresponding effect as a child.
