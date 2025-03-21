@@ -2,9 +2,9 @@ extends "res://Prefabs/Components/Characters/ResourceManager.gd"
 
 var effect_manager : Node2D
 
-func _ready():
-	effect_manager = get_parent().get_node("EffectManager")
-	pass
+func initialize(character:Node2D):
+	.initialize(character)
+	effect_manager = character.get_node("EffectManager")
 
 func consume(val):
 	if depleted:

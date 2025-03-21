@@ -39,14 +39,20 @@ var special_controls
 var abilities = []
 
 func initialize(parent_selector : Node2D, character : Node2D):
+	
 	display = get_node("Display")
+	
 	self.character = character
+	var character_id = self.character.get_id()
 
-	for c in get_node("Options").get_children():
-		c.initialize(self, self.character)
-		options.append(c)
-	selected_idx = int( len(options)/2 ) # Starting option is the middle one
+	initialize_children()
 	create_cards()
+	
+	if character_id % 2 == 0:	# If even will stand on the right
+		flip_cards()
+		define_control_scheme("p2_move_up","p2_move_down","p2_confirm","p2_special")	
+	else:			# If odd will stand on the left
+		define_control_scheme("p1_move_up","p1_move_down","p1_confirm","p1_special")
 	pass
 
 func _input(event):
@@ -77,6 +83,13 @@ func define_control_scheme(up,down,confirm,special):
 	down_controls = down
 	confirm_controls = confirm
 	special_controls = special
+
+func initialize_children():
+	for c in get_node("Options").get_children():
+		c.initialize(self, character)
+		options.append(c)
+	selected_idx = int( len(options)/2 ) # Starting option is the middle one
+	pass
 
 ###
 # Positions itself and tells the display to create one card for each option

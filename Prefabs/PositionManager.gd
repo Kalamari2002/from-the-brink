@@ -17,21 +17,36 @@ var curr_pos : int 					# an integer that represents the quadrant where the char
 var destination : int				# Quadrant idx set that the character wants to move to next.
 
 var home_column : Node2D			# reference to the column where the character is standing
+var character : Node2D
+
 var can_move = true					# determines if the position manager can make requests to the board in the first place 
 
 var is_right : bool					# true if character is on the right column, false if not
 var spawn_offset = 64				# horizontal offset for projectiles
 
-onready var endlag = $EndLag
-onready var startlag = $StartLag
+var endlag : Timer
+var startlag : Timer
 
-func _ready():
+func initialize(character : Node2D):
+	endlag = $EndLag
+	startlag = $StartLag
+	
 	if init_end_lag > 0:
 		curr_end_lag = init_end_lag
 		endlag.wait_time = curr_end_lag
 	if init_start_lag > 0:
 		curr_start_lag = init_start_lag
 		startlag.wait_time = curr_start_lag
+	self.character = character
+	var id = self.character.get_id()
+	if id % 2 == 0:	# If even will stand on the right
+		set_home_column("/root/Board/Quadrants/right")
+		set_is_right(1)
+	else:			# If odd will stand on the left
+		set_home_column("/root/Board/Quadrants/left")
+		set_is_right(0)
+	set_pos(1)
+	pass
 
 ###
 # Checks if the character can move to a neighbor quadrant. If they can, call change_quadrant().
@@ -62,7 +77,7 @@ func change_quadrant():
 	if curr_end_lag > 0:
 		endlag.start()
 	
-	if home_column.step_to_quadrant(curr_pos, destination, get_parent()):
+	if home_column.step_to_quadrant(curr_pos, destination, character):
 		curr_pos = destination # update the current position.
 		emit_signal("changed_quadrants")
 	pass
@@ -119,7 +134,7 @@ func set_is_right(val):
 ###
 func set_pos(pos):
 	curr_pos = pos # update curr_pos accordingly
-	home_column.set_pos(-1,pos,get_parent()) # from is -1 to signal that the character hadn't been placed yet.
+	home_column.set_pos(-1,pos,character) # from is -1 to signal that the character hadn't been placed yet.
 
 ###
 # Gets the current quadrant where the character is standing.
@@ -128,7 +143,7 @@ func get_curr_pos():
 	return curr_pos
 
 func get_character_pos():
-	return get_parent().global_position
+	return character.global_position
 	
 ###
 # @return true if character is on the right side, false if on the left
