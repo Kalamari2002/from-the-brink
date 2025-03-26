@@ -4,14 +4,12 @@ var leech_path = "res://Prefabs/Abilities/Aspen/LeechArrowsVolley.tscn"
 var slipper_path = "res://Prefabs/Abilities/Aspen/SlippersVolley.tscn"
 
 var items_selector : Node2D
+var damage_data : Node
 var dug_quadrants = []
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
 
 func initialize(pselecter, charactr):
 	.initialize(pselecter,charactr)
+	damage_data = $DamageData
 	items_selector = character.get_node("Selector/Options/Items")
 	pass
 
@@ -19,7 +17,7 @@ func confirm_effect():
 	if !can_atk:
 		return
 	
-	cursor_manager.get_adversary_column().affect_quadrants("damage",2) # Requests opposite column to atk the selected quadrant
+	cursor_manager.get_adversary_column().affect_quadrants("damage",damage_data) # Requests opposite column to atk the selected quadrant
 	scavenge_option(cursor_manager.get_curr_pos())
 	
 	atk_count -= 1

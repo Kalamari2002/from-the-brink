@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Prefabs/Components/Projectiles/ProjectileComponents/EffectOnCollisionBase.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Prefabs/Components/Projectiles/Projectile.gd" type="Script" id=2]
+[ext_resource path="res://Prefabs/Components/Characters/DamageData.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Prefabs/Components/Projectiles/SelfDestroyTimer.gd" type="Script" id=4]
 [ext_resource path="res://Prefabs/Components/Projectiles/AccelLinearMovement.gd" type="Script" id=5]
 [ext_resource path="res://Sprites/Projectiles/Fire-Ball-PNG-Image.png" type="Texture" id=6]
@@ -12,11 +13,14 @@ radius = 27.0185
 [node name="FireBolt" type="KinematicBody2D"]
 script = ExtResource( 2 )
 
-[node name="AccelLinearMovement" type="Node2D" parent="."]
+[node name="DamageData" parent="." instance=ExtResource( 3 )]
+value = 2
+atk_type = 5
+
+[node name="_Movement" type="Node2D" parent="."]
 script = ExtResource( 5 )
 
-[node name="EffectOnCollisionBase" parent="." instance=ExtResource( 1 )]
-damage = 3
+[node name="_EffectOnCollision" parent="." instance=ExtResource( 1 )]
 effect = "burnin"
 
 [node name="Sprite" type="Sprite" parent="."]

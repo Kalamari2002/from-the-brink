@@ -7,10 +7,10 @@ export var value = 0
 export var ignore_invul = false
 
 enum DamageTypes {
-	BLUDGEONING, PIERCING, SLASHING,
-	ACID, COLD, FIRE, LIGHTNING, 
-	NECROTIC, POISON, THUNDER,
-	FORCE, PSYCHIC, RADIANT
+	BLUDGEONING, PIERCING, SLASHING, # 0, 1, 2
+	ACID, COLD, FIRE, LIGHTNING,  # 3, 4, 5, 6
+	NECROTIC, POISON, THUNDER, # 7, 8, 9
+	FORCE, PSYCHIC, RADIANT # 10, 11, 12
 }
 export var dmg_type = DamageTypes.SLASHING
 

@@ -6,6 +6,8 @@ const INIT_COUNT = 15
 var move_count
 var x_offset = 20
 
+onready var damage_data = $DamageData
+
 func _ready():
 	move_count = INIT_COUNT
 	position_manager = character.get_node("PositionManager")
@@ -26,5 +28,5 @@ func decrement_move_count():
 	pass
 
 func _on_ToDamage_timeout():
-	effect_manager.apply_effect("damage",1)
+	effect_manager.apply_effect("damage",damage_data)
 	pass # Replace with function body.

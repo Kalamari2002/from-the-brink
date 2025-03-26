@@ -48,7 +48,7 @@ func apply_effect(effect, arg):
 		take_damage(arg)
 		return
 	if effect == "replenish_resource":
-		character.get_node("ResourceManager").replenish(arg)
+		character.get_node("_ResourceManager").replenish(arg)
 		return
 	if effect == "heal":
 		heal(arg)

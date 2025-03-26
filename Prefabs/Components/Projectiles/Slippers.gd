@@ -12,14 +12,22 @@ var animation_player
 var shadow
 var effect_manager
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	y_origin = global_position.y
-	arc_movement  = get_node("ArcMovement")
-	collision_shape = get_node("Area2D/CollisionShape2D")
+	set_animation()
+
+func initialize(character):
+	.initialize(character)
+	effect_manager = character.get_node("EffectManager")
+	arc_movement  = $_Movement
+	
+	collision_shape = $Area2D/CollisionShape2D
 	collision_shape.disabled = true
-	animation_player = get_node("AnimationPlayer")
-	shadow = get_node("Shadow")
+	
+	animation_player = $AnimationPlayer
+	shadow = $Shadow
+
+func set_animation():
 	if dir == -1:
 		animation_player.play("Rotate_Reverse")
 	else:
@@ -28,10 +36,7 @@ func _ready():
 	rng.randomize()
 	var animation_speed = rng.randf_range(0.6, 1.4)
 	animation_player.playback_speed = animation_speed
-
-func initialize(character):
-	.initialize(character)
-	effect_manager = character.get_node("EffectManager")
+	pass
 
 func _process(delta):
 	if abs(global_position.y - y_origin) <= 20 and arc_movement.get_curr_y_vel() > 0:
