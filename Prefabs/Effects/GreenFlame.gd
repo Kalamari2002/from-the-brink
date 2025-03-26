@@ -8,7 +8,8 @@ extends "res://Prefabs/Effects/EffectBase.gd"
 const MULTIPLIER = 0.5
 var health_manager
 onready var timer = $Timer
-onready var set_damage = 0
+onready var damage_data = $DamageData
+
 func _ready():
 	health_manager = character.get_node("HealthManager")
 	
@@ -21,15 +22,15 @@ func _ready():
 func reset_effect():
 	pass
 
-func combust(dmg):
-	set_damage = dmg
+###
+# Called when the damaged character's health manager fires a "took_damage" signal
+###
+func combust(damage_amount : int):
+	damage_data.value = max(1, int(MULTIPLIER * damage_amount))
 	timer.start()
 	pass
 
-
 func _on_Timer_timeout():
-	var extra_damage = max(1, int(MULTIPLIER * set_damage))
-	#health_manager.change_health(-extra_damage)
-	effect_manager.apply_effect("damage", extra_damage)
+	effect_manager.apply_effect("damage", damage_data)
 	end_effect()
 	pass # Replace with function body.

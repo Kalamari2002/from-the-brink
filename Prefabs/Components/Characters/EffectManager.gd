@@ -70,10 +70,10 @@ func apply_effect(effect, arg):
 # and signaling that the character was damaged.
 # @param dmg to be dealt
 ###
-func take_damage(dmg):
+func take_damage(dmg : Node):
 	#health_manager.change_health(-dmg)
-	health_manager.damage(dmg)
-	emit_signal("took_damage",dmg)
+	health_manager.damage(dmg.value)
+	emit_signal("took_damage", dmg.value)
 	pass
 
 func heal(health):

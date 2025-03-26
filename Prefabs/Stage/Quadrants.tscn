@@ -39,6 +39,7 @@ texture = ExtResource( 1 )
 [node name="right" type="Node2D" parent="."]
 position = Vector2( 256, 0 )
 script = ExtResource( 4 )
+id = 1
 
 [node name="r0" type="Node2D" parent="right"]
 script = ExtResource( 2 )

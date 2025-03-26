@@ -9,7 +9,7 @@ func collide(area):
 			return
 		if can_inflict_character(character):
 			inflict_character(character)
-		else:
+		elif character == damage_data.origin:
 			emit_signal("caught")
 			pass
 	pass

@@ -16,7 +16,7 @@ func initialize(charactr):
 	
 	control_scheme = character.get_node("ControlScheme")
 	
-	resource_manager = character.get_node("ResourceManager")
+	resource_manager = character.get_node("_ResourceManager")
 	resource_manager.connect("depleted", self, "stop_bullet_time")
 	pass
 

@@ -55,7 +55,6 @@ func on_effect_remove(effect_name: String):
 func play_sprite_animation(animation : String):
 	if animation == "dead":
 		sprite_animator.play(animation)
-	print("Current animation: ", curr_lingering_animation)
 	last_requested_animation = animation
 	if curr_lingering_animation == "":
 		if animation == "":

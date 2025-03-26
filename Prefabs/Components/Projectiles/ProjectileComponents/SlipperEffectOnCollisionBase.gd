@@ -7,6 +7,6 @@ func _ready():
 	pass # Replace with function body.
 
 func inflict_character(character):
-	character.get_node("EffectManager").apply_effect("damage", damage)
+	character.get_node("EffectManager").apply_effect("damage", damage_data)
 	get_parent().get_effect_manager().apply_effect("replenish_resource",recover_on_hit)
 	pass

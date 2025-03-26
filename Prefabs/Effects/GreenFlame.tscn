@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Prefabs/Effects/GreenFlame.gd" type="Script" id=1]
+[ext_resource path="res://Prefabs/Components/Characters/DamageData.tscn" type="PackedScene" id=2]
 
 [node name="GreenFlame" type="Node2D"]
 script = ExtResource( 1 )
@@ -10,5 +11,10 @@ icon_name = "GreenFlame_icon"
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.2
 one_shot = true
+
+[node name="DamageData" parent="." instance=ExtResource( 2 )]
+ignore_invul = true
+dmg_type = 5
+atk_type = 2
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

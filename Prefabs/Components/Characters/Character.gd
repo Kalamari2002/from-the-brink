@@ -21,7 +21,7 @@ onready var effect_manager = $EffectManager
 onready var position_manager = $PositionManager
 onready var cursor_manager = $CursorManager
 onready var selector = $Selector
-onready var resource_manager = $ResourceManager
+onready var resource_manager = $_ResourceManager
 onready var skill_manager = $SkillManager
 onready var animation_manager = $AnimationManager
 

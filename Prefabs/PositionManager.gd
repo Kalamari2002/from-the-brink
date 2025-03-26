@@ -119,6 +119,9 @@ func set_can_move(perm):
 func set_home_column(path):
 	home_column = get_node(path)
 
+func get_home_column() -> Node2D:
+	return home_column
+
 ###
 # Called by the character after they are assigned a side.
 # @param val true if character is on right column, false if they're on the left
@@ -139,7 +142,7 @@ func set_pos(pos):
 ###
 # Gets the current quadrant where the character is standing.
 ###
-func get_curr_pos():
+func get_curr_pos() -> int:
 	return curr_pos
 
 func get_character_pos():

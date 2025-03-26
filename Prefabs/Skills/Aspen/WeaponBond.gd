@@ -22,7 +22,7 @@ func initialize(charactr):
 	melee.connect("melee_attacked", self, "icon_make_unavailable")
 	
 	position_manager = character.get_node("PositionManager")
-	resource_manager = character.get_node("ResourceManager")
+	resource_manager = character.get_node("_ResourceManager")
 	
 	character.connect("id_assigned", self, "instantiate_projectile")
 	pass

@@ -318,7 +318,7 @@ max_health = 100
 [node name="EffectManager" parent="." instance=ExtResource( 8 )]
 position = Vector2( -35.3333, -61.3333 )
 
-[node name="ResourceManager" parent="." instance=ExtResource( 12 )]
+[node name="_ResourceManager" parent="." instance=ExtResource( 12 )]
 
 [node name="PositionManager" parent="." instance=ExtResource( 7 )]
 init_end_lag = 0.02
@@ -372,7 +372,6 @@ special2 = "p2_special"
 [node name="Items" parent="Selector/Options" instance=ExtResource( 4 )]
 
 [node name="AspenMeleeCharge" parent="Selector/Options" instance=ExtResource( 17 )]
-BASE_DAMAGE = 5
 
 [node name="Maple" parent="Selector/Options" instance=ExtResource( 24 )]
 

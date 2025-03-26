@@ -2,30 +2,24 @@ extends "res://Prefabs/Components/Projectiles/Projectile.gd"
 
 signal succeeded_catch
 
-var movement : Node2D
-var effect_on_collision : Node2D
 var hide_timer : Timer
 var collision_shape : CollisionShape2D
-var active = false
-var was_caught = true
 var xoffset : int
 
+var active = false
+var was_caught = true
+
 func _ready():
-	movement = get_node("BoomerangMovement")
-	effect_on_collision = get_node("ScimitarEffectOnCollision")
-	effect_on_collision.connect("caught",self,"succeed_catch")
 	collision_shape = get_node("Area2D/CollisionShape2D")
 	hide_timer = get_node("HideTimer")
 	hide()
 	pass
 
 func initialize(character):
-	var position_manager = character.get_node("PositionManager")
+	.initialize(character)
 	xoffset = position_manager.get_spawn_offset()
-	dir = 1
-	if position_manager.get_is_right():
-		dir = -1
-	origin_quadrant = position_manager.get_curr_pos()
+	effect_on_collision.connect("caught",self,"succeed_catch")
+	pass
 
 ###
 # Makes itself visible, enables its collision and starts following its trajectory.

@@ -20,5 +20,5 @@ export var atk_type = AttackTypes.MELEE
 func set_origin(origin : Node2D):
 	self.origin = origin
 	var position_manager = origin.get_node("PositionManager")
-	target_column = not position_manager.get_is_right()
+	target_column = int(not position_manager.get_is_right())
 	pass

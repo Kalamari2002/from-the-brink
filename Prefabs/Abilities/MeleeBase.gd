@@ -17,7 +17,6 @@ var atk_count
 var is_charging = false
 var multiplier = 1.0
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	atk_count = TOTAL_ATK_CNT
@@ -53,6 +52,7 @@ func initialize(pselecter, charactr):
 
 func update_multiplier(mult):
 	multiplier = mult
+	print(multiplier)
 
 func _input(event):
 	if !active:
@@ -65,7 +65,8 @@ func _input(event):
 			confirm_effect()
 
 func confirm_effect():
-	cursor_manager.get_adversary_column().affect_quadrants("damage", calc_damage()) # Requests opposite column to atk the selected quadrant
+	damage_data.value = calc_damage()
+	cursor_manager.get_adversary_column().affect_quadrants("damage", damage_data) # Requests opposite column to atk the selected quadrant
 	atk_count -= 1
 	melee_bar.stop_charge()
 	is_charging = false

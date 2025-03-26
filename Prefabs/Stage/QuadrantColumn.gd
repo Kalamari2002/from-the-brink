@@ -5,6 +5,7 @@
 ###
 extends Node2D
 
+export var id : int
 var quadrants = []		# an array of quadrants, its children.
 
 func _ready():
@@ -105,3 +106,6 @@ func get_characters():
 func clear_cursor():
 	for i in quadrants:
 		i.unselect()
+
+func get_id()->int:
+	return id

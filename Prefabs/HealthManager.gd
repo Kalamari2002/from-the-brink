@@ -30,7 +30,7 @@ func initialize(character : Node2D):
 # and sends a signals that the character was damaged, and if the health has depleted.
 # @param damage to be taken.
 ###
-func damage(amount):
+func damage(amount : int):
 	var new_text = damage_text.instance()
 	
 	emit_signal("took_damaged")
@@ -52,7 +52,7 @@ func damage(amount):
 # and sends a signals that the character was healed, adjusts health so it doesn't overheal.
 # @param health to be restored.
 ###
-func heal(amount):
+func heal(amount : int):
 	var new_text = damage_text.instance()
 	
 	emit_signal("healed")
