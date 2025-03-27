@@ -40,10 +40,11 @@ func collide(area : Area2D):
 	pass
 
 func inflict_character(character : Node2D):
-	if damage_data.value != 0:
-		print("damage")
-		character.get_node("EffectManager").apply_effect("damage", damage_data)
-	character.get_node("EffectManager").apply_effect(effect, arg)
+#	if damage_data.value != 0:
+#		print("damage")
+#		character.get_node("EffectManager").apply_effect("damage", damage_data)
+#	character.get_node("EffectManager").apply_effect(effect, arg)
+	character.get_node("EffectManager").apply_on_hit_effects({"damage":damage_data, effect:arg})
 	pass
 
 func can_inflict_character(character : Node2D)->bool:

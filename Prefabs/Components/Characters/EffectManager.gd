@@ -68,16 +68,27 @@ func apply_effect(effect, arg):
 	pass
 
 ###
+# @param effects: a dictionary of effects with key-value being effect_name-arg
+###
+func apply_on_hit_effects(effects):
+	if invulnerability.time_left != 0:
+		return
+	for e in effects:
+		print("Effect: ", e)
+		apply_effect(e, effects[e]) 
+		pass
+	pass
+
+###
 # Damages a character by requesting a health change from the health manager
 # and signaling that the character was damaged.
 # @param dmg to be dealt
 ###
 func take_damage(dmg : Node):
-	if invulnerability.time_left != 0 and not dmg.ignore_invul:
-		return
 	health_manager.damage(dmg.value)
 	emit_signal("took_damage", dmg.value)
-	call_deferred("start_invulnerability")
+	if not dmg.ignore_invul:
+		call_deferred("start_invulnerability")
 	pass
 
 func heal(health):
@@ -98,7 +109,7 @@ func remove_effect(effect):
 
 func start_invulnerability():
 	invulnerability.start()
-	collision.disabled = true
+	#collision.disabled = true
 	pass
 
 func end_invulnerability():
