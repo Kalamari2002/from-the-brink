@@ -13,7 +13,9 @@ signal removed_effect(effect_name)
 
 var health_manager : Node2D		# Ref to the character's health manager
 var character : Node2D
+var invulnerability : Timer
 var hbox : HBoxContainer			# the horizontal boxed used to keep icons
+var collision : CollisionShape2D
 
 const GREENFLAME = preload("res://Prefabs/Effects/GreenFlame.tscn")
 const BURNIN = preload("res://Prefabs/Effects/Burnin.tscn")
@@ -31,8 +33,10 @@ var curr_effects = {}
 
 func initialize(character:Node2D):
 	self.character = character
+	collision = self.character.get_node("Area2D/CollisionShape2D")
 	health_manager = self.character.get_node("HealthManager")
 	hbox = get_node("EffectIcons/MarginContainer/HBoxContainer")
+	invulnerability = $Invulnerability
 	pass
 
 ###
@@ -41,7 +45,6 @@ func initialize(character:Node2D):
 # @param arg is an int that can be used to specify any quantity associated with the effect
 ###
 func apply_effect(effect, arg):
-	#print(effect + " ",arg)
 	if effect == "":
 		return
 	if effect == "damage":
@@ -53,7 +56,6 @@ func apply_effect(effect, arg):
 	if effect == "heal":
 		heal(arg)
 		return
-		
 	if not effect in curr_effects: # If we don't have the current effect
 		var new_effect = effect_dict[effect].instance()	#add the new effect
 		new_effect.initialize(self,character)
@@ -71,13 +73,14 @@ func apply_effect(effect, arg):
 # @param dmg to be dealt
 ###
 func take_damage(dmg : Node):
-	#health_manager.change_health(-dmg)
+	if invulnerability.time_left != 0 and not dmg.ignore_invul:
+		return
 	health_manager.damage(dmg.value)
 	emit_signal("took_damage", dmg.value)
+	call_deferred("start_invulnerability")
 	pass
 
 func heal(health):
-	#health_manager.change_health(health)
 	health_manager.heal(health)
 	emit_signal("healed")
 	pass
@@ -92,7 +95,16 @@ func remove_effect(effect):
 	remove_icon(effect.get_icon())
 	remove_child(effect)
 	effect.queue_free()
-	
+
+func start_invulnerability():
+	invulnerability.start()
+	collision.disabled = true
+	pass
+
+func end_invulnerability():
+	collision.disabled = false
+	pass
+
 ###
 # Called by an effect, takes a TextureRect scene and adds it to the hbox.
 # @param icon is the TextureRect object.
@@ -107,3 +119,7 @@ func add_icon(icon):
 func remove_icon(icon):
 	hbox.remove_child(icon)
 	icon.queue_free()
+
+func _on_Invulnerability_timeout():
+	call_deferred("end_invulnerability")
+	pass

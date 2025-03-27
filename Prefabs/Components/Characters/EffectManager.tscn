@@ -23,3 +23,9 @@ margin_bottom = 64.0
 margin_right = 40.0
 margin_bottom = 64.0
 alignment = 1
+
+[node name="Invulnerability" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[connection signal="timeout" from="Invulnerability" to="." method="_on_Invulnerability_timeout"]

@@ -15,8 +15,6 @@ signal healed
 
 export var max_health : int	# determines character initial and max health from inspector
 
-onready var invul_timer = $Invulnerability
-
 onready var curr_health = max_health
 onready var invulnerable = false
 
