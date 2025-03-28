@@ -42,6 +42,10 @@ func apply_effect(effect, arg):
 	for c in held_characters:
 		c.get_node("EffectManager").apply_effect(effect,arg)
 
+func apply_on_hit_effects(effects):
+	for c in held_characters:
+		c.get_node("EffectManager").apply_on_hit_effects(effects)
+
 ###
 # Returns how many characters are standing in this quadrant.
 # @return character count

@@ -66,7 +66,8 @@ func _input(event):
 
 func confirm_effect():
 	damage_data.value = calc_damage()
-	cursor_manager.get_adversary_column().affect_quadrants("damage", damage_data) # Requests opposite column to atk the selected quadrant
+	#cursor_manager.get_adversary_column().affect_quadrants("damage", damage_data) # Requests opposite column to atk the selected quadrant
+	cursor_manager.get_adversary_column().affect_on_hit_quadrants({"damage":damage_data})
 	atk_count -= 1
 	melee_bar.stop_charge()
 	is_charging = false

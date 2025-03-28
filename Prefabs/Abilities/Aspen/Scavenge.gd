@@ -17,7 +17,8 @@ func confirm_effect():
 	if !can_atk:
 		return
 	
-	cursor_manager.get_adversary_column().affect_quadrants("damage",damage_data) # Requests opposite column to atk the selected quadrant
+	#cursor_manager.get_adversary_column().affect_quadrants("damage",damage_data) # Requests opposite column to atk the selected quadrant
+	cursor_manager.get_adversary_column().affect_on_hit_quadrants({"damage":damage_data})
 	scavenge_option(cursor_manager.get_curr_pos())
 	
 	atk_count -= 1

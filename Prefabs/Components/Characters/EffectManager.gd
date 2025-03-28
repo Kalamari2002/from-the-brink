@@ -73,6 +73,7 @@ func apply_effect(effect, arg):
 func apply_on_hit_effects(effects):
 	if invulnerability.time_left != 0:
 		return
+	print("ON HIT")
 	for e in effects:
 		print("Effect: ", e)
 		apply_effect(e, effects[e]) 

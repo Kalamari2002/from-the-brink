@@ -89,6 +89,11 @@ func affect_quadrants(effect, arg):
 	for q in quadrants:
 		if q.is_selected():
 			q.apply_effect(effect,arg)
+func affect_on_hit_quadrants(effects):
+	for q in quadrants:
+		if q.is_selected():
+			q.apply_on_hit_effects(effects)
+
 
 ###
 # @return all characters in the column
