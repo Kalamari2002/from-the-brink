@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Prefabs/Components/Projectiles/BondedScimitar.gd" type="Script" id=1]
-[ext_resource path="res://Sprites/Projectiles/638506870305531070.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Projectiles/scimitar glow.png" type="Texture" id=2]
 [ext_resource path="res://Prefabs/Components/Projectiles/ProjectileComponents/BoomerangMovement.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Prefabs/Components/Projectiles/ProjectileComponents/ScimitarEffectOnCollision.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Prefabs/Components/Characters/DamageData.tscn" type="PackedScene" id=5]
@@ -56,7 +56,7 @@ atk_type = 1
 effect = "greenflame"
 
 [node name="Sprite" type="Sprite" parent="."]
-scale = Vector2( 0.12, 0.12 )
+scale = Vector2( -0.12, 0.15 )
 texture = ExtResource( 2 )
 
 [node name="Area2D" type="Area2D" parent="." groups=["projectiles"]]
