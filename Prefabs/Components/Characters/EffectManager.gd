@@ -15,7 +15,6 @@ var health_manager : Node2D		# Ref to the character's health manager
 var character : Node2D
 var invulnerability : Timer
 var hbox : HBoxContainer			# the horizontal boxed used to keep icons
-var collision : CollisionShape2D
 
 const GREENFLAME = preload("res://Prefabs/Effects/GreenFlame.tscn")
 const BURNIN = preload("res://Prefabs/Effects/Burnin.tscn")
@@ -33,14 +32,14 @@ var curr_effects = {}
 
 func initialize(character:Node2D):
 	self.character = character
-	collision = self.character.get_node("Area2D/CollisionShape2D")
 	health_manager = self.character.get_node("HealthManager")
 	hbox = get_node("EffectIcons/MarginContainer/HBoxContainer")
 	invulnerability = $Invulnerability
 	pass
 
 ###
-# Takes a string and adds a corresponding effect as a child.
+# Takes a string and adds a corresponding effect as a child. Ignores invulnerability if called 
+# on its own (useful for passive damage effects and non-attack effects).
 # @param effect is a string that represents the effect to be inflicted. Set to "damage" if you just wanna damage a character
 # @param arg is an int that can be used to specify any quantity associated with the effect
 ###
@@ -68,22 +67,27 @@ func apply_effect(effect, arg):
 	pass
 
 ###
-# @param effects: a dictionary of effects with key-value being effect_name-arg
+# Used to damage/inflict effects on the character by hitting them (thru a melee or
+# projectile attack). This function checks for the current invulnerability timer, 
+# and applies effect to the character only if they aren't invulnerable.
+# @param effects: a dictionary of effects with {key : value} being {"effect name" : arg}
+# @return false if the effect doesn't go through (character was invulnerable)
+# @return true if the effect goes through (character was vulnerable)
 ###
-func apply_on_hit_effects(effects):
+func apply_on_hit_effects(effects) -> bool:
 	if invulnerability.time_left != 0:
-		return
+		return false
 	print("ON HIT")
 	for e in effects:
 		print("Effect: ", e)
 		apply_effect(e, effects[e]) 
-		pass
-	pass
+	return true
 
 ###
-# Damages a character by requesting a health change from the health manager
-# and signaling that the character was damaged.
-# @param dmg to be dealt
+# Damages a character by passing the damage value to the health manager and signaling 
+# that the character was damaged. If source doesn't ignore invulnerability, start the
+# invulnerability timer.
+# @param damage_data object for the damage source
 ###
 func take_damage(dmg : Node):
 	health_manager.damage(dmg.value)
@@ -92,6 +96,9 @@ func take_damage(dmg : Node):
 		call_deferred("start_invulnerability")
 	pass
 
+###
+# Heals a character by
+###
 func heal(health):
 	health_manager.heal(health)
 	emit_signal("healed")
@@ -108,15 +115,14 @@ func remove_effect(effect):
 	remove_child(effect)
 	effect.queue_free()
 
+###
+# Called when taken damage by a source that doesn't ignore invulnerability. Starts
+# the invulnerability timer.
+###
 func start_invulnerability():
 	invulnerability.start()
-	#collision.disabled = true
 	pass
-
-func end_invulnerability():
-	collision.disabled = false
-	pass
-
+	
 ###
 # Called by an effect, takes a TextureRect scene and adds it to the hbox.
 # @param icon is the TextureRect object.
@@ -131,7 +137,3 @@ func add_icon(icon):
 func remove_icon(icon):
 	hbox.remove_child(icon)
 	icon.queue_free()
-
-func _on_Invulnerability_timeout():
-	call_deferred("end_invulnerability")
-	pass

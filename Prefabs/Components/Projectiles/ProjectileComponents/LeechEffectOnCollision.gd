@@ -6,6 +6,6 @@ func _ready():
 	
 func inflict_character(character):
 	var origin_effect_manager = damage_data.origin.get_node("EffectManager")
-	character.get_node("EffectManager").apply_on_hit_effects({"damage":damage_data})
-	origin_effect_manager.apply_effect("heal",damage_data.value)
+	if character.get_node("EffectManager").apply_on_hit_effects({"damage":damage_data}):
+		origin_effect_manager.apply_effect("heal",damage_data.value)
 	pass

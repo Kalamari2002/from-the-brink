@@ -26,5 +26,3 @@ alignment = 1
 
 [node name="Invulnerability" type="Timer" parent="."]
 one_shot = true
-
-[connection signal="timeout" from="Invulnerability" to="." method="_on_Invulnerability_timeout"]
