@@ -66,9 +66,6 @@ func _input(event):
 ###
 func roll_initiative():
 	
-	#randomize()
-	#initiative_order.shuffle()
-	
 	var allPlayers = ""
 	for i in initiative_order: # Get all nodes in the initiative order and extract their names
 		var og = String(i.get_path())
@@ -111,6 +108,16 @@ func switch_turn():
 		initiative_idx = 0
 		top_of_the_round()
 	emit_signal("passed_turn")
+	pass
+
+func start_quick_time_event():
+	for i in initiative_order:
+		i.pause_control()
+	pass
+
+func end_quick_time_event():
+	for i in initiative_order:
+		i.resume_control()
 	pass
 
 ###

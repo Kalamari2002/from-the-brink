@@ -93,6 +93,12 @@ func end_turn():
 	print(String(get_path()) + " has ended their turn")
 	pass
 
+func pause_control():
+	position_manager.set_can_move(false)
+
+func resume_control():
+	position_manager.set_can_move(true)
+
 ###
 # Sets game state to attacking. This is called on signals by attack options.
 ###

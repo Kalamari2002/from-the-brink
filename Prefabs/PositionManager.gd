@@ -37,7 +37,9 @@ func initialize(character : Node2D):
 	if init_start_lag > 0:
 		curr_start_lag = init_start_lag
 		startlag.wait_time = curr_start_lag
+	
 	self.character = character
+	
 	var id = self.character.get_id()
 	if id % 2 == 0:	# If even will stand on the right
 		set_home_column("/root/Board/Quadrants/right")
@@ -162,17 +164,6 @@ func get_spawn_offset():
 	if is_right:
 		direction = -1
 	return spawn_offset * direction
-
-###
-# When a quick time event starts, no character can move. Characters regain movement when a quick time event
-# ends.
-###
-func receive_message(message):
-	if message == "quick_time_start":
-		set_can_move(false)
-	if message == "quick_time_end":
-		set_can_move(true)
-	pass
 
 func _on_StartLag_timeout():
 	change_quadrant()

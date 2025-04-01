@@ -16,13 +16,7 @@ func _ready():
 	broadcaster = get_node("/root/Board/GameManager/Broadcaster")
 	broadcaster.add_subscriber(self) #adds itself as a listener
 	pass # Replace with function body.
-
-### Uncomment for debugging purposes
-#func _input(event):
-#	if event.is_action_pressed("broadcast_remove"):
-#		broadcaster.remove_subscriber(self)
-#		pass
-
+	
 ###
 # Called by the broadcaster. Passes on the received message to the parent of this subscriber.
 # @param message is the String which will be passed on to the object using this Subscriber

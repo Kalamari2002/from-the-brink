@@ -7,19 +7,14 @@ var target				# character to whom the effects will be applied if caller wins the
 
 var quicktimeevent = preload("res://Prefabs/Components/Characters/QuickTimeEvent.tscn")
 var quicktimeobject # used to reference the created quicktime event, deletes it l8r
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-#	control_scheme = character.get_node("ControlScheme")
-#	cursor_manager = character.get_node("CursorManager")
-#	position_manager = character.get_node("PositionManager")
-	pass # Replace with function body.
+var damage_data : Node
 
 func initialize(pselecter, charactr):
 	.initialize(pselecter, charactr)
 	control_scheme = character.get_node("ControlScheme")
 	cursor_manager = character.get_node("CursorManager")
 	position_manager = character.get_node("PositionManager")
+	damage_data = $DamageData
 ###
 # Called by OptionSelector to initiate this attack. Emits signal that the attack has begun,
 # picks the target of the attack and initializes a quick time event
@@ -28,6 +23,7 @@ func activate():
 	.activate()
 	determine_target()
 	initialize_event()
+
 ###
 # Picks the target of the qt atk. It just gets the first character in the opposite column.
 # If more players are added this is gonna have to be changed.
@@ -70,5 +66,5 @@ func check_result():
 # Effect applied to target
 ###
 func apply_effect():
-	target.get_node("EffectManager").apply_effect("damage",40)
+	target.get_node("EffectManager").apply_effect("damage",damage_data)
 

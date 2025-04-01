@@ -5,23 +5,24 @@
 ###
 extends Node2D
 
+signal start					# Signals when the quick time event starts
+signal finish					# Signals when the quick time event exits
 
-signal finish				# Signals when the quick time event exits
-var participants = []		# List of QuickTimeEventParticipants that keep track of the contestants
+var participants = []			# List of QuickTimeEventParticipants that keep track of the contestants
 export var input_count : int	# Number of inputs in the time event
 var is_active = false			# Doesn't start taking inputs until it's set to active
 var part = preload("res://Prefabs/Components/Characters/QuickTimeParticipant.tscn")	# Participant
-var canvaslayer			# To display the inputs
-var side_of_caller		# Integer that determines which column the caller is at (0 = left, 1 = right)
-var subscriber			# To announce to participants' respective objects that the contest is over
-var animation_player	# Ref to animation player
-var has_caller_won		# true if the caller finishes the event before the target, false if otherwise
+var side_of_caller				# Integer that determines which column the caller is at (0 = left, 1 = right)
+
+var has_caller_won				# true if the caller finishes the event before the target, false if otherwise
+onready var canvaslayer = $QuickTimeLayer
+onready var animation_player = $AnimationPlayer # Ref to animation player
+onready var game_state_manager = get_tree().root.get_node("Board/GameManager/GameStateManager")
 
 func _ready():
-	canvaslayer = get_node("QuickTimeLayer")
-	subscriber = get_node("Subscriber")
-	animation_player = get_node("AnimationPlayer")
-	pass # Replace with function body.
+	self.connect("start", game_state_manager, "start_quick_time_event")
+	self.connect("finish", game_state_manager, "end_quick_time_event")
+	pass
 
 func _input(event):
 	if !is_active:
@@ -42,8 +43,7 @@ func _input(event):
 func start_quicktime(side, left_scheme, right_scheme):
 	if is_active:
 		return
-	subscriber.send_message("quick_time_start") # signals broadly that a quick time has started
-	
+	emit_signal("start")
 	side_of_caller = side
 	add_participant(0,left_scheme)
 	add_participant(1,right_scheme)
@@ -152,8 +152,6 @@ func end_quicktime():
 func exit():
 	has_caller_won = participants[side_of_caller].get_has_succeeded()
 	participants.clear()
-	subscriber.send_message("quick_time_end")
-	subscriber.remove()
 	emit_signal("finish")
 
 func get_has_caller_won():
@@ -162,6 +160,3 @@ func get_has_caller_won():
 func _on_Timer_timeout():
 	end_quicktime()
 	pass # Replace with function body.
-	 
-func receive_message(message):
-	pass

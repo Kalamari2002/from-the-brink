@@ -1,9 +1,8 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Prefabs/Components/Characters/QuickTimeEvent.gd" type="Script" id=1]
 [ext_resource path="res://Prefabs/Components/QuickTimeLayer.gd" type="Script" id=2]
 [ext_resource path="res://Fonts/DUNGRG__.TTF" type="DynamicFontData" id=3]
-[ext_resource path="res://Prefabs/Subscriber.tscn" type="PackedScene" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 38
@@ -254,8 +253,6 @@ text = "Winner!"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="QuickTimeLayer/MarginContainer/P2Container"]
 anims/flash_red = SubResource( 3 )
-
-[node name="Subscriber" parent="." instance=ExtResource( 4 )]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/draw = SubResource( 6 )

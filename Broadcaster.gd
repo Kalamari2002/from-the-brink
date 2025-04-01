@@ -9,19 +9,13 @@ extends Node2D
 
 var subscribers = [] # Keeps track of all Subscribers
 
-# Uncomment for debugging purposes
-#func _input(event):
-#	if event.is_action_pressed("broadcast_notify"):
-#		broadcast_message("WAKE UP")
-#	pass
-
 ###
 # Called by a Subscriber. It adds the Subscriber to the subcsribers list.
 # @param subs is the Subscriber to be added
 ###
 func add_subscriber(subs):
 	subscribers.append(subs)
-	print("added " + subs.get_path() + ", " + String(len(subscribers)))
+	print(get_parent().get_name() + " added " + subs.get_path() + ", " + String(len(subscribers)))
 	pass
 
 ###
