@@ -7,6 +7,9 @@ extends CanvasLayer
 
 signal ready_ended
 
+export (NodePath) var ui_path
+onready var ui = get_node(ui_path)
+
 ###
 # Called when the initative order's end is broadcasted.
 ###
@@ -20,11 +23,4 @@ func play_animation():
 func end_ready():
 	print("end ready")
 	emit_signal("ready_ended")
-	get_node("Subscriber").send_message("ready_ended")
-
-###
-# u know the jist of this.
-###
-func receive_message(message):
-	if message == "initiative_ended": # Fades in after initiative is displayed
-		play_animation()
+	ui.on_ready_ended()

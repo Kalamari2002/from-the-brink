@@ -1,6 +1,5 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://Prefabs/Subscriber.tscn" type="PackedScene" id=1]
 [ext_resource path="res://GameStateManager.gd" type="Script" id=2]
 [ext_resource path="res://Broadcaster.gd" type="Script" id=3]
 [ext_resource path="res://Prefabs/Stage/Quadrants.tscn" type="PackedScene" id=4]
@@ -63,8 +62,7 @@ script = ExtResource( 3 )
 
 [node name="GameStateManager" type="Node2D" parent="GameManager"]
 script = ExtResource( 2 )
-
-[node name="Subscriber" parent="GameManager/GameStateManager" instance=ExtResource( 1 )]
+initiative_roll_path = NodePath("../../Control/InitiativeRoll")
 
 [node name="TimeScaleManager" type="Node2D" parent="GameManager"]
 script = ExtResource( 11 )
@@ -77,12 +75,14 @@ margin_right = 1027.0
 margin_bottom = 596.0
 
 [node name="InitiativeRoll" parent="Control" instance=ExtResource( 6 )]
+ready_path = NodePath("../Ready")
 
 [node name="IntroText" parent="Control" instance=ExtResource( 5 )]
 game_state_manager_path = NodePath("../../GameManager/GameStateManager")
 initiative_roll_path = NodePath("../InitiativeRoll")
 
 [node name="Ready" parent="Control" instance=ExtResource( 8 )]
+ui_path = NodePath("../UI")
 
 [node name="UI" parent="Control" instance=ExtResource( 7 )]
 

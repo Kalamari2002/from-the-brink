@@ -10,6 +10,8 @@ signal game_started
 signal top_of_the_round
 signal passed_turn
 
+export (NodePath) var initiative_roll_path
+
 var initiative_order = [] # A list of players, ordered by turn from first to last
 var initiative_idx = 0 # Keeps track of which player in the initiative_order is going currently
 
@@ -19,6 +21,9 @@ var skip_intro = false # If set true, the intro lines are skipped
 var player_count = 2 # Numbers of players playing
 var curr_player
 var game_over = false
+
+onready var initiative_roll = get_node(initiative_roll_path)
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	instantiate_players()
@@ -66,14 +71,10 @@ func _input(event):
 ###
 func roll_initiative():
 	
-	var allPlayers = ""
+	var players = []
 	for i in initiative_order: # Get all nodes in the initiative order and extract their names
-		var og = String(i.get_path())
-		var s =  og.substr(12,(len(og) - 12))
-		allPlayers += s + "," # Concatenate their names in a comma separated string
-	var toBroadcast = allPlayers.substr(0,len(allPlayers) - 1)
-	
-	get_node("Subscriber").send_message("gege"+toBroadcast) # Broadcast initiative order, received by InitiativeRoll
+		players.append(i.get_name())
+	initiative_roll.set_initiative_labels(players)
 	pass
 	
 func start_game():
@@ -149,12 +150,3 @@ func game_set():
 	var time_in_seconds = 4
 	yield(get_tree().create_timer(time_in_seconds), "timeout")
 	get_tree().change_scene("res://Scenes/VictoryScreen.tscn")
-	
-###
-# To catch Broadcaster to Subscriber messages. Called by child Subscriber.
-# @param message is the received message from child Subscriber
-###
-func receive_message(message):
-	if message == "intro_ended":
-		roll_initiative()
-	pass

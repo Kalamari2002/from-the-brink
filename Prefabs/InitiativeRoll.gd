@@ -6,10 +6,12 @@
 
 extends CanvasLayer
 
-var started = false # Prevents player from playing fadeout animation when they shouldn't
+export (NodePath) var ready_path
 
+var started = false # Prevents player from playing fadeout animation when they shouldn't
 var players = [] # List of the name of the players to be displayed in the initiative order
 
+onready var ready = get_node(ready_path)
 func _input(event):
 	if !started:
 		return
@@ -47,7 +49,7 @@ func end_initiative_roll():
 	print("end initiative")
 	self.visible = false
 	started = false
-	get_node("Subscriber").send_message("initiative_ended")
+	ready.play_animation()
 
 ###
 # Called when this object receives the broadcasted message that the intro has ended.
@@ -57,24 +59,4 @@ func end_initiative_roll():
 func set_initiative_labels(players):
 	get_node("MarginContainer/VBoxContainer/First").text = players[0]
 	get_node("MarginContainer/VBoxContainer/Second").text = players[1]
-
-###
-# For Subscriber to notify this object.
-# @param message String sent by Subscriber
-###
-
-func receive_message(message):
-	if message == "intro_ended": # when the intro is over, that's the queue for this object to fade in
-		print("fade")
-		play_fade_in()
-		
-	###
-	# "gege" is a codeword sent by the GameStateManager. When a message with these initials is sent,
-	# the InitiativeRoll object knows that the message will contain the initiative order with all names
-	# separated by a comma (eg., "gegePlayer1,Player2,")
-	###
-	if message.substr(0,4) == "gege":
-		var allPlayers = message.substr(4,len(message)-4) # remove the code word from the message
-		players = allPlayers.split(",")
-		set_initiative_labels(players) # Separate string by comma and put all names in a list, update names
-	return
+	play_fade_in()

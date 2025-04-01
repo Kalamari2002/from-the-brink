@@ -46,5 +46,4 @@ func end_intro():
 	self.visible = false
 	started = false
 	game_state_manager.roll_initiative()
-	initiative_roll.play_fade_in() # This should probably be called on roll_initiative...
 	pass

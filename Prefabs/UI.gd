@@ -44,7 +44,7 @@ func update_health(idx):
 func on_game_end():
 	 get_node("End").visible = true
 
-func receive_message(message):
-	if message == "ready_ended":
-		for i in range(len(characters)):
-			update_health(i)
+func on_ready_ended():
+	for i in range(len(characters)):
+		update_health(i)
+	pass
