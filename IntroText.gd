@@ -8,6 +8,12 @@ extends CanvasLayer
 
 var started = false # Prevents player from skipping the animation when it's over or when it's not even playing yet
 
+export (NodePath) var game_state_manager_path
+export (NodePath) var initiative_roll_path
+
+onready var game_state_manager = get_node(game_state_manager_path)
+onready var initiative_roll = get_node(initiative_roll_path)
+
 func _ready():
 	play_fade_in()
 
@@ -39,12 +45,6 @@ func end_intro():
 	print("intro ended")
 	self.visible = false
 	started = false
-	get_node("Subscriber").send_message("intro_ended")
+	game_state_manager.roll_initiative()
+	initiative_roll.play_fade_in() # This should probably be called on roll_initiative...
 	pass
-
-func receive_message(message):
-	return
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass

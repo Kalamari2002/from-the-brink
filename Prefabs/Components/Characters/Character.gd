@@ -14,6 +14,7 @@ enum GameState {WAITING, SELECTING, ATTACKING, ENDING, DEAD} # Determines what k
 var curr_state			# current game state of the character
 
 var id		# Unique id assigned by the GameStateManager
+
 onready var character_display = $CharacterDisplay
 onready var control_scheme = $ControlScheme
 onready var health_manager = $HealthManager
@@ -43,7 +44,6 @@ func on_ready():
 	resource_manager.initialize(self)
 	skill_manager.initialize(self)
 	animation_manager.initialize(self)
-	
 	emit_signal("id_assigned")
 
 func _input(event):

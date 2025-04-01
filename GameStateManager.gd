@@ -155,9 +155,6 @@ func game_set():
 # @param message is the received message from child Subscriber
 ###
 func receive_message(message):
-	if message == "end_turn_1" or message == "end_turn_2": # If either player finishes their turn
-		switch_turn() # switch to the next player
-		pass
 	if message == "intro_ended":
 		roll_initiative()
 	pass

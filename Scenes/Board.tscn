@@ -79,6 +79,8 @@ margin_bottom = 596.0
 [node name="InitiativeRoll" parent="Control" instance=ExtResource( 6 )]
 
 [node name="IntroText" parent="Control" instance=ExtResource( 5 )]
+game_state_manager_path = NodePath("../../GameManager/GameStateManager")
+initiative_roll_path = NodePath("../InitiativeRoll")
 
 [node name="Ready" parent="Control" instance=ExtResource( 8 )]
 

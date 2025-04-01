@@ -62,6 +62,7 @@ func set_initiative_labels(players):
 # For Subscriber to notify this object.
 # @param message String sent by Subscriber
 ###
+
 func receive_message(message):
 	if message == "intro_ended": # when the intro is over, that's the queue for this object to fade in
 		print("fade")
