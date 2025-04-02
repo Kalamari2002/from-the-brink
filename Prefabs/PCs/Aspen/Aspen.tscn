@@ -366,6 +366,10 @@ up2 = "p2_move_up"
 down2 = "p2_move_down"
 confirm2 = "p2_confirm"
 special2 = "p2_special"
+up3 = "p3_move_up"
+down3 = "p3_move_down"
+confirm3 = "p3_confirm"
+special3 = "p3_special"
 
 [node name="Selector" parent="." instance=ExtResource( 1 )]
 

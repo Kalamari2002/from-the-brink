@@ -14,13 +14,15 @@ export var down2 : String
 export var confirm2 : String
 export var special2 : String
 
+export var up3 : String
+export var down3 : String
+export var confirm3 : String
+export var special3 : String
+
 
 func initialize(character: Node2D):
 	var character_id = character.get_id()
-	if character_id % 2 == 0:
-		set_scheme(2)
-	else:
-		set_scheme(1)
+	set_scheme(character_id)
 	pass
 
 ###
@@ -29,12 +31,15 @@ func initialize(character: Node2D):
 #func set_scheme(up,down,confirm,special):
 #	scheme = {"up": up, "down": down, "confirm": confirm, "special" : special}
 func set_scheme(player):
-	if player == 1:
-		scheme = {"up": up1, "down": down1, "confirm": confirm1, "special" : special1}
-	if player == 2:
-		scheme = {"up": up2, "down": down2, "confirm": confirm2, "special" : special2}
-	if player == 0:
-		scheme = {"up": "dummy", "down": "dummy", "confirm": "dummy", "special" : "dummy"}
+	match(player):
+		1:
+			scheme = {"up": up1, "down": down1, "confirm": confirm1, "special" : special1}
+		2:
+			scheme = {"up": up2, "down": down2, "confirm": confirm2, "special" : special2}
+		3:
+			scheme = {"up": up3, "down": down3, "confirm": confirm3, "special" : special3}
+		_:
+			scheme = {"up": "dummy", "down": "dummy", "confirm": "dummy", "special" : "dummy"}
 
 func vaxis():
 	var vertical = Input.get_action_strength(scheme["up"]) - Input.get_action_strength(scheme["down"])

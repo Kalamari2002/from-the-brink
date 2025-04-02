@@ -63,10 +63,17 @@ func instantiate_players():
 	p2.set_name("Player2")
 	p2.assign_id(2)
 	
+	var p3 = aspen.instance()
+	p3.set_name("Player3")
+	p3.assign_id(3)
+	
 	get_node("/root/Board").call_deferred("add_child",p1)
 	get_node("/root/Board").call_deferred("add_child",p2)
+	get_node("/root/Board").call_deferred("add_child",p3)
+	
 	initiative_order.append(p1)
 	initiative_order.append(p2)
+	initiative_order.append(p3)
 
 	for i in initiative_order:
 		i.connect("turn_ended", self, "switch_turn")

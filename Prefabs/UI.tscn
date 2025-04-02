@@ -24,23 +24,49 @@ script = ExtResource( 2 )
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
-margin_left = 50.0
-margin_top = 50.0
-margin_right = -101.0
 margin_bottom = 47.0
 
-[node name="p1_failure" type="Label" parent="MarginContainer"]
-margin_right = 873.0
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+margin_right = 1024.0
+margin_bottom = 47.0
+custom_constants/separation = 200
+alignment = 1
+
+[node name="health_p1" type="Label" parent="MarginContainer/HBoxContainer"]
+margin_left = 18.0
+margin_right = 111.0
 margin_bottom = 47.0
 custom_colors/font_color = Color( 0.807843, 0, 0, 1 )
 custom_fonts/font = SubResource( 1 )
+text = "Player 1: "
 
-[node name="p2_failure" type="Label" parent="MarginContainer"]
-margin_right = 873.0
+[node name="health_p2" type="Label" parent="MarginContainer/HBoxContainer"]
+margin_left = 311.0
+margin_right = 409.0
 margin_bottom = 47.0
 custom_colors/font_color = Color( 0.807843, 0, 0, 1 )
 custom_fonts/font = SubResource( 1 )
+text = "Player 2: "
 align = 2
+
+[node name="health_p3" type="Label" parent="MarginContainer/HBoxContainer"]
+margin_left = 609.0
+margin_right = 706.0
+margin_bottom = 47.0
+custom_colors/font_color = Color( 0.807843, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "Player 3: "
+valign = 2
+
+[node name="health_p4" type="Label" parent="MarginContainer/HBoxContainer"]
+margin_left = 906.0
+margin_right = 1006.0
+margin_bottom = 47.0
+custom_colors/font_color = Color( 0.807843, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "Player 4: "
+align = 2
+valign = 2
 
 [node name="RoundCount" type="Label" parent="."]
 anchor_right = 1.0

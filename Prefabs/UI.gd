@@ -18,13 +18,13 @@ func _ready():
 	round_count = get_node("RoundCount")
 	player_turn = get_node("PlayerTurn")
 	
-	for c in get_node("MarginContainer").get_children():
+	for c in get_node("MarginContainer/HBoxContainer").get_children():
 		labels.append(c)
 	for i in get_node("/root/Board/GameManager/GameStateManager").get_initiative_order():
 		characters.append(i.get_node("HealthManager"))
 	for i in range(len(characters)):
 		characters[i].connect("health_change",self,"update_health",[i])
-	pass # Replace with function body.
+	pass
 
 func get_character_hp(path):
 	return get_node(path).get_curr_health()
@@ -39,7 +39,7 @@ func update_player_turn():
 	pass
 
 func update_health(idx):
-	labels[idx].text = "HP: " + String(characters[idx].get_curr_health())
+	labels[idx].text = String(characters[idx].get_curr_health())
 
 func on_game_end():
 	 get_node("End").visible = true
