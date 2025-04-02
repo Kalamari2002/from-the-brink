@@ -62,7 +62,9 @@ script = ExtResource( 3 )
 
 [node name="GameStateManager" type="Node2D" parent="GameManager"]
 script = ExtResource( 2 )
+intro_text_path = NodePath("../../Control/IntroText")
 initiative_roll_path = NodePath("../../Control/InitiativeRoll")
+ready_path = NodePath("../../Control/Ready")
 
 [node name="TimeScaleManager" type="Node2D" parent="GameManager"]
 script = ExtResource( 11 )

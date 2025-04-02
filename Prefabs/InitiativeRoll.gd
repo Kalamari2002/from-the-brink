@@ -6,6 +6,8 @@
 
 extends CanvasLayer
 
+signal end_initiative
+
 export (NodePath) var ready_path
 
 var started = false # Prevents player from playing fadeout animation when they shouldn't
@@ -47,9 +49,12 @@ func finish_fade_in():
 ##
 func end_initiative_roll():
 	print("end initiative")
+	emit_signal("end_initiative")
+	close()
+
+func close():
 	self.visible = false
 	started = false
-	ready.play_animation()
 
 ###
 # Called when this object receives the broadcasted message that the intro has ended.
@@ -59,4 +64,3 @@ func end_initiative_roll():
 func set_initiative_labels(players):
 	get_node("MarginContainer/VBoxContainer/First").text = players[0]
 	get_node("MarginContainer/VBoxContainer/Second").text = players[1]
-	play_fade_in()

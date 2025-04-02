@@ -10,7 +10,11 @@ signal game_started
 signal top_of_the_round
 signal passed_turn
 
+export (NodePath) var intro_text_path
 export (NodePath) var initiative_roll_path
+export (NodePath) var ready_path
+
+var pre_game_state = 0
 
 var initiative_order = [] # A list of players, ordered by turn from first to last
 var initiative_idx = 0 # Keeps track of which player in the initiative_order is going currently
@@ -22,13 +26,25 @@ var player_count = 2 # Numbers of players playing
 var curr_player
 var game_over = false
 
+onready var intro_text = get_node(intro_text_path)
 onready var initiative_roll = get_node(initiative_roll_path)
+onready var ready = get_node(ready_path)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	instantiate_players()
 	get_node("/root/Board/Control/Ready").connect("ready_ended",self,"start_game")
-	pass # Replace with function body.
+	
+	initiative_roll.connect("end_initiative", self, "proceed_game_state")
+	
+	intro_text.connect("end_intro", self, "proceed_game_state")
+	intro_text.play_fade_in()
+	pass
+
+func _input(event):
+	if event.is_action_pressed("ui_accept"): # lets you skip the intro
+		proceed_game_state()
+		pass
 
 ###
 # Creates the players, adding them to the scene, setting their Id's and names, and
@@ -58,10 +74,22 @@ func instantiate_players():
 		connect("game_started",i,"on_game_start")
 	pass
 
-func _input(event):
-	if event.is_action_pressed("ui_accept"): # lets you skip the intro
-		skip_intro = true
-		pass
+func proceed_game_state():
+	if pre_game_state > 2:
+		return
+	match(pre_game_state):
+		0:
+			intro_text.close()
+			roll_initiative()
+			initiative_roll.play_fade_in()
+			pass
+		1:
+			initiative_roll.play_fade_out()
+			pass
+		2:
+			ready.play_animation()
+	pre_game_state += 1
+	pass
 
 ###
 # Called when the introtext broadcasts that it's ended. Doesn't really roll any numbers, 
@@ -70,7 +98,6 @@ func _input(event):
 # of all players in order.
 ###
 func roll_initiative():
-	
 	var players = []
 	for i in initiative_order: # Get all nodes in the initiative order and extract their names
 		players.append(i.get_name())

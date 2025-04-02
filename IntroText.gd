@@ -6,6 +6,8 @@
 ###
 extends CanvasLayer
 
+signal end_intro
+
 var started = false # Prevents player from skipping the animation when it's over or when it's not even playing yet
 
 export (NodePath) var game_state_manager_path
@@ -15,13 +17,15 @@ onready var game_state_manager = get_node(game_state_manager_path)
 onready var initiative_roll = get_node(initiative_roll_path)
 
 func _ready():
-	play_fade_in()
+	#play_fade_in()
+	pass
 
 func _input(event):
 	if !started:
 		return
 	if event.is_action_pressed("ui_accept"):
-		skip()
+		close()
+		pass
 
 ###
 # Stats playing FadeIn animation and lets the player skip it.
@@ -33,9 +37,10 @@ func play_fade_in():
 ###
 # Stops animation and announces intro end.
 ###
-func skip():
+func close():
 	get_node("AnimationPlayer").stop()
-	end_intro()
+	self.visible = false
+	started = false
 
 ###
 # Makes the InitiativeRoll layer invisible and broadcasts the message that the
@@ -45,5 +50,6 @@ func end_intro():
 	print("intro ended")
 	self.visible = false
 	started = false
-	game_state_manager.roll_initiative()
+	emit_signal("end_intro")
+	#game_state_manager.roll_initiative()
 	pass
