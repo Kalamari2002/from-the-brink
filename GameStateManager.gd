@@ -22,7 +22,7 @@ var initiative_idx = 0 # Keeps track of which player in the initiative_order is 
 var round_count = 0 # The round number, is incremented at the top of the round
 var skip_intro = false # If set true, the intro lines are skipped 
 
-var player_count = 2 # Numbers of players playing
+var player_count = 3 # Numbers of players playing
 var curr_player
 var game_over = false
 

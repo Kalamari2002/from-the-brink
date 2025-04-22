@@ -14,6 +14,7 @@ enum GameState {WAITING, SELECTING, ATTACKING, ENDING, DEAD} # Determines what k
 var curr_state			# current game state of the character
 
 var id		# Unique id assigned by the GameStateManager
+var color_palette : int
 
 onready var character_display = $CharacterDisplay
 onready var control_scheme = $ControlScheme
@@ -33,7 +34,8 @@ func _ready():
 func on_ready():
 	if id % 2 == 0:	# If even will stand on the right
 		character_display.flip_self()
-		
+	color_palette = id
+	
 	curr_state = GameState.WAITING # Starts waiting, can't select actions but can move around
 	control_scheme.initialize(self)
 	health_manager.initialize(self)
@@ -142,6 +144,9 @@ func change_state(state):
 ###
 func get_id():
 	return id
+
+func get_color_palette()->int:
+	return color_palette
 
 func get_curr_state():
 	return curr_state

@@ -3,6 +3,11 @@
 ###
 extends Node2D
 
+export (Resource) var palette_1
+export (Resource) var palette_2
+export (Resource) var palette_3
+export (Resource) var palette_4
+
 export var hit_animation : String
 
 var character : Node2D
@@ -16,20 +21,22 @@ var lingering_animations = ["burnin"]
 
 onready var last_requested_animation = "idle"	# used to keep track of which animation to go back to after recovering from a hit or lingering animation
 onready var curr_lingering_animation = ""	# reflects the currently playing lingering animation. set to "" if no lingering animations are playing
+
 onready var animation_player = $AnimationPlayer
-onready var sprite_animator = $Sprite/SpriteAnimator
 onready var movement_animator = $MovementAnimator
+
+#onready var sprite_animator = $Sprite/SpriteAnimator
+var character_sprite : Sprite
+var sprite_animator : AnimationPlayer
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	play_sprite_animation("idle")
 	pass
 
 func initialize(parent):
 	character = parent
 	character.connect("state_changed",self,"on_state_change")
-	
-	color_palette = 1
 	
 	effect_manager = character.get_node("EffectManager")
 	effect_manager.connect("applied_effect", self, "on_effect_apply")
@@ -37,13 +44,35 @@ func initialize(parent):
 	
 	position_manager = character.get_node("PositionManager")
 	position_manager.connect("changed_quadrants",self,"on_step")
-	if position_manager.get_is_right():
-		$Sprite.flip_h = true
 	
 	health_manager = character.get_node("HealthManager")
 	if hit_animation != "": # If there's a hit animation to be played
 		# Set it so that whenever the character is damaged, we play it.
 		health_manager.connect("took_damaged", self, "play_hit_animation")
+	
+	create_character_sprite(character.get_color_palette())
+	play_sprite_animation("idle")
+	pass
+
+func create_character_sprite(color_palette : int):
+	match(color_palette):
+		1:
+			character_sprite = palette_1.instance()
+		2:
+			character_sprite = palette_2.instance()
+		3:
+			character_sprite = palette_4.instance()
+		4:
+			character_sprite = palette_4.instance()
+	
+	character_sprite.set_name("_CharacterSprite")
+	character_sprite.connect("recover_from_hit", self, "recover_from_hit")
+	add_child(character_sprite)
+	
+	sprite_animator = character_sprite.get_node("AnimationPlayer")
+	
+	if position_manager.get_is_right():
+		character_sprite.flip_h = true
 	pass
 
 func on_effect_apply(effect_name : String):

@@ -1,0 +1,225 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://Sprites/Characters/Players/Aspen/Aspen_choosing_1.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/Characters/Players/Aspen/Aspen_choosing_2.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Characters/Players/Aspen/Aspen_idle.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Characters/Players/Aspen/Aspen_attack.png" type="Texture" id=4]
+[ext_resource path="res://Prefabs/Components/Characters/AnimationManagers/CharacterSprite.gd" type="Script" id=5]
+[ext_resource path="res://Sprites/Characters/Players/Aspen/Aspen_burning_1.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/Characters/Players/Aspen/Aspen_dead.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/Characters/Players/Aspen/Aspen_burning_2.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/Characters/Players/Aspen/Aspen_damaged.png" type="Texture" id=9]
+
+[sub_resource type="Animation" id=14]
+resource_name = "attacking"
+length = 0.1
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "attacking" ],
+"method": "set_sprite"
+} ]
+}
+
+[sub_resource type="Animation" id=15]
+resource_name = "burnin"
+length = 0.2
+loop = true
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ "burning_1" ],
+"method": "set_sprite"
+}, {
+"args": [ "burning_2" ],
+"method": "set_sprite"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ Vector2( 0, 8.667 ), Vector2( 0, 5 ) ]
+}
+
+[sub_resource type="Animation" id=16]
+resource_name = "damaged"
+length = 0.3
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ "damaged" ],
+"method": "set_sprite"
+}, {
+"args": [  ],
+"method": "recover_from_hit"
+} ]
+}
+
+[sub_resource type="Animation" id=17]
+resource_name = "dead"
+length = 0.1
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "dead" ],
+"method": "set_sprite"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ Vector2( 0.15, 0.11 ), Vector2( 0.15, 0.15 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -3.667 ), Vector2( 0, -8.667 ) ]
+}
+
+[sub_resource type="Animation" id=18]
+resource_name = "idle"
+length = 4.0
+loop = true
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "idle" ],
+"method": "set_sprite"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1, 1.5, 3.5, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 8.667 ), Vector2( 0, 9.667 ), Vector2( 0, 9.667 ), Vector2( 0, 8.667 ), Vector2( 0, 8.667 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1, 1.5, 3.5, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.15, 0.15 ), Vector2( 0.15, 0.145 ), Vector2( 0.15, 0.145 ), Vector2( 0.15, 0.15 ), Vector2( 0.15, 0.15 ) ]
+}
+
+[sub_resource type="Animation" id=19]
+resource_name = "selecting"
+length = 0.4
+loop = true
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ "selecting_1" ],
+"method": "set_sprite"
+}, {
+"args": [ "selecting_2" ],
+"method": "set_sprite"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.15, 0.15 ) ]
+}
+
+[node name="CharacterSprite" type="Sprite"]
+position = Vector2( 0, 8.667 )
+scale = Vector2( 0.15, 0.15 )
+texture = ExtResource( 3 )
+script = ExtResource( 5 )
+attack = ExtResource( 4 )
+burning_1 = ExtResource( 6 )
+burning_2 = ExtResource( 8 )
+selecting_1 = ExtResource( 1 )
+selecting_2 = ExtResource( 2 )
+damaged = ExtResource( 9 )
+dead = ExtResource( 7 )
+idle = ExtResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/attacking = SubResource( 14 )
+anims/burnin = SubResource( 15 )
+anims/damaged = SubResource( 16 )
+anims/dead = SubResource( 17 )
+anims/idle = SubResource( 18 )
+anims/selecting = SubResource( 19 )

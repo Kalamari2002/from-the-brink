@@ -1,0 +1,22 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Sprites/Characters/Players/Aspen/palette_4/Aspen_dead_4.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/Characters/Players/Aspen/palette_4/Aspen_choosing_4_1.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Characters/Players/Aspen/palette_4/Aspen_burning_4_2.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Characters/Players/Aspen/palette_4/Aspen_idle_4.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Characters/Players/Aspen/palette_4/Aspen_choosing_4_2.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/Characters/Players/Aspen/palette_4/Aspen_burning_4_1.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/Characters/Players/Aspen/palette_4/Aspen_damaged_4.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/Characters/Players/Aspen/palette_4/Aspen_attack_4.png" type="Texture" id=8]
+[ext_resource path="res://Prefabs/Components/Characters/AnimationManagers/CharacterSprite.tscn" type="PackedScene" id=9]
+
+[node name="AspenCharacterSprite_4" instance=ExtResource( 9 )]
+texture = ExtResource( 4 )
+attack = ExtResource( 8 )
+burning_1 = ExtResource( 6 )
+burning_2 = ExtResource( 3 )
+selecting_1 = ExtResource( 2 )
+selecting_2 = ExtResource( 5 )
+damaged = ExtResource( 7 )
+dead = ExtResource( 1 )
+idle = ExtResource( 4 )
