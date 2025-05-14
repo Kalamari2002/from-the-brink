@@ -22,7 +22,7 @@ var initiative_idx = 0 # Keeps track of which player in the initiative_order is 
 var round_count = 0 # The round number, is incremented at the top of the round
 var skip_intro = false # If set true, the intro lines are skipped 
 
-var player_count = 3 # Numbers of players playing
+var player_count = 4 # Numbers of players playing
 var curr_player
 var game_over = false
 
@@ -67,14 +67,21 @@ func instantiate_players():
 	p3.set_name("Player3")
 	p3.assign_id(3)
 	
+	var p4 = aspen.instance()
+	p4.set_name("Player4")
+	p4.assign_id(4)
+	
 	get_node("/root/Board").call_deferred("add_child",p1)
 	get_node("/root/Board").call_deferred("add_child",p2)
 	get_node("/root/Board").call_deferred("add_child",p3)
+	get_node("/root/Board").call_deferred("add_child",p4)
 	
+	initiative_order.append(p4)
 	initiative_order.append(p1)
 	initiative_order.append(p2)
 	initiative_order.append(p3)
 
+	
 	for i in initiative_order:
 		i.connect("turn_ended", self, "switch_turn")
 		i.connect("died", self, "game_set")

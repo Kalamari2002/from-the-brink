@@ -61,7 +61,7 @@ func create_character_sprite(color_palette : int):
 		2:
 			character_sprite = palette_2.instance()
 		3:
-			character_sprite = palette_4.instance()
+			character_sprite = palette_3.instance()
 		4:
 			character_sprite = palette_4.instance()
 	

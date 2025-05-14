@@ -19,6 +19,11 @@ export var down3 : String
 export var confirm3 : String
 export var special3 : String
 
+export var up4 : String
+export var down4 : String
+export var confirm4 : String
+export var special4 : String
+
 
 func initialize(character: Node2D):
 	var character_id = character.get_id()
@@ -38,6 +43,8 @@ func set_scheme(player):
 			scheme = {"up": up2, "down": down2, "confirm": confirm2, "special" : special2}
 		3:
 			scheme = {"up": up3, "down": down3, "confirm": confirm3, "special" : special3}
+		4:
+			scheme = {"up": up4, "down": down4, "confirm": confirm4, "special" : special4}
 		_:
 			scheme = {"up": "dummy", "down": "dummy", "confirm": "dummy", "special" : "dummy"}
 

@@ -55,6 +55,8 @@ func initialize(parent_selector : Node2D, character : Node2D):
 			define_control_scheme("p2_move_up","p2_move_down","p2_confirm","p2_special")
 		3:
 			define_control_scheme("p3_move_up","p3_move_down","p3_confirm","p3_special")
+		4:
+			define_control_scheme("p4_move_up","p4_move_down","p4_confirm","p4_special")
 	if character_id % 2 == 0:	# If even will stand on the right
 		flip_cards()
 	pass
