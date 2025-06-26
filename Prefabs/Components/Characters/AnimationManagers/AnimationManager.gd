@@ -9,6 +9,8 @@ export (Resource) var palette_3
 export (Resource) var palette_4
 
 export var hit_animation : String
+export var hit_color : Color
+
 
 var character : Node2D
 var position_manager : Node2D
@@ -19,20 +21,15 @@ var color_palette : int
 
 var lingering_animations = ["burnin"]
 
+onready var DEFAULT_SPRITE_COLOR = Color(1,1,1)
 onready var last_requested_animation = "idle"	# used to keep track of which animation to go back to after recovering from a hit or lingering animation
 onready var curr_lingering_animation = ""	# reflects the currently playing lingering animation. set to "" if no lingering animations are playing
 
-onready var animation_player = $AnimationPlayer
 onready var movement_animator = $MovementAnimator
 
 #onready var sprite_animator = $Sprite/SpriteAnimator
 var character_sprite : Sprite
 var sprite_animator : AnimationPlayer
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass
 
 func initialize(parent):
 	character = parent
@@ -41,6 +38,9 @@ func initialize(parent):
 	effect_manager = character.get_node("EffectManager")
 	effect_manager.connect("applied_effect", self, "on_effect_apply")
 	effect_manager.connect("removed_effect", self, "end_lingering_animation")
+	effect_manager.connect("invulnerability_start", self, "on_invulnerability_start")
+	var invulnerability = effect_manager.get_node("Invulnerability")
+	invulnerability.connect("timeout", self, "on_invulnerability_end")
 	
 	position_manager = character.get_node("PositionManager")
 	position_manager.connect("changed_quadrants",self,"on_step")
@@ -98,7 +98,6 @@ func play_sprite_animation(animation : String):
 func play_hit_animation():
 	if character.get_curr_state() == character.GameState.DEAD or curr_lingering_animation != "":
 		return
-	animation_player.play(hit_animation)
 	sprite_animator.play("damaged")
 	pass
 func recover_from_hit():
@@ -123,6 +122,13 @@ func on_step():
 	movement_animator.play("step")
 	pass
 
+func on_invulnerability_start():
+	character_sprite.modulate = hit_color
+	pass
+func on_invulnerability_end():
+	character_sprite.modulate = DEFAULT_SPRITE_COLOR
+	pass
+
 func on_state_change(state):
 	var gamestate = character.GameState
 
@@ -136,5 +142,3 @@ func on_state_change(state):
 		_:
 			play_sprite_animation("idle")
 	pass
-
-

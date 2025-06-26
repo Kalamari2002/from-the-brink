@@ -17,6 +17,7 @@ export (NodePath) var ready_path
 var pre_game_state = 0
 
 var initiative_order = [] # A list of players, ordered by turn from first to last
+var teams = {}
 var initiative_idx = 0 # Keeps track of which player in the initiative_order is going currently
 
 var round_count = 0 # The round number, is incremented at the top of the round
@@ -80,12 +81,16 @@ func instantiate_players():
 	initiative_order.append(p1)
 	initiative_order.append(p2)
 	initiative_order.append(p3)
-
 	
 	for i in initiative_order:
 		i.connect("turn_ended", self, "switch_turn")
+		#i.connect("died", self, "on_character_died")
 		i.connect("died", self, "game_set")
 		connect("game_started",i,"on_game_start")
+	teams = {
+		1 : [2, [1,3]],
+		2 : [2, [2,4]]
+	}
 	pass
 
 func proceed_game_state():
@@ -181,6 +186,16 @@ func get_round_count():
 
 func get_initiative_order():
 	return initiative_order
+
+func on_character_died(character_id : int):
+	if character_id % 2 != 0:
+		teams[1][0] -= 1
+	else:
+		teams[2][0] -= 1
+	
+	if teams[1][0] == 0 or teams[2][0] == 0:
+		game_set()
+	pass
 
 func game_set():
 	if game_over:

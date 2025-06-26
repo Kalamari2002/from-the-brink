@@ -11,6 +11,7 @@ signal normal_time
 const BULLET_TIME_SCALE = 0.4
 var curr_scale = 1
 var bullet_time_dim
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	bullet_time_dim = get_node("/root/Board/Control/BulletTimeDim")
@@ -32,11 +33,14 @@ func normalize_time_scale():
 	Engine.time_scale = curr_scale
 	bullet_time_dim.get_node("AnimationPlayer").play("FadeOut")
 
-func get_curr_scale():
+func get_curr_scale()->float:
 	return curr_scale
 
-func get_bullet_time_scale():
+func get_bullet_time_scale()->float:
 	return BULLET_TIME_SCALE
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+func is_in_bullet_time()->bool:
+	return curr_scale == BULLET_TIME_SCALE

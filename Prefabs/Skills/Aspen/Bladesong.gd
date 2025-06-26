@@ -39,7 +39,7 @@ func _input(event):
 		stop_bullet_time()
 
 func begin():
-	if resource_manager.get_remaining_resource() <= 0:
+	if resource_manager.get_remaining_resource() <= 0 or time_manager.is_in_bullet_time():
 		return
 	start_bullet_time()
 

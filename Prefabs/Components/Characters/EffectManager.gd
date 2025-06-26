@@ -7,9 +7,10 @@
 extends Node2D
 
 signal took_damage(dmg)		# Certain effects are triggered with damage. We use this signal everytime the character is dmged.
-signal healed			# Signaled when a character is healed
 signal applied_effect(effect_name)
 signal removed_effect(effect_name)
+signal healed			# Signaled when a character is healed
+signal invulnerability_start
 
 var health_manager : Node2D		# Ref to the character's health manager
 var character : Node2D
@@ -120,6 +121,7 @@ func remove_effect(effect):
 # the invulnerability timer.
 ###
 func start_invulnerability():
+	emit_signal("invulnerability_start")
 	invulnerability.start()
 	pass
 	
