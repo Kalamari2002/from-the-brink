@@ -5,12 +5,12 @@
 extends Node2D
 
 signal state_changed(state)
-#signal died(id)
 signal died
 signal turn_started
-signal turn_ended		# Signal is taken by GameStateManager to switch turns or end the game
+signal turn_ended
 signal id_assigned
 
+var game_state_manager : Node2D
 
 enum GameState {WAITING, SELECTING, ATTACKING, ENDING, DEAD} # Determines what kinds of actions the player can take
 var curr_state			# current game state of the character
@@ -70,17 +70,19 @@ func on_game_start():
 	pass
 
 ###
-# Lets character select their options. Called by the GameStateManager
+# Lets character select their options. Called by the GameStateManager.
+# @return 0 if player can start turn
+# @return -1 if player is DEAD
 ###
-func start_turn():
+func start_turn() -> int:
 	if curr_state == GameState.DEAD:
-		return
+		return -1
 	#curr_state = GameState.SELECTING
 	change_state(GameState.SELECTING)
 	selector.activate()
 	emit_signal("turn_started")
 	print(String(get_path()) + " is selecting their action")
-	pass
+	return 0
 
 ###
 # Sets character to WAITING and stops them from selecting options. Stalls for 2 seconds
@@ -94,6 +96,7 @@ func end_turn():
 	if !change_state(GameState.WAITING):
 		return
 	emit_signal("turn_ended")
+	game_state_manager.on_turn_ended()
 	print(String(get_path()) + " has ended their turn")
 	pass
 
@@ -126,15 +129,17 @@ func die():
 	#curr_state = GameState.DEAD
 	change_state(GameState.DEAD)
 	selector.seize_selector()
-	#emit_signal("died", id) # Lets other objects know that this character is dead
-	emit_signal("died")
+	emit_signal("died") # Lets other objects know that this character is dead
+	game_state_manager.on_character_died(id)
 	pass
 
 ###
 # Called by GameStateManager at the start of the game. Determines the id of this character.
 ###
-func assign_id(id):
+func assign_id(id : int, game_state_manager : Node2D):
 	self.id = id
+	self.game_state_manager = game_state_manager
+	pass
 
 func change_state(state):
 	if curr_state == GameState.DEAD:

@@ -58,19 +58,19 @@ func instantiate_players():
 
 	var p1 = aspen.instance()
 	p1.set_name("Player1")
-	p1.assign_id(1)
+	p1.assign_id(1, self)
 	
 	var p2 = aspen.instance()
 	p2.set_name("Player2")
-	p2.assign_id(2)
+	p2.assign_id(2, self)
 	
 	var p3 = aspen.instance()
 	p3.set_name("Player3")
-	p3.assign_id(3)
+	p3.assign_id(3, self)
 	
 	var p4 = aspen.instance()
 	p4.set_name("Player4")
-	p4.assign_id(4)
+	p4.assign_id(4, self)
 	
 	get_node("/root/Board").call_deferred("add_child",p1)
 	get_node("/root/Board").call_deferred("add_child",p2)
@@ -83,9 +83,6 @@ func instantiate_players():
 	initiative_order.append(p3)
 	
 	for i in initiative_order:
-		i.connect("turn_ended", self, "switch_turn")
-		#i.connect("died", self, "on_character_died")
-		i.connect("died", self, "game_set")
 		connect("game_started",i,"on_game_start")
 	teams = {
 		1 : [2, [1,3]],
@@ -168,11 +165,13 @@ func end_quick_time_event():
 	pass
 
 ###
-# Makes a player start their atk turn.
+# Attempts to make a player start their atk turn. If they can't, switch turn to the next player
+# in the initiative order
 # @param player is the player which will start their turn.
 ###
 func pass_control_to_player(player):
-	player.start_turn()
+	if player.start_turn() != 0:
+		switch_turn()
 	pass
 
 ###
@@ -187,6 +186,10 @@ func get_round_count():
 func get_initiative_order():
 	return initiative_order
 
+###
+# Called directly by a character when they die. Subtracts from the player's respective
+# "alive" headcount, if all players in a team are dead, end game.
+###
 func on_character_died(character_id : int):
 	if character_id % 2 != 0:
 		teams[1][0] -= 1
@@ -196,6 +199,12 @@ func on_character_died(character_id : int):
 	if teams[1][0] == 0 or teams[2][0] == 0:
 		game_set()
 	pass
+
+###
+# Called directly by a character when they end their turn
+###
+func on_turn_ended():
+	switch_turn()
 
 func game_set():
 	if game_over:
