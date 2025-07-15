@@ -54,13 +54,14 @@ func _input(event):
 func instantiate_players():
 	var temp_player = preload("res://Prefabs/Components/Characters/Character.tscn")
 	var aspen = preload("res://Prefabs/PCs/Aspen/Aspen.tscn")
+	var raouss = preload("res://Prefabs/PCs/Raouss/Raouss.tscn")
 	var dummy = preload("res://Prefabs/NPCs/TrainingDummy.tscn")
 
-	var p1 = aspen.instance()
+	var p1 = raouss.instance()
 	p1.set_name("Player1")
 	p1.assign_id(1, self)
 	
-	var p2 = aspen.instance()
+	var p2 = raouss.instance()
 	p2.set_name("Player2")
 	p2.assign_id(2, self)
 	

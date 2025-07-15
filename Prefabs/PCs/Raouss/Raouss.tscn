@@ -1,0 +1,133 @@
+[gd_scene load_steps=29 format=2]
+
+[ext_resource path="res://Prefabs/Components/Characters/CursorManager.gd" type="Script" id=1]
+[ext_resource path="res://Prefabs/Components/Characters/AnimationManagers/Raouss_Sprites/RaoussCharacterSprite_1.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Prefabs/Components/Characters/Character.gd" type="Script" id=3]
+[ext_resource path="res://Prefabs/Components/Characters/AnimationManagers/Raouss_Sprites/RaoussCharacterSprite_2.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Prefabs/Components/Characters/AnimationManagers/Raouss_Sprites/RaoussCharacterSprite_3.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Prefabs/Components/Characters/AnimationManagers/Raouss_Sprites/RaoussCharacterSprite_4.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Prefabs/Components/Characters/ControlScheme.gd" type="Script" id=7]
+[ext_resource path="res://Prefabs/Abilities/Raouss/RaoussMeleeCharge.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Prefabs/Abilities/Aspen/FireBoltVolley.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Prefabs/Abilities/Aspen/Maple.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Prefabs/Abilities/Aspen/LeechArrowsVolley.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Prefabs/Abilities/Aspen/SlippersVolley.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Prefabs/Abilities/QuickTimeAtkBase.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Prefabs/Components/Characters/EffectManager.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Prefabs/Components/Characters/CharacterDisplay.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Prefabs/Components/Characters/SkillManager.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Prefabs/Components/Characters/ResourceManager.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Prefabs/Components/Characters/Selector/Selector.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Prefabs/Components/Characters/Instructions.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Prefabs/Components/Characters/AnimationManagers/AnimationManager.tscn" type="PackedScene" id=20]
+[ext_resource path="res://Prefabs/Abilities/Aspen/Items.tscn" type="PackedScene" id=21]
+[ext_resource path="res://Prefabs/Components/Characters/PositionManager.tscn" type="PackedScene" id=22]
+[ext_resource path="res://Prefabs/Components/UI/BladesongGauge.tscn" type="PackedScene" id=23]
+[ext_resource path="res://Prefabs/Abilities/Raouss/UI/RaoussMeleeBar.tscn" type="PackedScene" id=25]
+[ext_resource path="res://Prefabs/Components/Characters/Selector/HealthManager.tscn" type="PackedScene" id=26]
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 26.1725
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.172549, 0.627451, 0.388235, 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.392157, 0.0941176, 0.0941176, 1 )
+
+[node name="Raouss" type="Node2D"]
+scale = Vector2( 1.5, 1.5 )
+script = ExtResource( 3 )
+
+[node name="Area2D" type="Area2D" parent="." groups=["characters"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 2 )
+
+[node name="CharacterDisplay" parent="." instance=ExtResource( 15 )]
+
+[node name="ChargeBar" type="ProgressBar" parent="CharacterDisplay"]
+visible = false
+margin_left = -56.0
+margin_top = 43.3333
+margin_right = 35.0
+margin_bottom = 57.3333
+rect_rotation = -90.0
+custom_styles/fg = SubResource( 3 )
+custom_styles/bg = SubResource( 4 )
+max_value = 10.0
+percent_visible = false
+
+[node name="MeleeBar" parent="CharacterDisplay" instance=ExtResource( 25 )]
+visible = false
+margin_left = 70.0
+margin_top = -84.6667
+margin_right = 30.0
+margin_bottom = -124.667
+
+[node name="BladesongGauge" parent="CharacterDisplay" instance=ExtResource( 23 )]
+visible = false
+
+[node name="Instructions" parent="." instance=ExtResource( 19 )]
+
+[node name="HealthManager" parent="." instance=ExtResource( 26 )]
+max_health = 150
+
+[node name="EffectManager" parent="." instance=ExtResource( 14 )]
+position = Vector2( -35.3333, -61.3333 )
+
+[node name="_ResourceManager" parent="." instance=ExtResource( 17 )]
+display_name = "BladesongGauge"
+MAX_VALUE = 100
+
+[node name="PositionManager" parent="." instance=ExtResource( 22 )]
+init_end_lag = 0.1
+
+[node name="CursorManager" type="Node2D" parent="."]
+script = ExtResource( 1 )
+
+[node name="AnimationManager" parent="." instance=ExtResource( 20 )]
+palette_1 = ExtResource( 2 )
+palette_2 = ExtResource( 4 )
+palette_3 = ExtResource( 5 )
+palette_4 = ExtResource( 6 )
+
+[node name="ControlScheme" type="Node2D" parent="."]
+script = ExtResource( 7 )
+up1 = "p1_move_up"
+down1 = "p1_move_down"
+confirm1 = "p1_confirm"
+special1 = "p1_special"
+up2 = "p2_move_up"
+down2 = "p2_move_down"
+confirm2 = "p2_confirm"
+special2 = "p2_special"
+up3 = "p3_move_up"
+down3 = "p3_move_down"
+confirm3 = "p3_confirm"
+special3 = "p3_special"
+up4 = "p4_move_up"
+down4 = "p4_move_down"
+confirm4 = "p4_confirm"
+special4 = "p4_special"
+
+[node name="Selector" parent="." instance=ExtResource( 18 )]
+
+[node name="Options" type="Node2D" parent="Selector"]
+
+[node name="QuickTimeAtkBase" parent="Selector/Options" instance=ExtResource( 13 )]
+option_name = "Quick TIme"
+
+[node name="Items" parent="Selector/Options" instance=ExtResource( 21 )]
+
+[node name="Maple" parent="Selector/Options" instance=ExtResource( 10 )]
+
+[node name="RaoussMeleeCharge" parent="Selector/Options" instance=ExtResource( 8 )]
+
+[node name="FireBoltVolley" parent="Selector/Options" instance=ExtResource( 9 )]
+
+[node name="SlippersVolley" parent="Selector/Options" instance=ExtResource( 12 )]
+
+[node name="LeechArrowsVolley" parent="Selector/Options" instance=ExtResource( 11 )]
+
+[node name="SkillManager" parent="." instance=ExtResource( 16 )]
