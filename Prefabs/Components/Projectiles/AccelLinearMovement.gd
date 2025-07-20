@@ -15,4 +15,4 @@ func _physics_process(delta):
 func velocity(time):
 	var offset = 1.4
 	var expo = time - offset
-	return pow(CONSTANT, expo) * 900
+	return min(pow(CONSTANT, expo) * 900, 120)

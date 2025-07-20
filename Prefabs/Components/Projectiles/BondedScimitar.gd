@@ -15,6 +15,13 @@ func _ready():
 	hide()
 	pass
 
+func reflect():
+	if !active:
+		return
+	movement.on_reflect()
+	effect_on_collision.on_reflect()
+	pass
+
 func initialize(character):
 	.initialize(character)
 	xoffset = position_manager.get_spawn_offset()
@@ -51,6 +58,8 @@ func hide():
 	movement.stop()
 	hide_timer.stop()
 	visible = false
+	dir = init_dir
+	effect_on_collision.set_reflected(false) 
 	pass
 
 ###

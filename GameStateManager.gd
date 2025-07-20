@@ -57,11 +57,11 @@ func instantiate_players():
 	var raouss = preload("res://Prefabs/PCs/Raouss/Raouss.tscn")
 	var dummy = preload("res://Prefabs/NPCs/TrainingDummy.tscn")
 
-	var p1 = raouss.instance()
+	var p1 = aspen.instance()
 	p1.set_name("Player1")
 	p1.assign_id(1, self)
 	
-	var p2 = raouss.instance()
+	var p2 = aspen.instance()
 	p2.set_name("Player2")
 	p2.assign_id(2, self)
 	
@@ -196,9 +196,13 @@ func on_character_died(character_id : int):
 		teams[1][0] -= 1
 	else:
 		teams[2][0] -= 1
-	
+
 	if teams[1][0] == 0 or teams[2][0] == 0:
 		game_set()
+	else:
+		var character = initiative_order[initiative_idx]
+		if character.curr_state == character.GameState.DEAD:
+			switch_turn()
 	pass
 
 ###

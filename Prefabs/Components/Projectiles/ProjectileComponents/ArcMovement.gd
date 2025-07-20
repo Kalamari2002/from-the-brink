@@ -1,9 +1,10 @@
 extends "res://Prefabs/Components/Projectiles/ProjectileComponents/ProjectileMovementBase.gd"
 
 const Y_INIT = 800
+const B_CONST_INIT = -40
 var time = 0
 var a_const = 90
-var b_const = -40
+var b_const = B_CONST_INIT
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -19,6 +20,13 @@ func y_velocity(delta):
 func bounce():
 	time = 0
 	b_const = -20
+	pass
 	
 func get_curr_y_vel():
 	return y_velocity(time)
+
+func on_reflect():
+	.on_reflect()
+	b_const = B_CONST_INIT
+	time = 0;
+	pass

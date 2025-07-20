@@ -24,9 +24,18 @@ func initialize(parent_projectile):
 	
 func multiply_damage(mult):
 	damage_data.value = int(base_damage * mult) 
-
+	pass
+	
 func restore_damage():
 	damage_data.value = base_damage
+	pass
+	
+func on_reflect():
+	reflected = !reflected
+	pass
+func set_reflected(val:bool):
+	reflected = val
+	pass
 
 func collide(area : Area2D):
 	print("COLLIDE: ")
@@ -40,10 +49,6 @@ func collide(area : Area2D):
 	pass
 
 func inflict_character(character : Node2D):
-#	if damage_data.value != 0:
-#		print("damage")
-#		character.get_node("EffectManager").apply_effect("damage", damage_data)
-#	character.get_node("EffectManager").apply_effect(effect, arg)
 	character.get_node("EffectManager").apply_on_hit_effects({"damage":damage_data, effect:arg})
 	pass
 
@@ -52,15 +57,9 @@ func can_inflict_character(character : Node2D)->bool:
 	print("Home Column id: ", position_manager.get_home_column().get_id())
 	print("Target Column: ", damage_data.target_column)
 	if position_manager.get_home_column().get_id() == damage_data.target_column:
-		return true
-	return false
-	#if char_position_manager.get_is_right():
-	#	if parent_projectile.get_dir() == -1 and !reflected:
-	#		return false
-	#else:
-	#	if parent_projectile.get_dir() == 1 and !reflected:
-	#		return false
-	#return true
+		return (true && !reflected)
+	return (false || reflected)
 
 func self_destroy():
 	queue_free()
+	pass

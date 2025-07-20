@@ -52,5 +52,11 @@ func bounce():
 	shadow.visible = false
 	pass
 
+func reflect():
+	if bounced:
+		return
+	.reflect()
+	pass
+
 func get_effect_manager():
 	return effect_manager

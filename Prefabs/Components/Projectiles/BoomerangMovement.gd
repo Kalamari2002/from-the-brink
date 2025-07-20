@@ -1,9 +1,9 @@
 extends "res://Prefabs/Components/Projectiles/ProjectileComponents/ProjectileMovementBase.gd"
 
-
 var left_column : Node2D
 var right_column : Node2D
 
+var can_go_back = true		# If the scimitar is reflected, it stops following the boomerang trajectory (going for a linear path instead) 
 var going_back = false
 var stopped = true
 
@@ -15,9 +15,18 @@ func _ready():
 	left_column = get_tree().get_root().get_node("Board/Quadrants/left")
 	right_column = get_tree().get_root().get_node("Board/Quadrants/right")
 	animation_player = get_parent().get_node("AnimationPlayer")
+	pass
 
 func _physics_process(delta):
 	movement(delta)
+	pass
+
+func on_reflect():
+	if going_back:
+		return
+	can_go_back = false
+	dir = -dir
+	pass
 
 func movement(delta):
 	if stopped:
@@ -45,8 +54,13 @@ func move(direction : int):
 func stop():
 	stopped = true
 	curr_base = 0
+	can_go_back = true
 	going_back = false
 	animation_player.stop()
+	dir = get_parent().get_init_dir()
+	pass
 
 func switch_speed():
-	going_back = true
+	if can_go_back:
+		going_back = true
+	pass

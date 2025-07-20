@@ -74,6 +74,7 @@ func seize():
 	active = false
 	duration_timer.stop()
 	duration_label.stop()
+	emit_signal("end_atk")
 
 ###
 # @return option name/text label

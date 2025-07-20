@@ -1,7 +1,7 @@
 extends Node2D
 
 export var base_speed : int
-var dir
+var dir : int 
 var curr_base = 0
 var is_slown = false
 var time_manager
@@ -17,3 +17,8 @@ func _ready():
 	
 func multiply_speed(mult):
 	curr_base *= mult
+	pass
+
+func on_reflect():
+	dir = get_parent().get_dir()
+	pass
