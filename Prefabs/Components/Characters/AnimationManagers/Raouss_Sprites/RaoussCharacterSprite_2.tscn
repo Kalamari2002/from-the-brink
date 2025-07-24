@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Prefabs/Components/Characters/AnimationManagers/Raouss_Sprites/RaoussCharacterSprite_1.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/Characters/Players/Raouss/Raouss_choosing_2_1.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Sprites/Characters/Players/Raouss/Raouss_damaged_2.png" type="Texture" id=6]
 [ext_resource path="res://Sprites/Characters/Players/Raouss/Raouss_burning_2_2.png" type="Texture" id=7]
 [ext_resource path="res://Sprites/Characters/Players/Raouss/Raouss_attack_2.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/Characters/Players/Raouss/Raouss_dead_2.png" type="Texture" id=9]
 
 [node name="RaoussCharacterSprite_2" instance=ExtResource( 1 )]
 texture = ExtResource( 5 )
@@ -17,5 +18,5 @@ burning_2 = ExtResource( 7 )
 selecting_1 = ExtResource( 2 )
 selecting_2 = ExtResource( 4 )
 damaged = ExtResource( 6 )
-dead = ExtResource( 4 )
+dead = ExtResource( 9 )
 idle = ExtResource( 5 )

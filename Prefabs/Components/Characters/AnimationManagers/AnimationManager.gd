@@ -77,7 +77,6 @@ func create_character_sprite(color_palette : int):
 
 func on_effect_apply(effect_name : String):
 	if effect_name in lingering_animations:
-		print("Animation effect: " + effect_name)
 		play_lingering_animation(effect_name)
 	pass
 func on_effect_remove(effect_name: String):
@@ -90,8 +89,6 @@ func play_sprite_animation(animation : String):
 		sprite_animator.play(animation)
 	last_requested_animation = animation
 	if curr_lingering_animation == "":
-		if animation == "":
-			print("EMPTY")
 		sprite_animator.play(animation)
 	pass
 
@@ -108,8 +105,6 @@ func play_lingering_animation(animation : String):
 	var curr_state = character.get_curr_state()
 	if curr_state == character.GameState.DEAD:
 		return
-	if animation == "":
-		print("EMPTY")
 	sprite_animator.play(animation)
 	curr_lingering_animation = animation
 func end_lingering_animation(animation : String):

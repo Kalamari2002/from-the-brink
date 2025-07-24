@@ -27,10 +27,14 @@ func initialize(parent_selector : Node2D, character : Node2D):
 	connect("opened_selector", self.parent_selector, "deactivate")
 	connect("option_picked", self.parent_selector, "close")
 	connect("go_back", self.parent_selector, "activate")
-	self.parent_selector.connect("seize", self, "seize_selector")
+	self.parent_selector.connect("seize", self, "on_character_death")
 	
 	initialize_children()
 	create_cards()
+
+func on_character_death():
+	close()
+	pass
 
 func _input(event):
 	if !active:

@@ -9,9 +9,8 @@ func initialize(pselecter, charactr):
 	
 	connect("start_atk", parent_selector, "close")
 	
-	#connect("start_atk", character, "start_atking") # Wanna let the caller know when this atk has started
+	connect("start_atk", character, "start_atking") # Wanna let the caller know when this atk has started
 	connect("end_atk", character,"end_turn") # Wanna let the caller know when it's over
-	character.connect("died", self, "seize")
 	
 	add_to_group("abilities")
 	effect_manager = character.get_node("EffectManager")

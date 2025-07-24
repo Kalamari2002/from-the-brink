@@ -66,11 +66,15 @@ intro_text_path = NodePath("../../Control/IntroText")
 initiative_roll_path = NodePath("../../Control/InitiativeRoll")
 ready_path = NodePath("../../Control/Ready")
 
+[node name="PassTime" type="Timer" parent="GameManager/GameStateManager"]
+wait_time = 2.0
+one_shot = true
+
 [node name="TimeScaleManager" type="Node2D" parent="GameManager"]
 script = ExtResource( 11 )
 
 [node name="Quadrants" parent="." instance=ExtResource( 4 )]
-position = Vector2( 384, 192 )
+position = Vector2( 397, 169 )
 
 [node name="Control" type="Control" parent="."]
 margin_right = 1027.0
@@ -96,3 +100,5 @@ color = Color( 0, 0, 0, 0 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Control/BulletTimeDim"]
 anims/FadeIn = SubResource( 1 )
 anims/FadeOut = SubResource( 2 )
+
+[connection signal="timeout" from="GameManager/GameStateManager/PassTime" to="GameManager/GameStateManager" method="_on_PassTime_timeout"]

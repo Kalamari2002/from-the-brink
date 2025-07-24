@@ -71,7 +71,7 @@ visible = false
 [node name="Instructions" parent="." instance=ExtResource( 19 )]
 
 [node name="HealthManager" parent="." instance=ExtResource( 26 )]
-max_health = 150
+max_health = 3
 
 [node name="EffectManager" parent="." instance=ExtResource( 14 )]
 position = Vector2( -35.3333, -61.3333 )

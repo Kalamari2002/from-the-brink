@@ -142,13 +142,16 @@ func deactivate():
 ###
 func close():
 	deactivate()
-	print("PICKED")
 	display.visible = false
 	emit_signal("option_picked")
 
-func seize_selector():
+func on_character_death():
+	print("on_character_death")
+	if last_pick != null and last_pick.active:
+		last_pick.deactivate()
 	close()
 	emit_signal("seize")
+	pass
 
 ###
 # Used by Subselectors to let the selector know which option was the previously

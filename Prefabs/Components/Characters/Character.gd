@@ -9,6 +9,8 @@ signal died
 signal turn_started
 signal turn_ended
 signal id_assigned
+signal atk_started
+signal atk_ended
 
 var game_state_manager : Node2D
 
@@ -81,23 +83,16 @@ func start_turn() -> int:
 	change_state(GameState.SELECTING)
 	selector.activate()
 	emit_signal("turn_started")
-	print(String(get_path()) + " is selecting their action")
 	return 0
 
 ###
 # Sets character to WAITING and stops them from selecting options. Stalls for 2 seconds
 # before passing the turn to another player. Called by the GameStateManager.
 ###
-func end_turn():
-	#curr_state = GameState.ENDING
+func end_turn():  
 	change_state(GameState.ENDING)
-	var time_in_seconds = 2
-	yield(get_tree().create_timer(time_in_seconds), "timeout")
-	if !change_state(GameState.WAITING):
-		return
-	emit_signal("turn_ended")
-	game_state_manager.on_turn_ended()
-	print(String(get_path()) + " has ended their turn")
+	game_state_manager.on_turn_end()
+	emit_signal("atk_ended")
 	pass
 
 func pause_control():
@@ -110,9 +105,10 @@ func resume_control():
 # Sets game state to attacking. This is called on signals by attack options.
 ###
 func start_atking():
-	#curr_state = GameState.ATTACKING
 	change_state(GameState.ATTACKING)
-
+	game_state_manager.on_atk_start()
+	emit_signal("atk_started")
+	pass
 ###
 # Tells health manager to decrease health by x amount.
 # @param dmg amount of health damaged
@@ -126,11 +122,12 @@ func take_dmg(dmg):
 func die():
 	if curr_state == GameState.DEAD:
 		return
-	#curr_state = GameState.DEAD
+	if curr_state == GameState.SELECTING:
+		game_state_manager.skip_turn()
 	change_state(GameState.DEAD)
-	selector.seize_selector()
 	emit_signal("died") # Lets other objects know that this character is dead
 	game_state_manager.on_character_died(id)
+	selector.on_character_death()
 	pass
 
 ###

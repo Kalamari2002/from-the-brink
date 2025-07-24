@@ -25,4 +25,5 @@ margin_bottom = 64.0
 alignment = 1
 
 [node name="Invulnerability" type="Timer" parent="."]
+wait_time = 0.4
 one_shot = true

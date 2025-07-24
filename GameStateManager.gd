@@ -15,18 +15,20 @@ export (NodePath) var initiative_roll_path
 export (NodePath) var ready_path
 
 var pre_game_state = 0
+enum GameState { INTRO, SELECT, ATTACK, PASS, END }
 
 var initiative_order = [] # A list of players, ordered by turn from first to last
 var teams = {}
-var initiative_idx = 0 # Keeps track of which player in the initiative_order is going currently
+var initiative_idx = -1 # Keeps track of which player in the initiative_order is going currently
 
 var round_count = 0 # The round number, is incremented at the top of the round
 var skip_intro = false # If set true, the intro lines are skipped 
 
-var player_count = 4 # Numbers of players playing
+var player_count : int
 var curr_player
 var game_over = false
 
+onready var curr_state = GameState.INTRO
 onready var intro_text = get_node(intro_text_path)
 onready var initiative_roll = get_node(initiative_roll_path)
 onready var ready = get_node(ready_path)
@@ -83,6 +85,8 @@ func instantiate_players():
 	initiative_order.append(p2)
 	initiative_order.append(p3)
 	
+	player_count = initiative_order.size()
+
 	for i in initiative_order:
 		connect("game_started",i,"on_game_start")
 	teams = {
@@ -124,6 +128,7 @@ func roll_initiative():
 func start_game():
 	emit_signal("game_started")
 	top_of_the_round()
+	next_game_state()
 	pass
 
 ###
@@ -135,7 +140,6 @@ func top_of_the_round():
 	round_count += 1
 	emit_signal("top_of_the_round")
 	print("\nTop of the round: ", round_count)
-	pass_control_to_player(current_player())
 	pass
 
 ###
@@ -143,16 +147,37 @@ func top_of_the_round():
 # other players in the initiative_order, we reset it and restart from the top_of_the_round
 ###
 func switch_turn():
-	print("SWITCH")
+	print("switch")
 	if game_over:
 		return
 	initiative_idx += 1
-	if initiative_idx < player_count: # Next player
-		pass_control_to_player(current_player())
-	else: # Reached last player, top_of_the_round
+	
+	if initiative_idx >= player_count: # Next player
 		initiative_idx = 0
 		top_of_the_round()
+	
+	pass_control_to_player(current_player())
 	emit_signal("passed_turn")
+	pass
+
+func next_game_state():
+	set_game_state(curr_state + 1)
+	pass
+func skip_turn():
+	set_game_state(GameState.PASS)
+	pass
+func set_game_state(var state):
+	if curr_state == GameState.END:
+		return
+	match state:
+		GameState.SELECT:
+			switch_turn()
+			pass
+		GameState.PASS:
+			$PassTime.start()
+			pass
+	curr_state = state
+	print("Current State: " + String(state))
 	pass
 
 func start_quick_time_event():
@@ -176,6 +201,38 @@ func pass_control_to_player(player):
 	pass
 
 ###
+# Called directly by a character when they die. Subtracts from the player's respective
+# "alive" headcount, if all players in a team are dead, end game.
+###
+func on_character_died(character_id : int):
+	teams[2 - (character_id % 2)][0] -= 1
+	if teams[1][0] == 0 or teams[2][0] == 0:
+		game_set()
+	pass
+
+###
+# Called by characters when they select an attack. Advances the game state by 1
+###
+func on_atk_start():
+	next_game_state()
+###
+# Called by character when they end their turn. Advances the game state by 1
+###
+func on_turn_end():
+	next_game_state()
+	pass
+
+func game_set():
+	if game_over:
+		return
+	game_over = true
+	print("ended!!!")
+	emit_signal("game_set")
+	var time_in_seconds = 4
+	yield(get_tree().create_timer(time_in_seconds), "timeout")
+	get_tree().change_scene("res://Scenes/VictoryScreen.tscn")
+
+###
 # The current player going
 ###	
 func current_player():
@@ -187,36 +244,6 @@ func get_round_count():
 func get_initiative_order():
 	return initiative_order
 
-###
-# Called directly by a character when they die. Subtracts from the player's respective
-# "alive" headcount, if all players in a team are dead, end game.
-###
-func on_character_died(character_id : int):
-	if character_id % 2 != 0:
-		teams[1][0] -= 1
-	else:
-		teams[2][0] -= 1
-
-	if teams[1][0] == 0 or teams[2][0] == 0:
-		game_set()
-	else:
-		var character = initiative_order[initiative_idx]
-		if character.curr_state == character.GameState.DEAD:
-			switch_turn()
-	pass
-
-###
-# Called directly by a character when they end their turn
-###
-func on_turn_ended():
-	switch_turn()
-
-func game_set():
-	if game_over:
-		return
-	game_over = true
-	print("ended!!!")
-	emit_signal("game_set")
-	var time_in_seconds = 4
-	yield(get_tree().create_timer(time_in_seconds), "timeout")
-	get_tree().change_scene("res://Scenes/VictoryScreen.tscn")
+func _on_PassTime_timeout():
+	set_game_state(GameState.SELECT)
+	pass # Replace with function body.

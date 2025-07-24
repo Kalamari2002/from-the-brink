@@ -43,7 +43,6 @@ func initialize(pselecter, charactr):
 	
 	connect("start_atk", character, "start_atking") # Wanna let the caller know when this atk has started
 	connect("end_atk", character,"end_turn") # Wanna let the caller know when it's over
-	character.connect("died", self, "seize")
 	
 	add_to_group("abilities")
 	pass
@@ -54,7 +53,6 @@ func initialize(pselecter, charactr):
 func activate():
 	active = true
 	duration_timer.start()
-	print(option_name)
 	duration_label.start(duration_timer.time_left)
 	instruction_label.visible = true
 	instruction_label.text = instruction
@@ -64,17 +62,22 @@ func activate():
 # Call this to make the option end its behavior
 ###
 func deactivate():
+	if !active:
+		return
+	
 	duration_timer.stop()
 	duration_label.stop()
 	active = false
 	instruction_label.visible = false
 	emit_signal("end_atk")
+	pass
 
 func seize():
+	print(character.get_name() + " " + self.get_name() + " SEIZED")
 	active = false
 	duration_timer.stop()
 	duration_label.stop()
-	emit_signal("end_atk")
+	pass
 
 ###
 # @return option name/text label
@@ -92,6 +95,5 @@ func get_icon_path():
 func _on_Duration_timeout():
 	if !active:
 		return
-	print("TIMEOUT")
 	deactivate()
 	pass # Replace with function body.

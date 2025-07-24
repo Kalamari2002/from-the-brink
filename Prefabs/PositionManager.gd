@@ -129,7 +129,6 @@ func get_home_column() -> Node2D:
 # @param val true if character is on right column, false if they're on the left
 ###
 func set_is_right(val):
-	print("=====Set is right=====")
 	is_right = val
 
 ###

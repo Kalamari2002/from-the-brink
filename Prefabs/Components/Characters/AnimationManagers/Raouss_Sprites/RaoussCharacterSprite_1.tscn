@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Prefabs/Components/Characters/AnimationManagers/CharacterSprite.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Characters/Players/Raouss/Raouss_burning_1_1.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Sprites/Characters/Players/Raouss/Raouss_choosing_1_2.png" type="Texture" id=6]
 [ext_resource path="res://Sprites/Characters/Players/Raouss/Raouss_damaged_1.png" type="Texture" id=7]
 [ext_resource path="res://Sprites/Characters/Players/Raouss/Raouss_idle.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/Characters/Players/Raouss/Raouss_dead_1.png" type="Texture" id=9]
 
 [sub_resource type="Animation" id=1]
 resource_name = "attacking"
@@ -163,7 +164,7 @@ burning_2 = ExtResource( 5 )
 selecting_1 = ExtResource( 3 )
 selecting_2 = ExtResource( 6 )
 damaged = ExtResource( 7 )
-dead = ExtResource( 6 )
+dead = ExtResource( 9 )
 idle = ExtResource( 8 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
