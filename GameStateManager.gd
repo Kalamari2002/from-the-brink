@@ -143,13 +143,16 @@ func top_of_the_round():
 	pass
 
 ###
-# Passes the atk turn to the next player in the initiative order. If there are no
-# other players in the initiative_order, we reset it and restart from the top_of_the_round
+# Sets the previous player's state to WAITING and passes the atk turn to the next player in the 
+# initiative order. If there are no other players in the initiative_order, we reset it and restart 
+# from the top_of_the_round.
 ###
 func switch_turn():
 	print("switch")
 	if game_over:
 		return
+	
+	current_player().change_state(current_player().GameState.WAITING)
 	initiative_idx += 1
 	
 	if initiative_idx >= player_count: # Next player
