@@ -9,10 +9,9 @@ signal end_atk		# signaled when the option ends its behavior
 
 export var option_name : String		# Name that appears in the selector label
 export var icon_path : String		# icon path
-export var instruction : String
+export var instruction : String		# Instruction text on how to use this ability
 
 var active			# Determines if this option can act or not
-var parent_selector
 var character		# Character calling this option
 var instruction_label
 var control_scheme
@@ -32,14 +31,11 @@ func _ready():
 	active = false
 	pass # Replace with function body.
 
-func initialize(pselecter, charactr):
-	parent_selector = pselecter
+func initialize(charactr):
 	character = charactr
 	
 	instruction_label = character.get_node("Instructions/Label")
 	control_scheme = character.get_node("ControlScheme")
-	
-	connect("start_atk", parent_selector, "close")
 	
 	connect("start_atk", character, "start_atking") # Wanna let the caller know when this atk has started
 	connect("end_atk", character,"end_turn") # Wanna let the caller know when it's over
@@ -59,7 +55,8 @@ func activate():
 	emit_signal("start_atk")
 
 ###
-# Call this to make the option end its behavior
+# Call this to make the option end its behavior. Signals to the character that
+# their turn is over.
 ###
 func deactivate():
 	if !active:
@@ -72,11 +69,15 @@ func deactivate():
 	emit_signal("end_atk")
 	pass
 
+###
+# Call this to make the option end its behavior and not
+# signalize to the player that the attack is over.
+###
 func seize():
 	print(character.get_name() + " " + self.get_name() + " SEIZED")
-	active = false
 	duration_timer.stop()
 	duration_label.stop()
+	active = false
 	pass
 
 ###

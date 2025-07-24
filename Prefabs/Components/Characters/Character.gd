@@ -46,7 +46,7 @@ func on_ready():
 	effect_manager.initialize(self)
 	position_manager.initialize(self)
 	cursor_manager.initialize(self)
-	selector.initialize(null,self)
+	selector.initialize(self)
 	resource_manager.initialize(self)
 	skill_manager.initialize(self)
 	animation_manager.initialize(self)
@@ -86,8 +86,8 @@ func start_turn() -> int:
 	return 0
 
 ###
-# Sets character to WAITING and stops them from selecting options. Stalls for 2 seconds
-# before passing the turn to another player. Called by the GameStateManager.
+# Sets character to ENDING and tells the game_state_manager that this player
+# has finished their turn. This is mainly called by options via signal.
 ###
 func end_turn():  
 	change_state(GameState.ENDING)

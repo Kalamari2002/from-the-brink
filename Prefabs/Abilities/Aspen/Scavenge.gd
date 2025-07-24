@@ -7,8 +7,8 @@ var items_selector : Node2D
 var damage_data : Node
 var dug_quadrants = []
 
-func initialize(pselecter, charactr):
-	.initialize(pselecter,charactr)
+func initialize(charactr):
+	.initialize(charactr)
 	damage_data = $DamageData
 	items_selector = character.get_node("Selector/Options/Items")
 	pass

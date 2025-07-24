@@ -14,8 +14,8 @@ func _ready():
 		projectile = load(projectile_path)
 	pass # Replace with function body.
 
-func initialize(pselecter, charactr):
-	.initialize(pselecter, charactr)
+func initialize(charactr):
+	.initialize(charactr)
 	progress_bar = character.get_node("CharacterDisplay/ChargeBar")
 
 func _process(delta):

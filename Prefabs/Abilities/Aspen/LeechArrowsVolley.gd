@@ -2,8 +2,8 @@ extends "res://Prefabs/Abilities/VolleyBase.gd"
 
 var position_manager
 
-func initialize(pselecter, charactr):
-	.initialize(pselecter,charactr)
+func initialize(charactr):
+	.initialize(charactr)
 	position_manager = character.get_node("PositionManager")
 	pass
 

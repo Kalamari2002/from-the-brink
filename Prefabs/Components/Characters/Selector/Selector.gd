@@ -38,7 +38,7 @@ var special_controls
 
 var abilities = []
 
-func initialize(parent_selector : Node2D, character : Node2D):
+func initialize(character : Node2D):
 	
 	display = get_node("Display")
 	
@@ -70,11 +70,11 @@ func _input(event):
 		switch_selected(1)
 	
 	if event.is_action_released(confirm_controls):
-		options[selected_idx].activate()
+		if !options[selected_idx].activate():
+			close()
 		last_pick = options[selected_idx]
-	
-#	if event.is_action_pressed("ui_accept"):
-#		add_option(debug)
+		
+	pass
 	
 ###
 # Called by the character that owns this menu. It sets which actions
@@ -92,7 +92,7 @@ func define_control_scheme(up,down,confirm,special):
 
 func initialize_children():
 	for c in get_node("Options").get_children():
-		c.initialize(self, character)
+		c.initialize(character)
 		options.append(c)
 	selected_idx = int( len(options)/2 ) # Starting option is the middle one
 	pass
@@ -113,7 +113,7 @@ func add_option(opt_path):
 	print("added")
 	var option = load(opt_path)
 	var new_opt = option.instance()
-	new_opt.initialize(self, character)
+	new_opt.initialize(character)
 	get_node("Options").add_child(new_opt)
 	options.append(new_opt)
 	display.update_cards()
@@ -130,10 +130,11 @@ func flip_cards():
 ###
 # Lets the player navigate and pick from this selector
 ###
-func activate():
+func activate() -> bool:
 	active = true
 	display.visible = true
 	emit_signal("opened_selector")
+	return true
 	
 func deactivate():
 	active = false
@@ -145,8 +146,12 @@ func close():
 	display.visible = false
 	emit_signal("option_picked")
 
+###
+# Called by the character when they die. If the character dies while an ability
+# is still active, the selector deactivates it. Then, it closes itself and calls
+# seize so that submenus may close as well.
+###
 func on_character_death():
-	print("on_character_death")
 	if last_pick != null and last_pick.active:
 		last_pick.deactivate()
 	close()

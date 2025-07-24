@@ -16,25 +16,21 @@ var sub_flip_offset = Vector2(-180,0)
 # this subselector, allowing it to make connections without calling get_parent()
 # and preserving the parent to child hierarchy.
 ###
-func initialize(parent_selector : Node2D, character : Node2D):
+func initialize(character : Node2D):
 
 	display = get_node("Display")
 	active = false
 	
 	self.character = character	
 
-	self.parent_selector = parent_selector
+	self.parent_selector = character.get_node("Selector")
 	connect("opened_selector", self.parent_selector, "deactivate")
 	connect("option_picked", self.parent_selector, "close")
 	connect("go_back", self.parent_selector, "activate")
-	self.parent_selector.connect("seize", self, "on_character_death")
+	self.parent_selector.connect("seize", self, "close")
 	
 	initialize_children()
 	create_cards()
-
-func on_character_death():
-	close()
-	pass
 
 func _input(event):
 	if !active:
@@ -57,7 +53,7 @@ func flip_cards():
 	.flip_cards()
 	position = sub_flip_offset
 
-func activate():
+func activate() -> bool:
 	if parent_selector.is_flipped():	# If the parent belongs to a character on the right, we flip this subselector's cards too/
 		flip_cards()
 	var parent_controls = parent_selector.get_control_scheme()
@@ -65,7 +61,7 @@ func activate():
 	down_controls = parent_controls[1]
 	confirm_controls = parent_controls[2]
 	special_controls = parent_controls[3]
-	.activate()
+	return .activate()
 ###
 # @return name/label text of the option
 ###

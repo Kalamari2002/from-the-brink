@@ -22,9 +22,9 @@ func _ready():
 	atk_count = TOTAL_ATK_CNT
 	pass # Replace with function body.
 
-func initialize(pselecter, charactr):
+func initialize(charactr):
 	
-	.initialize(pselecter, charactr)
+	.initialize(charactr)
 	
 	control_scheme = character.get_node("ControlScheme")
 	cursor_manager = character.get_node("CursorManager")
@@ -88,7 +88,6 @@ func activate():
 	atk_count = TOTAL_ATK_CNT
 	cursor_manager.enable_cursor()
 	melee_bar.visible = true
-	pass
 	
 func deactivate():
 	.deactivate()

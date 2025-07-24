@@ -9,8 +9,8 @@ var quicktimeevent = preload("res://Prefabs/Components/Characters/QuickTimeEvent
 var quicktimeobject # used to reference the created quicktime event, deletes it l8r
 var damage_data : Node
 
-func initialize(pselecter, charactr):
-	.initialize(pselecter, charactr)
+func initialize(charactr):
+	.initialize(charactr)
 	control_scheme = character.get_node("ControlScheme")
 	cursor_manager = character.get_node("CursorManager")
 	position_manager = character.get_node("PositionManager")
