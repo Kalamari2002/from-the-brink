@@ -75,11 +75,6 @@ func instantiate_players():
 	p4.set_name("Player4")
 	p4.assign_id(4, self)
 	
-	get_node("/root/Board").call_deferred("add_child",p1)
-	get_node("/root/Board").call_deferred("add_child",p2)
-	get_node("/root/Board").call_deferred("add_child",p3)
-	get_node("/root/Board").call_deferred("add_child",p4)
-	
 	initiative_order.append(p4)
 	initiative_order.append(p1)
 	initiative_order.append(p2)
@@ -88,7 +83,9 @@ func instantiate_players():
 	player_count = initiative_order.size()
 
 	for i in initiative_order:
+		get_node("/root/Board").call_deferred("add_child",i)
 		connect("game_started",i,"on_game_start")
+		connect("game_set", i, "on_game_set")
 	teams = {
 		1 : [2, [1,3]],
 		2 : [2, [2,4]]
@@ -208,8 +205,10 @@ func pass_control_to_player(player):
 # "alive" headcount, if all players in a team are dead, end game.
 ###
 func on_character_died(character_id : int):
-	teams[2 - (character_id % 2)][0] -= 1
-	if teams[1][0] == 0 or teams[2][0] == 0:
+	var team_idx = 2 - (character_id % 2)
+	teams[team_idx][0] -= 1
+	
+	if teams[team_idx][0] == 0:
 		game_set()
 	pass
 
@@ -218,6 +217,8 @@ func on_character_died(character_id : int):
 ###
 func on_atk_start():
 	next_game_state()
+	pass
+
 ###
 # Called by character when they end their turn. Advances the game state by 1
 ###

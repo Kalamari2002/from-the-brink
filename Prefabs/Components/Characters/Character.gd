@@ -70,6 +70,10 @@ func _input(event):
 func on_game_start():
 	skill_manager.enable()
 	pass
+func on_game_set():
+	if curr_state != GameState.DEAD:
+		effect_manager.set_invincibility(true)
+	pass
 
 ###
 # Lets character select their options. Called by the GameStateManager.

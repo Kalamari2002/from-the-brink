@@ -32,7 +32,8 @@ func initialize(eff_man, charctr):
 	var temp_icon = load(path_conc + icon_name + ".tscn") # setting logo
 	icon = temp_icon.instance()
 	effect_manager.add_icon(icon) # adds an effect icon above the character
-
+	
+	character.connect("died",self,"end_effect")
 	if decrement_type == 0: # setting the decrement type just connects the decrement function to the respective character turn signal
 		character.connect("turn_started", self, "decrement")
 	if decrement_type == 1:

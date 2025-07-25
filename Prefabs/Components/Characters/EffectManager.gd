@@ -15,7 +15,7 @@ signal invulnerability_start
 var health_manager : Node2D		# Ref to the character's health manager
 var character : Node2D
 var invulnerability : Timer
-var hbox : HBoxContainer			# the horizontal boxed used to keep icons
+var hbox : HBoxContainer		# the horizontal boxed used to keep icons
 
 const GREENFLAME = preload("res://Prefabs/Effects/GreenFlame.tscn")
 const BURNIN = preload("res://Prefabs/Effects/Burnin.tscn")
@@ -31,6 +31,8 @@ var effect_dict = {
 
 var curr_effects = {}
 
+onready var invincible = false
+
 func initialize(character:Node2D):
 	self.character = character
 	health_manager = self.character.get_node("HealthManager")
@@ -39,13 +41,13 @@ func initialize(character:Node2D):
 	pass
 
 ###
-# Takes a string and adds a corresponding effect as a child. Ignores invulnerability if called 
+# Takes a string and adds a corresponding effect as a child. Ignores invulnerability (not invincibility) if called 
 # on its own (useful for passive damage effects and non-attack effects).
 # @param effect is a string that represents the effect to be inflicted. Set to "damage" if you just wanna damage a character
 # @param arg is an int that can be used to specify any quantity associated with the effect
 ###
 func apply_effect(effect, arg):
-	if effect == "":
+	if effect == "" or character.get_curr_state() == character.GameState.DEAD or invincible:
 		return
 	if effect == "damage":
 		take_damage(arg)
@@ -122,7 +124,15 @@ func start_invulnerability():
 	emit_signal("invulnerability_start")
 	invulnerability.start()
 	pass
-	
+
+###
+# Sets a character's invincibility. Duhr.
+# @param val true makes character immune to heal, damage, and anything in between
+###
+func set_invincibility(var val : bool):
+	invincible = val
+	pass
+
 ###
 # Called by an effect, takes a TextureRect scene and adds it to the hbox.
 # @param icon is the TextureRect object.
