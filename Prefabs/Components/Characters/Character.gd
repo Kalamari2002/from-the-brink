@@ -73,6 +73,7 @@ func on_game_start():
 func on_game_set():
 	if curr_state != GameState.DEAD:
 		effect_manager.set_invincibility(true)
+	selector.seize()
 	pass
 
 ###
@@ -131,7 +132,7 @@ func die():
 	change_state(GameState.DEAD)
 	emit_signal("died") # Lets other objects know that this character is dead
 	game_state_manager.on_character_died(id)
-	selector.on_character_death()
+	selector.seize()
 	pass
 
 ###

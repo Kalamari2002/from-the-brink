@@ -7,10 +7,7 @@
 
 extends Node2D
 
-signal opened_selector		# Whenever this selector is activated, signal this
-signal option_picked		# Whenever an option is picked, signal this
-signal go_back				# For subselectors, gives control back to the previous menu/selector
-signal seize
+signal seize				# Signal for submenus to terminate (ie, when a character dies or the game is set)
 
 var options = []			# All selectable options in the selector
 var last_pick				# Most recently picked option
@@ -44,9 +41,6 @@ func initialize(character : Node2D):
 	
 	self.character = character
 	var character_id = self.character.get_id()
-
-	initialize_children()
-	create_cards()
 	
 	match(character_id):
 		1:
@@ -57,6 +51,9 @@ func initialize(character : Node2D):
 			define_control_scheme("p3_move_up","p3_move_down","p3_confirm","p3_special")
 		4:
 			define_control_scheme("p4_move_up","p4_move_down","p4_confirm","p4_special")
+
+	initialize_children()
+	create_cards()
 	if character_id % 2 == 0:	# If even will stand on the right
 		flip_cards()
 	pass
@@ -70,10 +67,10 @@ func _input(event):
 		switch_selected(1)
 	
 	if event.is_action_released(confirm_controls):
-		if !options[selected_idx].activate():
-			close()
+		deactivate()
 		last_pick = options[selected_idx]
-		
+		if !options[selected_idx].activate():
+			on_option_picked()
 	pass
 	
 ###
@@ -89,6 +86,7 @@ func define_control_scheme(up,down,confirm,special):
 	down_controls = down
 	confirm_controls = confirm
 	special_controls = special
+	pass
 
 func initialize_children():
 	for c in get_node("Options").get_children():
@@ -133,29 +131,40 @@ func flip_cards():
 func activate() -> bool:
 	active = true
 	display.visible = true
-	emit_signal("opened_selector")
 	return true
-	
+
+###
+# For the root selector, all we do when we pick an option is just close the selector.
+# This isn't the case for subselectors.
+###
+func on_option_picked():
+	close()
+	pass
+
 func deactivate():
 	active = false
+
 ###
 # Hides the menu and prevents the player from interacting with this selector.
 ###
 func close():
 	deactivate()
 	display.visible = false
-	emit_signal("option_picked")
+	pass
 
 ###
-# Called by the character when they die. If the character dies while an ability
+# Called by the character when they die or the game ends. If an ability
 # is still active, the selector deactivates it. Then, it closes itself and calls
 # seize so that submenus may close as well.
 ###
-func on_character_death():
+func seize():
 	if last_pick != null and last_pick.active:
 		last_pick.deactivate()
 	close()
 	emit_signal("seize")
+	pass
+
+func on_game_set():
 	pass
 
 ###
@@ -163,6 +172,7 @@ func on_character_death():
 # picked one.
 ###
 func set_last_pick(pick):
+	print("Last picked: " + pick.get_name())
 	last_pick = pick
 
 func get_last_pic():

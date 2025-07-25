@@ -26,6 +26,8 @@ func reset_effect():
 # Called when the damaged character's health manager fires a "took_damage" signal
 ###
 func combust(damage_amount : int):
+	if character.get_curr_state() == character.GameState.DEAD:
+		return
 	damage_data.value = max(1, int(MULTIPLIER * damage_amount))
 	timer.start()
 	pass
