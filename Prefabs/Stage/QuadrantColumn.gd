@@ -79,7 +79,7 @@ func attack_quadrants(dmg):
 	for q in quadrants:
 		if q.is_selected():
 			q.damage_characters(dmg)
-
+	pass
 ###
 # Inflicts an effect (including damage) to all characters standing on the selected quadrant.
 # @param effect is a string representing the effect
@@ -89,11 +89,20 @@ func affect_quadrants(effect, arg):
 	for q in quadrants:
 		if q.is_selected():
 			q.apply_effect(effect,arg)
+	pass
+
+###
+# Apply a set of effects on all characters in the selected quadrant. If target
+# quadrant affects a character that's reflecting the effects, effect origin (character
+# dealing effects) is inflicted instead. Otherwise, effect goes through.
+###
 func affect_on_hit_quadrants(effects):
+	var o_effect_manager = effects["damage"].origin.get_node("EffectManager")
 	for q in quadrants:
 		if q.is_selected():
-			q.apply_on_hit_effects(effects)
-
+			if not q.apply_on_hit_effects(effects): # Damage has been reflected
+				o_effect_manager.apply_on_hit_effects(effects)
+	pass
 
 ###
 # @return all characters in the column

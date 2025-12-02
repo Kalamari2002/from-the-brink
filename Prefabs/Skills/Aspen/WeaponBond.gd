@@ -30,15 +30,9 @@ func initialize(charactr):
 func instantiate_projectile():
 	scimitar = projectile.instance()
 	scimitar.initialize(character)
-	#scimitar.set_auto_catch_timer(cooldown.wait_time)
 	cooldown.connect("timeout", scimitar, "on_cooldown_end")
 	scimitar.connect("succeeded_catch", self, "catch_scimitar")
 	get_node("/root/Board").add_child(scimitar)
-	pass
-
-func _process(delta):
-	if cooldown.time_left != 0:
-		icon.update_bar(cooldown.time_left)
 	pass
 
 func trigger():
@@ -105,6 +99,4 @@ func get_dir() -> int:
 	return 1
 
 func is_active() -> bool:
-	if character.get_curr_state() != character.GameState.ATTACKING:
-		return false
-	return true
+	return (character.get_curr_state() == character.GameState.ATTACKING)

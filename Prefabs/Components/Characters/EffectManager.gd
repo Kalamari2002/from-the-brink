@@ -32,6 +32,7 @@ var effect_dict = {
 var curr_effects = {}
 
 onready var invincible = false
+onready var reflect = false
 
 func initialize(character:Node2D):
 	self.character = character
@@ -72,15 +73,17 @@ func apply_effect(effect, arg):
 ###
 # Used to damage/inflict effects on the character by hitting them (thru a melee or
 # projectile attack). This function checks for the current invulnerability timer, 
-# and applies effect to the character only if they aren't invulnerable.
+# and applies effect to the character only if they aren't invulnerable or reflecting damage.
 # @param effects: a dictionary of effects with {key : value} being {"effect name" : arg}
-# @return false if the effect doesn't go through (character was invulnerable)
-# @return true if the effect goes through (character was vulnerable)
+# @return true if the effect isn't reflected and goes through
+# @return false if it's reflected and returned to sender
 ###
 func apply_on_hit_effects(effects) -> bool:
-	if invulnerability.time_left != 0:
+	if reflect:							# Target is unaffected, return false
 		return false
-	for e in effects:
+	if invulnerability.time_left != 0:	# Target is unaffected, return true
+		return true
+	for e in effects:					# Target is affected
 		apply_effect(e, effects[e]) 
 	return true
 
@@ -129,10 +132,13 @@ func start_invulnerability():
 # Sets a character's invincibility. Duhr.
 # @param val true makes character immune to heal, damage, and anything in between
 ###
-func set_invincibility(var val : bool):
+func set_invincibility(val : bool):
 	invincible = val
 	pass
 
+func set_reflect(val : bool):
+	reflect = val
+	pass
 ###
 # Called by an effect, takes a TextureRect scene and adds it to the hbox.
 # @param icon is the TextureRect object.

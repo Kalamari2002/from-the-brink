@@ -112,6 +112,7 @@ func change_start_lag(time):
 # @param perm if true lets character move, if false prevents character from moving
 ###
 func set_can_move(perm):
+	print("SET_CAN_MOVE")
 	can_move = perm
 
 ###

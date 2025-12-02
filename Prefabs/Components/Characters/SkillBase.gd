@@ -3,13 +3,17 @@ extends Node2D
 export var icon_path : String
 var icon_ref
 var character : Node2D
-var cooldown : Timer
 var icon : Control
+
+onready var cooldown = $Cooldown
+ 
 func _ready():
-#	character = get_parent().get_parent()
-	cooldown = get_node("Cooldown")
 	icon_ref = load(icon_path)
 	pass
+
+func _process(delta):
+	if cooldown.time_left != 0:
+		icon.update_bar(cooldown.time_left)
 
 func initialize(charactr):
 	character = charactr
@@ -31,6 +35,7 @@ func begin():
 
 func end_cooldown():
 	cooldown.stop()
+	pass
 
 func icon_make_available():
 	if !is_active():

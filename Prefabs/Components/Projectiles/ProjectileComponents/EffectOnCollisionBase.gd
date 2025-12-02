@@ -49,7 +49,8 @@ func collide(area : Area2D):
 	pass
 
 func inflict_character(character : Node2D):
-	character.get_node("EffectManager").apply_on_hit_effects({"damage":damage_data, effect:arg})
+	if not character.get_node("EffectManager").apply_on_hit_effects({"damage":damage_data, effect:arg}):
+		parent_projectile.reflect()
 	pass
 
 func can_inflict_character(character : Node2D)->bool:

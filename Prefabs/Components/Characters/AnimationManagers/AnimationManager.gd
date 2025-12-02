@@ -113,6 +113,12 @@ func end_lingering_animation(animation : String):
 	curr_lingering_animation = ""
 	play_sprite_animation(last_requested_animation)
 
+func set_sprite_color(color : Color):
+	character_sprite.modulate = color
+	pass
+func reset_sprite_color():
+	character_sprite.modulate = DEFAULT_SPRITE_COLOR
+
 func on_step():
 	movement_animator.play("step")
 	pass
@@ -121,7 +127,7 @@ func on_invulnerability_start():
 	character_sprite.modulate = hit_color
 	pass
 func on_invulnerability_end():
-	character_sprite.modulate = DEFAULT_SPRITE_COLOR
+	reset_sprite_color()
 	pass
 
 func on_state_change(state):

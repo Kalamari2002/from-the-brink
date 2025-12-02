@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Prefabs/Components/Characters/CursorManager.gd" type="Script" id=1]
 [ext_resource path="res://Prefabs/Components/Characters/AnimationManagers/Raouss_Sprites/RaoussCharacterSprite_1.tscn" type="PackedScene" id=2]
@@ -8,10 +8,8 @@
 [ext_resource path="res://Prefabs/Components/Characters/AnimationManagers/Raouss_Sprites/RaoussCharacterSprite_4.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Prefabs/Components/Characters/ControlScheme.gd" type="Script" id=7]
 [ext_resource path="res://Prefabs/Abilities/Raouss/RaoussMeleeCharge.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Prefabs/Abilities/Aspen/FireBoltVolley.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Prefabs/Skills/Raouss/CloudRune.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Prefabs/Abilities/Aspen/Maple.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Prefabs/Abilities/Aspen/LeechArrowsVolley.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Prefabs/Abilities/Aspen/SlippersVolley.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Prefabs/Abilities/QuickTimeAtkBase.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Prefabs/Components/Characters/EffectManager.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Prefabs/Components/Characters/CharacterDisplay.tscn" type="PackedScene" id=15]
@@ -71,7 +69,7 @@ visible = false
 [node name="Instructions" parent="." instance=ExtResource( 19 )]
 
 [node name="HealthManager" parent="." instance=ExtResource( 26 )]
-max_health = 3
+max_health = 100
 
 [node name="EffectManager" parent="." instance=ExtResource( 14 )]
 position = Vector2( -35.3333, -61.3333 )
@@ -124,10 +122,8 @@ option_name = "Quick TIme"
 
 [node name="RaoussMeleeCharge" parent="Selector/Options" instance=ExtResource( 8 )]
 
-[node name="FireBoltVolley" parent="Selector/Options" instance=ExtResource( 9 )]
-
-[node name="SlippersVolley" parent="Selector/Options" instance=ExtResource( 12 )]
-
-[node name="LeechArrowsVolley" parent="Selector/Options" instance=ExtResource( 11 )]
-
 [node name="SkillManager" parent="." instance=ExtResource( 16 )]
+dfs_spc_tap = "CloudRune"
+
+[node name="CloudRune" parent="SkillManager" instance=ExtResource( 9 )]
+reflect_color = Color( 0.368627, 0.945098, 0.956863, 1 )

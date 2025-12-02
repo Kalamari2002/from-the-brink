@@ -59,7 +59,7 @@ func instantiate_players():
 	var raouss = preload("res://Prefabs/PCs/Raouss/Raouss.tscn")
 	var dummy = preload("res://Prefabs/NPCs/TrainingDummy.tscn")
 
-	var p1 = aspen.instance()
+	var p1 = raouss.instance()
 	p1.set_name("Player1")
 	p1.assign_id(1, self)
 	
@@ -71,7 +71,7 @@ func instantiate_players():
 	p3.set_name("Player3")
 	p3.assign_id(3, self)
 	
-	var p4 = aspen.instance()
+	var p4 = raouss.instance()
 	p4.set_name("Player4")
 	p4.assign_id(4, self)
 	

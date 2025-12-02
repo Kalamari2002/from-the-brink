@@ -21,10 +21,10 @@ func initialize(charactr):
 	pass
 
 func _process(delta):
+	._process(delta)
 	if is_bullet_time:
 		resource_manager.consume(delta/BULLET_TIME_SCALE)
-	if cooldown.time_left != 0:
-		icon.update_bar(cooldown.time_left)
+	pass
 
 func trigger():
 	if cooldown.time_left != 0 or !is_active() or !resource_manager.is_available():
@@ -62,6 +62,4 @@ func on_character_state_change(state):
 	pass
 
 func is_active():
-	if character.get_curr_state() != character.GameState.WAITING:
-		return false
-	return true
+	return (character.get_curr_state() == character.GameState.WAITING)

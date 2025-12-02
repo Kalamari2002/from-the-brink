@@ -153,6 +153,7 @@ func change_state(state):
 ###
 # @return id of the character
 ###
+###
 func get_id():
 	return id
 

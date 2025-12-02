@@ -5,4 +5,15 @@
 
 [node name="CloudRune" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-icon_path = ""
+icon_path = "res://Prefabs/Components/UI/SkillIcons/CloudRune_icon.tscn"
+reflect_color = Color( 0.12549, 0.941176, 0.960784, 1 )
+
+[node name="Cooldown" parent="." index="0"]
+wait_time = 0.8
+
+[node name="ReflectWindow" type="Timer" parent="." index="1"]
+wait_time = 0.167
+one_shot = true
+
+[connection signal="timeout" from="Cooldown" to="." method="_on_Cooldown_timeout"]
+[connection signal="timeout" from="ReflectWindow" to="." method="_on_ReflectWindow_timeout"]
