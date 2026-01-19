@@ -53,8 +53,7 @@ func bounce():
 	pass
 
 func reflect():
-	if bounced:
-		return
+	bounced = false
 	.reflect()
 	pass
 

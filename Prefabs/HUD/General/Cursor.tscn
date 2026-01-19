@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Sprites/Characters/Players/Poko.png" type="Texture" id=1]
+
+[node name="Cursor" type="Sprite"]
+position = Vector2( 177, 0 )
+z_index = 100
+texture = ExtResource( 1 )
+centered = false

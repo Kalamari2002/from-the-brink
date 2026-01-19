@@ -39,7 +39,6 @@ func on_ready():
 	if id % 2 == 0:	# If even will stand on the right
 		character_display.flip_self()
 	color_palette = id
-	
 	curr_state = GameState.WAITING # Starts waiting, can't select actions but can move around
 	control_scheme.initialize(self)
 	health_manager.initialize(self)

@@ -10,4 +10,6 @@ func inflict_character(character):
 	var origin_effect_manager = damage_data.origin.get_node("EffectManager")
 	if character.get_node("EffectManager").apply_on_hit_effects({"damage":damage_data}):
 		origin_effect_manager.apply_effect("replenish_resource",recover_on_hit)
+	else:
+		parent_projectile.reflect()
 	pass

@@ -33,8 +33,6 @@ func initialize(character: Node2D):
 ###
 # Takes action labels and maps them to inputs.
 ###
-#func set_scheme(up,down,confirm,special):
-#	scheme = {"up": up, "down": down, "confirm": confirm, "special" : special}
 func set_scheme(player):
 	match(player):
 		1:

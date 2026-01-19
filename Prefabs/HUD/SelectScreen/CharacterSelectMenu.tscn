@@ -1,0 +1,262 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Prefabs/HUD/General/MenuControlScheme.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Fonts/Testing/MainMenu.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Prefabs/HUD/Buttons/Submenu.gd" type="Script" id=3]
+[ext_resource path="res://Prefabs/HUD/General/MenuNode.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Prefabs/HUD/SelectScreen/Characters.gd" type="Script" id=5]
+[ext_resource path="res://Prefabs/HUD/General/Cursor.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Prefabs/HUD/General/MenuLabel.gd" type="Script" id=7]
+[ext_resource path="res://Prefabs/HUD/SelectScreen/CharacterSelectMenu.gd" type="Script" id=8]
+
+[node name="CharacterSelectMenu" type="Control"]
+margin_right = 388.0
+margin_bottom = 337.0
+script = ExtResource( 8 )
+up = "p1_move_up"
+down = "p1_move_down"
+confirm = "p1_confirm"
+special = "p1_special"
+is_playing = true
+
+[node name="Cursor" parent="." instance=ExtResource( 6 )]
+
+[node name="MenuControlScheme" parent="." instance=ExtResource( 1 )]
+
+[node name="Characters" type="Node" parent="."]
+script = ExtResource( 5 )
+option_name = "Characters"
+activated = true
+
+[node name="Aspen" type="Node" parent="Characters"]
+script = ExtResource( 3 )
+label_path = NodePath("../../CharactersDisplay/VBoxContainter/Aspen")
+option_name = "Aspen"
+submenu_display_path = NodePath("../../AspenPalettes")
+
+[node name="Feywild" parent="Characters/Aspen" instance=ExtResource( 4 )]
+label_path = NodePath("../../../AspenPalettes/VBoxContainer/Feywild")
+option_name = "Feywild"
+
+[node name="CultOfTheDragon" parent="Characters/Aspen" instance=ExtResource( 4 )]
+label_path = NodePath("../../../AspenPalettes/VBoxContainer/CultOfTheDragon")
+option_name = "CultOfTheDragon"
+
+[node name="Hero" parent="Characters/Aspen" instance=ExtResource( 4 )]
+label_path = NodePath("../../../AspenPalettes/VBoxContainer/Hero")
+option_name = "Hero"
+
+[node name="Aewen" parent="Characters/Aspen" instance=ExtResource( 4 )]
+label_path = NodePath("../../../AspenPalettes/VBoxContainer/Aewen")
+option_name = "Aewen"
+
+[node name="Raouss" type="Node" parent="Characters"]
+script = ExtResource( 3 )
+label_path = NodePath("../../CharactersDisplay/VBoxContainter/Raouss")
+option_name = "Raouss"
+submenu_display_path = NodePath("../../RaoussPalettes")
+
+[node name="Feywild" parent="Characters/Raouss" instance=ExtResource( 4 )]
+label_path = NodePath("../../../RaoussPalettes/VBoxContainer/Feywild")
+option_name = "Feywild"
+
+[node name="CultOfTheDragon" parent="Characters/Raouss" instance=ExtResource( 4 )]
+label_path = NodePath("../../../RaoussPalettes/VBoxContainer/CultOfTheDragon")
+option_name = "CultOfTheDragon"
+
+[node name="Cyborg" parent="Characters/Raouss" instance=ExtResource( 4 )]
+label_path = NodePath("../../../RaoussPalettes/VBoxContainer/Cyborg")
+option_name = "Cyborg"
+
+[node name="Pihnto" parent="Characters/Raouss" instance=ExtResource( 4 )]
+label_path = NodePath("../../../RaoussPalettes/VBoxContainer/Pihnto")
+option_name = "Pihnto"
+
+[node name="Mival" type="Node" parent="Characters"]
+script = ExtResource( 3 )
+label_path = NodePath("../../CharactersDisplay/VBoxContainter/Mival")
+option_name = "Mival"
+submenu_display_path = NodePath("../../MivalPalettes")
+
+[node name="Feywild" parent="Characters/Mival" instance=ExtResource( 4 )]
+label_path = NodePath("../../../MivalPalettes/VBoxContainer/Feywild")
+option_name = "Feywild"
+
+[node name="CultOfTheDragon" parent="Characters/Mival" instance=ExtResource( 4 )]
+label_path = NodePath("../../../MivalPalettes/VBoxContainer/CultOfTheDragon")
+option_name = "CultOfTheDragon"
+
+[node name="Nein" parent="Characters/Mival" instance=ExtResource( 4 )]
+label_path = NodePath("../../../MivalPalettes/VBoxContainer/Nein")
+option_name = "Cyborg"
+
+[node name="Camille" parent="Characters/Mival" instance=ExtResource( 4 )]
+label_path = NodePath("../../../MivalPalettes/VBoxContainer/Camille")
+option_name = "Pihnto"
+
+[node name="CharactersDisplay" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Panel" type="Panel" parent="CharactersDisplay"]
+margin_right = 350.0
+margin_bottom = 280.0
+
+[node name="VBoxContainter" type="VBoxContainer" parent="CharactersDisplay"]
+margin_right = 129.0
+margin_bottom = 242.0
+
+[node name="Aspen" type="Label" parent="CharactersDisplay/VBoxContainter"]
+margin_right = 129.0
+margin_bottom = 78.0
+custom_fonts/font = ExtResource( 2 )
+text = "Aspen"
+script = ExtResource( 7 )
+
+[node name="Raouss" type="Label" parent="CharactersDisplay/VBoxContainter"]
+margin_top = 82.0
+margin_right = 129.0
+margin_bottom = 160.0
+custom_fonts/font = ExtResource( 2 )
+text = "Raouss"
+script = ExtResource( 7 )
+
+[node name="Mival" type="Label" parent="CharactersDisplay/VBoxContainter"]
+margin_top = 164.0
+margin_right = 129.0
+margin_bottom = 242.0
+custom_fonts/font = ExtResource( 2 )
+text = "Mival"
+script = ExtResource( 7 )
+
+[node name="AspenPalettes" type="Control" parent="."]
+visible = false
+margin_right = 388.0
+margin_bottom = 337.0
+
+[node name="Panel" type="Panel" parent="AspenPalettes"]
+margin_right = 388.0
+margin_bottom = 337.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AspenPalettes"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Feywild" type="Label" parent="AspenPalettes/VBoxContainer"]
+margin_right = 346.0
+margin_bottom = 78.0
+custom_fonts/font = ExtResource( 2 )
+text = "Feywild"
+script = ExtResource( 7 )
+
+[node name="CultOfTheDragon" type="Label" parent="AspenPalettes/VBoxContainer"]
+margin_top = 82.0
+margin_right = 346.0
+margin_bottom = 160.0
+custom_fonts/font = ExtResource( 2 )
+text = "Cult of the Dragon"
+script = ExtResource( 7 )
+
+[node name="Hero" type="Label" parent="AspenPalettes/VBoxContainer"]
+margin_top = 164.0
+margin_right = 346.0
+margin_bottom = 242.0
+custom_fonts/font = ExtResource( 2 )
+text = "Hero"
+script = ExtResource( 7 )
+
+[node name="Aewen" type="Label" parent="AspenPalettes/VBoxContainer"]
+margin_top = 246.0
+margin_right = 346.0
+margin_bottom = 324.0
+custom_fonts/font = ExtResource( 2 )
+text = "Aewen"
+script = ExtResource( 7 )
+
+[node name="RaoussPalettes" type="Control" parent="."]
+visible = false
+margin_right = 388.0
+margin_bottom = 337.0
+
+[node name="Panel" type="Panel" parent="RaoussPalettes"]
+margin_right = 388.0
+margin_bottom = 337.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RaoussPalettes"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Feywild" type="Label" parent="RaoussPalettes/VBoxContainer"]
+margin_right = 346.0
+margin_bottom = 78.0
+custom_fonts/font = ExtResource( 2 )
+text = "Feywild"
+script = ExtResource( 7 )
+
+[node name="CultOfTheDragon" type="Label" parent="RaoussPalettes/VBoxContainer"]
+margin_top = 82.0
+margin_right = 346.0
+margin_bottom = 160.0
+custom_fonts/font = ExtResource( 2 )
+text = "Cult of the Dragon"
+script = ExtResource( 7 )
+
+[node name="Cyborg" type="Label" parent="RaoussPalettes/VBoxContainer"]
+margin_top = 164.0
+margin_right = 346.0
+margin_bottom = 242.0
+custom_fonts/font = ExtResource( 2 )
+text = "Cyborg"
+script = ExtResource( 7 )
+
+[node name="Pihnto" type="Label" parent="RaoussPalettes/VBoxContainer"]
+margin_top = 246.0
+margin_right = 346.0
+margin_bottom = 324.0
+custom_fonts/font = ExtResource( 2 )
+text = "Pihnto"
+script = ExtResource( 7 )
+
+[node name="MivalPalettes" type="Control" parent="."]
+visible = false
+margin_right = 388.0
+margin_bottom = 337.0
+
+[node name="Panel" type="Panel" parent="MivalPalettes"]
+margin_right = 388.0
+margin_bottom = 337.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MivalPalettes"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Feywild" type="Label" parent="MivalPalettes/VBoxContainer"]
+margin_right = 346.0
+margin_bottom = 78.0
+custom_fonts/font = ExtResource( 2 )
+text = "Feywild"
+script = ExtResource( 7 )
+
+[node name="CultOfTheDragon" type="Label" parent="MivalPalettes/VBoxContainer"]
+margin_top = 82.0
+margin_right = 346.0
+margin_bottom = 160.0
+custom_fonts/font = ExtResource( 2 )
+text = "Cult of the Dragon"
+script = ExtResource( 7 )
+
+[node name="Nein" type="Label" parent="MivalPalettes/VBoxContainer"]
+margin_top = 164.0
+margin_right = 346.0
+margin_bottom = 242.0
+custom_fonts/font = ExtResource( 2 )
+text = "Nein"
+script = ExtResource( 7 )
+
+[node name="Camille" type="Label" parent="MivalPalettes/VBoxContainer"]
+margin_top = 246.0
+margin_right = 346.0
+margin_bottom = 324.0
+custom_fonts/font = ExtResource( 2 )
+text = "Camille"
+script = ExtResource( 7 )

@@ -52,7 +52,6 @@ script = ExtResource( 6 )
 base_speed = 20
 
 [node name="EffectOnCollisionBase" parent="." instance=ExtResource( 1 )]
-damage = 8
 effect = "greenflame"
 
 [node name="DamageData" parent="EffectOnCollisionBase" instance=ExtResource( 5 )]

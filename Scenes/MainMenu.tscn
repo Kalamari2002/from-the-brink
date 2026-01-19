@@ -1,0 +1,162 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Prefabs/HUD/General/MenuNode.gd" type="Script" id=1]
+[ext_resource path="res://Prefabs/HUD/Buttons/Main Menu/Play.gd" type="Script" id=2]
+[ext_resource path="res://Prefabs/HUD/General/BaseMenu.gd" type="Script" id=3]
+[ext_resource path="res://Fonts/Testing/MainMenu.tres" type="DynamicFont" id=4]
+[ext_resource path="res://Prefabs/HUD/General/Cursor.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Prefabs/HUD/General/MenuLabel.gd" type="Script" id=6]
+[ext_resource path="res://Prefabs/HUD/Buttons/Submenu.gd" type="Script" id=7]
+[ext_resource path="res://Prefabs/HUD/General/MenuControlScheme.tscn" type="PackedScene" id=8]
+
+[node name="MainMenu" type="Control"]
+
+[node name="MenuControlScheme" parent="." instance=ExtResource( 8 )]
+
+[node name="BaseMenu" type="Node" parent="."]
+script = ExtResource( 3 )
+option_name = "BaseMenu"
+activated = true
+
+[node name="Play" type="Node" parent="BaseMenu"]
+script = ExtResource( 2 )
+label_path = NodePath("../../VBoxContainer/Play")
+option_name = "Play"
+
+[node name="Settings" type="Node" parent="BaseMenu"]
+script = ExtResource( 7 )
+label_path = NodePath("../../VBoxContainer/Settings")
+option_name = "Settings"
+submenu_display_path = NodePath("../../Settings")
+
+[node name="Volume" type="Node" parent="BaseMenu/Settings"]
+script = ExtResource( 1 )
+label_path = NodePath("../../../Settings/VBoxContainer/Volume")
+option_name = "Volume"
+
+[node name="Keyboard" type="Node" parent="BaseMenu/Settings"]
+script = ExtResource( 7 )
+label_path = NodePath("../../../Settings/VBoxContainer/KeyBoard")
+option_name = "Keyboard"
+submenu_display_path = NodePath("../../../Keyboard")
+
+[node name="Up 1" type="Node" parent="BaseMenu/Settings/Keyboard"]
+script = ExtResource( 1 )
+label_path = NodePath("../../../../Keyboard/VBoxContainer/Up 1")
+option_name = "Up 1"
+
+[node name="Down 1" type="Node" parent="BaseMenu/Settings/Keyboard"]
+script = ExtResource( 1 )
+label_path = NodePath("../../../../Keyboard/VBoxContainer/Down 1")
+option_name = "Down 1"
+
+[node name="Credits" type="Node" parent="BaseMenu"]
+script = ExtResource( 1 )
+label_path = NodePath("../../VBoxContainer/Credits")
+option_name = "Credits"
+
+[node name="Quit" type="Node" parent="BaseMenu"]
+script = ExtResource( 1 )
+label_path = NodePath("../../VBoxContainer/Quit")
+option_name = "Quit"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Play" type="Label" parent="VBoxContainer"]
+margin_right = 148.0
+margin_bottom = 78.0
+rect_pivot_offset = Vector2( -362, -96 )
+custom_fonts/font = ExtResource( 4 )
+text = "Play"
+script = ExtResource( 6 )
+
+[node name="Settings" type="Label" parent="VBoxContainer"]
+margin_top = 82.0
+margin_right = 148.0
+margin_bottom = 160.0
+rect_pivot_offset = Vector2( -362, -96 )
+custom_fonts/font = ExtResource( 4 )
+text = "Settings"
+script = ExtResource( 6 )
+
+[node name="Credits" type="Label" parent="VBoxContainer"]
+margin_top = 164.0
+margin_right = 148.0
+margin_bottom = 242.0
+rect_pivot_offset = Vector2( -362, -96 )
+custom_fonts/font = ExtResource( 4 )
+text = "Credits"
+script = ExtResource( 6 )
+
+[node name="Quit" type="Label" parent="VBoxContainer"]
+margin_top = 246.0
+margin_right = 148.0
+margin_bottom = 324.0
+rect_pivot_offset = Vector2( -362, -96 )
+custom_fonts/font = ExtResource( 4 )
+text = "Quit"
+script = ExtResource( 6 )
+
+[node name="Cursor" parent="." instance=ExtResource( 5 )]
+
+[node name="Settings" type="Control" parent="."]
+visible = false
+margin_right = 390.0
+margin_bottom = 344.0
+
+[node name="Panel" type="Panel" parent="Settings"]
+margin_right = 392.0
+margin_bottom = 342.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Settings"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Volume" type="Label" parent="Settings/VBoxContainer"]
+margin_right = 178.0
+margin_bottom = 78.0
+rect_pivot_offset = Vector2( -362, -96 )
+custom_fonts/font = ExtResource( 4 )
+text = "Volume"
+script = ExtResource( 6 )
+
+[node name="KeyBoard" type="Label" parent="Settings/VBoxContainer"]
+margin_top = 82.0
+margin_right = 178.0
+margin_bottom = 160.0
+rect_pivot_offset = Vector2( -362, -96 )
+custom_fonts/font = ExtResource( 4 )
+text = "Keyboard"
+script = ExtResource( 6 )
+
+[node name="Keyboard" type="Control" parent="."]
+visible = false
+margin_right = 390.0
+margin_bottom = 344.0
+
+[node name="Panel" type="Panel" parent="Keyboard"]
+margin_right = 392.0
+margin_bottom = 342.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Keyboard"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Up 1" type="Label" parent="Keyboard/VBoxContainer"]
+margin_right = 129.0
+margin_bottom = 78.0
+rect_pivot_offset = Vector2( -362, -96 )
+custom_fonts/font = ExtResource( 4 )
+text = "Up 1"
+script = ExtResource( 6 )
+
+[node name="Down 1" type="Label" parent="Keyboard/VBoxContainer"]
+margin_top = 82.0
+margin_right = 129.0
+margin_bottom = 160.0
+rect_pivot_offset = Vector2( -362, -96 )
+custom_fonts/font = ExtResource( 4 )
+text = "Down 1"
+script = ExtResource( 6 )

@@ -63,7 +63,7 @@ func instantiate_players():
 	p1.set_name("Player1")
 	p1.assign_id(1, self)
 	
-	var p2 = aspen.instance()
+	var p2 = raouss.instance()
 	p2.set_name("Player2")
 	p2.assign_id(2, self)
 	
@@ -71,14 +71,14 @@ func instantiate_players():
 	p3.set_name("Player3")
 	p3.assign_id(3, self)
 	
-	var p4 = raouss.instance()
+	var p4 = aspen.instance()
 	p4.set_name("Player4")
 	p4.assign_id(4, self)
 	
-	initiative_order.append(p4)
+	#initiative_order.append(p4)
 	initiative_order.append(p1)
 	initiative_order.append(p2)
-	initiative_order.append(p3)
+	#initiative_order.append(p3)
 	
 	player_count = initiative_order.size()
 

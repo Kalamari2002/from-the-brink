@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Prefabs/HUD/General/MenuControlScheme.gd" type="Script" id=1]
+
+[node name="MenuControlScheme" type="Node"]
+script = ExtResource( 1 )
+up = "p1_move_up"
+down = "p1_move_down"
+confirm = "p1_confirm"
+special = "p1_special"

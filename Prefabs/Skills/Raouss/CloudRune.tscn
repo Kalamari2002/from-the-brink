@@ -12,7 +12,7 @@ reflect_color = Color( 0.12549, 0.941176, 0.960784, 1 )
 wait_time = 0.8
 
 [node name="ReflectWindow" type="Timer" parent="." index="1"]
-wait_time = 0.167
+wait_time = 0.2
 one_shot = true
 
 [connection signal="timeout" from="Cooldown" to="." method="_on_Cooldown_timeout"]

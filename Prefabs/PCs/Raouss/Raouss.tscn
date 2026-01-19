@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Prefabs/Components/Characters/CursorManager.gd" type="Script" id=1]
 [ext_resource path="res://Prefabs/Components/Characters/AnimationManagers/Raouss_Sprites/RaoussCharacterSprite_1.tscn" type="PackedScene" id=2]
@@ -9,8 +9,6 @@
 [ext_resource path="res://Prefabs/Components/Characters/ControlScheme.gd" type="Script" id=7]
 [ext_resource path="res://Prefabs/Abilities/Raouss/RaoussMeleeCharge.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Prefabs/Skills/Raouss/CloudRune.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Prefabs/Abilities/Aspen/Maple.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Prefabs/Abilities/QuickTimeAtkBase.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Prefabs/Components/Characters/EffectManager.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Prefabs/Components/Characters/CharacterDisplay.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Prefabs/Components/Characters/SkillManager.tscn" type="PackedScene" id=16]
@@ -18,7 +16,6 @@
 [ext_resource path="res://Prefabs/Components/Characters/Selector/Selector.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Prefabs/Components/Characters/Instructions.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Prefabs/Components/Characters/AnimationManagers/AnimationManager.tscn" type="PackedScene" id=20]
-[ext_resource path="res://Prefabs/Abilities/Aspen/Items.tscn" type="PackedScene" id=21]
 [ext_resource path="res://Prefabs/Components/Characters/PositionManager.tscn" type="PackedScene" id=22]
 [ext_resource path="res://Prefabs/Components/UI/BladesongGauge.tscn" type="PackedScene" id=23]
 [ext_resource path="res://Prefabs/Abilities/Raouss/UI/RaoussMeleeBar.tscn" type="PackedScene" id=25]
@@ -112,13 +109,6 @@ special4 = "p4_special"
 [node name="Selector" parent="." instance=ExtResource( 18 )]
 
 [node name="Options" type="Node2D" parent="Selector"]
-
-[node name="QuickTimeAtkBase" parent="Selector/Options" instance=ExtResource( 13 )]
-option_name = "Quick TIme"
-
-[node name="Items" parent="Selector/Options" instance=ExtResource( 21 )]
-
-[node name="Maple" parent="Selector/Options" instance=ExtResource( 10 )]
 
 [node name="RaoussMeleeCharge" parent="Selector/Options" instance=ExtResource( 8 )]
 
